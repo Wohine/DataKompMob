@@ -1,5 +1,7 @@
 package com.example.datakompgaming.bestillingfiler
 
+import com.example.datakompgaming.R
+
 object Bestillinger {
     val bestilligListe = listOf<Order>(
         Order(
