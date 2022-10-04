@@ -49,7 +49,11 @@ fun LoginPage(navController: NavHostController) {
 
         val username = remember { mutableStateOf(TextFieldValue()) }
         val password = remember { mutableStateOf(TextFieldValue()) }
-
+        Button(onClick = {
+                navController.navigate("Bestilling")
+        }) {
+            Text(text = "bestilling")
+        }
         Text(text = "Innlogging", style = TextStyle(fontSize = 40.sp, fontFamily = FontFamily.Cursive))
 
         Spacer(modifier = Modifier.height(20.dp))
