@@ -46,7 +46,7 @@ fun InfoCard(title: String, line1: String, line2: String) {
             Spacer(modifier = Modifier.height(5.dp))
             Text(line2)
             Spacer(modifier = Modifier.height(5.dp))
-            Image(painter = painterResource(com.example.datakompgaming.R.drawable.screenshot_2022_09_30_155004), contentDescription = null)
+            Image(painter = painterResource(com.example.datakompgaming.R.drawable.floppa), contentDescription = null)
         }
     }
 }
