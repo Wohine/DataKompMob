@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.BottomAppBar
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -15,25 +17,34 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.example.datakompgaming.screen.printBotBar
 
 @Composable
-fun printOrders(bestillingListe: List<Order>) {
-    Column() {
-        Text(text = "Dine bestillinger")
-        for (bestilling in bestillingListe){
-            Column(modifier = Modifier
-                .padding(10.dp)
-                .border(BorderStroke(1.dp, SolidColor(Color.Black)))) {
-                Text(text = "Bestilling")
-                Text(text = bestilling.dato)
-                Text(text = bestilling.key)
-                for (item in bestilling.liste){
-                    printProdukt(item)
+fun printOrders(bestillingListe: List<Order>, navController: NavController) {
+    Scaffold(bottomBar = {
+        printBotBar(navController = navController)
+    })
+    {
+        Column() {
+            Text(text = "Dine bestillinger")
+            for (bestilling in bestillingListe){
+                Column(modifier = Modifier
+                    .padding(10.dp)
+                    .border(BorderStroke(1.dp, SolidColor(Color.Black)))) {
+                    Text(text = "Bestilling")
+                    Text(text = bestilling.dato)
+                    Text(text = bestilling.key)
+                    for (item in bestilling.liste){
+                        printProdukt(item)
+                    }
+                    Text(text = bestilling.totalPris)
                 }
-                Text(text = bestilling.totalPris)
             }
         }
+
     }
+
 
 }
 @Composable
