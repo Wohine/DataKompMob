@@ -46,7 +46,7 @@ fun Kundeservice(navController: NavController)
             Spacer(modifier = Modifier.height(20.dp))
             Text(
                 text = "Kontakt Oss",
-                style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Bold)
+                style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold)
             )
 
             Spacer(modifier = Modifier.height(5.dp))
