@@ -29,7 +29,8 @@ fun printOrders(bestillingListe: List<Order>) {
                 Text(text = bestilling.key)
                 for (item in bestilling.liste){
                     printProdukt(item)
-                    Text(text = bestilling.totalPris)                }
+                }
+                Text(text = bestilling.totalPris)
             }
         }
     }
