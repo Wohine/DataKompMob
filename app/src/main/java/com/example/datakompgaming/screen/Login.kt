@@ -38,7 +38,7 @@ fun LoginPage(navController: NavHostController) {
                 text = AnnotatedString("Registrer deg her"),
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .absolutePadding(bottom = Dp(50f)),
+                    .absolutePadding(bottom = Dp(100f)),
                 onClick = { },
                 style = TextStyle(
                     fontSize = 14.sp,

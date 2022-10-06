@@ -71,6 +71,15 @@ fun printBotBar(navController: NavController){
             }
         )
         ClickableText(
+            text = AnnotatedString("Produkter"),
+            modifier = Modifier
+                .padding(5.dp),
+            style = TextStyle(color = Color.White),
+            onClick = {
+                navController.navigate("Produkter")
+            }
+        )
+        ClickableText(
             text = AnnotatedString("HomePage"),
             modifier = Modifier
                 .padding(5.dp),

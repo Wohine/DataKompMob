@@ -35,7 +35,7 @@ fun OmOss(navController: NavController) {
             InfoCard("Hvem er vi?","Vi er fem studenter som studerer IT og informasjonssytemer på USN Campus Bø.","Gjennom vår interesse for teknologi og duppeditter har vi alle kjent på risikoen ved å kjøpe elektroniske produkter brukt.")
             InfoCard("Mål","Det kastes enorme mengder e-avfall rundt om i verden. Dette er ofte produkter som er i god stand.","Vi tror at ved å tilby et bruktmarked for elektroniske varer hvor produktene er sjekket for feil av fagfolk, kan vi redusere mistilliten en har til brukte produkter, samt e-avfallet som genereres av det Norske folk.")
             InfoCard("Pris","Verden fikk kjenne på silisiumsmangelen gjennom 2021. Å få tak i produkter med mikroprosessorer var både dyrt og sjeldent.","Ved å kjøpe brukte produkter av oss unngår du å betale ekstra for manglende tilbud, og du får et produkt du kan stole på.")
-            Spacer(modifier = Modifier.height(150.dp))
+            Spacer(modifier = Modifier.height(100.dp))
         }
     }
 
