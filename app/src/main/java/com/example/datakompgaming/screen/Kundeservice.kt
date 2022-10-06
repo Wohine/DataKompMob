@@ -23,13 +23,13 @@ import androidx.navigation.NavController
 import com.example.datakompgaming.R
 
 @Composable
-fun Kundeservice(navController: NavController)
-{
+fun Kundeservice(navController: NavController) {
     Scaffold(bottomBar = {
         printBotBar(navController = navController)
     }) {
 
-        Column( modifier = Modifier.background(Color.White),
+        Column(
+            modifier = Modifier.background(Color.White),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         )

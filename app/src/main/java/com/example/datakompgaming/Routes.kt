@@ -6,4 +6,5 @@ sealed class Routes(val route: String) {
     object Chat : Routes("Chat")
     object OmOss : Routes("OmOss")
     object Kundeservice : Routes("Kundeservice")
+    object HomePage : Routes("HomePage")
 }

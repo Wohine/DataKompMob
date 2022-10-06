@@ -1,9 +1,11 @@
 package com.example.datakompgaming.screen
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -20,6 +22,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -35,7 +38,7 @@ fun LoginPage(navController: NavHostController) {
                 text = AnnotatedString("Registrer deg her"),
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(20.dp),
+                    .absolutePadding(bottom = Dp(50f)),
                 onClick = { },
                 style = TextStyle(
                     fontSize = 14.sp,
@@ -46,7 +49,9 @@ fun LoginPage(navController: NavHostController) {
             )
         }
         Column(
-            modifier = Modifier.padding(20.dp),
+            modifier = Modifier
+                .padding(20.dp)
+                .verticalScroll(rememberScrollState(),enabled = true),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

@@ -29,6 +29,7 @@ fun printBotBar(navController: NavController){
             text = AnnotatedString("bestilling"),
             modifier = Modifier
                 .padding(5.dp),
+            style = TextStyle(color = Color.White),
             onClick = {
                 navController.navigate("Bestilling")
             }
@@ -37,6 +38,7 @@ fun printBotBar(navController: NavController){
             text = AnnotatedString("login"),
             modifier = Modifier
                 .padding(5.dp),
+            style = TextStyle(color = Color.White),
             onClick = {
                 navController.navigate("Login")
             }
@@ -45,6 +47,7 @@ fun printBotBar(navController: NavController){
             text = AnnotatedString("chat"),
             modifier = Modifier
                 .padding(5.dp),
+            style = TextStyle(color = Color.White),
             onClick = {
                 navController.navigate("Chat")
             }
@@ -53,6 +56,7 @@ fun printBotBar(navController: NavController){
             text = AnnotatedString("om oss"),
             modifier = Modifier
                 .padding(5.dp),
+            style = TextStyle(color = Color.White),
             onClick = {
                 navController.navigate("OmOss")
             }
@@ -61,8 +65,18 @@ fun printBotBar(navController: NavController){
             text = AnnotatedString("Kundeservice"),
             modifier = Modifier
                 .padding(5.dp),
+            style = TextStyle(color = Color.White),
             onClick = {
                 navController.navigate("Kundeservice")
+            }
+        )
+        ClickableText(
+            text = AnnotatedString("HomePage"),
+            modifier = Modifier
+                .padding(5.dp),
+            style = TextStyle(color = Color.White),
+            onClick = {
+                navController.navigate("HomePage")
             }
         )
     }

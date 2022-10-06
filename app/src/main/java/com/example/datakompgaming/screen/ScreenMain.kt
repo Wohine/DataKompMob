@@ -33,5 +33,9 @@ fun ScreenMain(){
         composable(Routes.Kundeservice.route){
             Kundeservice(navController)
         }
+        composable(Routes.HomePage.route){
+            HomePage(navController)
+        }
+
     }
 }
