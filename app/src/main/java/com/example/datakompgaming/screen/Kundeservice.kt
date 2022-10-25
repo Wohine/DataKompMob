@@ -3,7 +3,9 @@ package com.example.datakompgaming.screen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -23,13 +25,15 @@ import androidx.navigation.NavController
 import com.example.datakompgaming.R
 
 @Composable
-fun Kundeservice(navController: NavController)
-{
+fun Kundeservice(navController: NavController) {
     Scaffold(bottomBar = {
         printBotBar(navController = navController)
     }) {
 
-        Column( modifier = Modifier.background(Color.White),
+        Column(
+            modifier = Modifier
+                .background(Color.White)
+                .verticalScroll(rememberScrollState(),enabled = true),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         )
@@ -46,7 +50,7 @@ fun Kundeservice(navController: NavController)
             Spacer(modifier = Modifier.height(20.dp))
             Text(
                 text = "Kontakt Oss",
-                style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Bold)
+                style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold)
             )
 
             Spacer(modifier = Modifier.height(5.dp))

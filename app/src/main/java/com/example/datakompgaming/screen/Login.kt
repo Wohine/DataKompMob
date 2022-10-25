@@ -1,10 +1,13 @@
 package com.example.datakompgaming.screen
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
@@ -19,6 +22,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -26,71 +30,73 @@ import com.example.datakompgaming.ui.theme.Purple700
 
 @Composable
 fun LoginPage(navController: NavHostController) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        ClickableText(
-            text = AnnotatedString("Registrer deg her"),
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(20.dp),
-            onClick = {},
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontFamily = FontFamily.Default,
-                textDecoration = TextDecoration.Underline,
-                color = Purple700
-            )
-        )
-    }
-    Column(
-        modifier = Modifier.padding(20.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        val username = remember { mutableStateOf(TextFieldValue()) }
-        val password = remember { mutableStateOf(TextFieldValue()) }
-        Button(onClick = {
-                navController.navigate("Bestilling")
-        }) {
-            Text(text = "bestilling")
-        }
-        Text(text = "Innlogging", style = TextStyle(fontSize = 40.sp, fontFamily = FontFamily.Cursive))
-
-        Spacer(modifier = Modifier.height(20.dp))
-        TextField(
-            label = { Text(text = "Brukernavn") },
-            value = username.value,
-            onValueChange = { username.value = it })
-
-        Spacer(modifier = Modifier.height(20.dp))
-        TextField(
-            label = { Text(text = "Passord") },
-            value = password.value,
-            visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            onValueChange = { password.value = it })
-
-        Spacer(modifier = Modifier.height(20.dp))
-        Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
-            Button(
-                onClick = {navController.navigate("Home")},
-                shape = RoundedCornerShape(50.dp),
+    Scaffold(bottomBar = {
+        printBotBar(navController = navController)
+    }) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            ClickableText(
+                text = AnnotatedString("Registrer deg her"),
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp)
-            ) {
-                Text(text = "Logg inn")
-            }
-        }
-
-        Spacer(modifier = Modifier.height(20.dp))
-        ClickableText(
-            text = AnnotatedString("Glemt passord?"),
-            onClick = { },
-            style = TextStyle(
-                fontSize = 14.sp,
-                fontFamily = FontFamily.Default
+                    .align(Alignment.BottomCenter)
+                    .absolutePadding(bottom = Dp(100f)),
+                onClick = { },
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    fontFamily = FontFamily.Default,
+                    textDecoration = TextDecoration.Underline,
+                    color = Purple700
+                )
             )
-        )
+        }
+        Column(
+            modifier = Modifier
+                .padding(20.dp)
+                .verticalScroll(rememberScrollState(),enabled = true),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            val username = remember { mutableStateOf(TextFieldValue()) }
+            val password = remember { mutableStateOf(TextFieldValue()) }
+
+            Text(text = "Innlogging", style = TextStyle(fontSize = 40.sp, fontFamily = FontFamily.Cursive))
+
+            Spacer(modifier = Modifier.height(20.dp))
+            TextField(
+                label = { Text(text = "Brukernavn") },
+                value = username.value,
+                onValueChange = { username.value = it })
+
+            Spacer(modifier = Modifier.height(20.dp))
+            TextField(
+                label = { Text(text = "Passord") },
+                value = password.value,
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                onValueChange = { password.value = it })
+
+            Spacer(modifier = Modifier.height(20.dp))
+            Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
+                Button(
+                    onClick = { },
+                    shape = RoundedCornerShape(50.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp)
+                ) {
+                    Text(text = "Logg inn")
+                }
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
+            ClickableText(
+                text = AnnotatedString("Glemt passord?"),
+                onClick = { },
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    fontFamily = FontFamily.Default
+                )
+            )
+        }
     }
 }

@@ -5,6 +5,7 @@ package com.example.datakompgaming.screen
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -14,33 +15,41 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 
-@Preview
 @Composable
-fun HomePage() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .background(Color.White),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceEvenly
+fun HomePage(navController: NavController) {
+
+    Scaffold(bottomBar = {
+        printBotBar(navController = navController)
+    })
+    {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .background(Color.White),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceEvenly
 
 
-    ) {
-        LogoBanner(title = "test")
-        SaleBanner(title = "test")
-        SaleBanner(title = "test")
-        SaleBanner(title = "test")
-        SaleBanner(title = "test")
-        SaleBanner(title = "test")
+        ) {
+            LogoBanner(title = "test")
+            SaleBanner(title = "test")
+            SaleBanner(title = "test")
+            SaleBanner(title = "test")
+            SaleBanner(title = "test")
+            SaleBanner(title = "test")
+            
+            Spacer(modifier = Modifier.height(100.dp))
+        }
     }
 }
 
 @Composable
 fun LogoBanner(title: String) {
-    Image(painter = painterResource(com.example.datakompgaming.R.drawable.mainlogo), contentDescription = null)
+    Image(painter = painterResource(com.example.datakompgaming.R.drawable.datakomplogo), contentDescription = null)
 }
 
 @Composable
