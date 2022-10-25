@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.datakompgaming.screen.printBotBar
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun printOrders(bestillingListe: List<Order>, navController: NavController) {
     Scaffold(bottomBar = {

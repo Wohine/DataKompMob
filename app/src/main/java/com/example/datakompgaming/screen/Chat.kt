@@ -1,5 +1,6 @@
 package com.example.datakompgaming.screen
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.media.VolumeShaper
@@ -71,6 +72,7 @@ fun MessageCard(msg: Message) {
 }
 
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun Conversation(messages: List<Message>, navController: NavController) {
     Scaffold(bottomBar = {
