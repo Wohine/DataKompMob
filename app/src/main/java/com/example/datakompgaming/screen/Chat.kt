@@ -74,7 +74,7 @@ fun MessageCard(msg: Message) {
 @Composable
 fun Conversation(messages: List<Message>, navController: NavController) {
     Scaffold(bottomBar = {
-        printBotBar(navController = navController)
+        printBotBarIcon(navController = navController)
     }) {
         LazyColumn {
             items(messages) { message ->

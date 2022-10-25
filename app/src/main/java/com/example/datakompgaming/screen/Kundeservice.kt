@@ -27,7 +27,7 @@ import com.example.datakompgaming.R
 @Composable
 fun Kundeservice(navController: NavController) {
     Scaffold(bottomBar = {
-        printBotBar(navController = navController)
+        printBotBarIcon(navController = navController)
     }) {
 
         Column(

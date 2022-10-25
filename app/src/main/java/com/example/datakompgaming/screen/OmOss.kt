@@ -20,7 +20,7 @@ import androidx.navigation.NavController
 @Composable
 fun OmOss(navController: NavController) {
     Scaffold(bottomBar = {
-        printBotBar(navController = navController)
+        printBotBarIcon(navController = navController)
     }) {
         Column(
             modifier = Modifier

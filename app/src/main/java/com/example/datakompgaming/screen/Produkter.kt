@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun Produkter(navController: NavController) {
     Scaffold(bottomBar = {
-        printBotBar(navController = navController)
+        printBotBarIcon(navController = navController)
     }) {
 
                 // A surface container using the 'background' color from the theme

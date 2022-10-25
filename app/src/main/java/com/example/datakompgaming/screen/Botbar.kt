@@ -6,6 +6,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,6 +37,7 @@ fun printBotBar(navController: NavController){
                 navController.navigate("Bestilling")
             }
         )
+        Icon(Icons.Rounded.Home, contentDescription = "homepage")
         ClickableText(
             text = AnnotatedString("login"),
             modifier = Modifier

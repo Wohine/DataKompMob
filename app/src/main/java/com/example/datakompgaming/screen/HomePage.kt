@@ -22,7 +22,7 @@ import androidx.navigation.NavController
 fun HomePage(navController: NavController) {
 
     Scaffold(bottomBar = {
-        printBotBar(navController = navController)
+        printBotBarIcon(navController = navController)
     })
     {
         Column(

@@ -31,7 +31,7 @@ import com.example.datakompgaming.ui.theme.Purple700
 @Composable
 fun LoginPage(navController: NavHostController) {
     Scaffold(bottomBar = {
-        printBotBar(navController = navController)
+        printBotBarIcon(navController = navController)
     }) {
         Box(modifier = Modifier.fillMaxSize()) {
             ClickableText(
