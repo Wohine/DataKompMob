@@ -36,13 +36,12 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    ScreenMain()
+                    login()
                 }
             }
         }
 
     }
-
     @Composable
     fun login(
     ) {
@@ -59,34 +58,35 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun signIn() {
-        val providers = arrayListOf(
-            AuthUI.IdpConfig.EmailBuilder().build()
-        )
-        val signinIntent = AuthUI.getInstance()
-            .createSignInIntentBuilder()
-            .setAvailableProviders(providers)
-            .build()
-        signInLauncher.launch(signinIntent)
-    }
-
-    private val signInLauncher = registerForActivityResult (
-        FirebaseAuthUIActivityResultContract()
-    ) {
-            res -> this.signInResult(res)
-    }
-
-
-
-    private fun signInResult(result: FirebaseAuthUIAuthenticationResult) {
-        val response = result.idpResponse
-        if (result.resultCode == RESULT_OK) {
-            user = FirebaseAuth.getInstance().currentUser
-        } else {
-            Log.e("Login.kt", "Error logging in " + response?.error?.errorCode)
+        private fun signIn() {
+            val providers = arrayListOf(
+                AuthUI.IdpConfig.EmailBuilder().build()
+            )
+            val signinIntent = AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .build()
+            signInLauncher.launch(signinIntent)
         }
-    }
 
+        private val signInLauncher = registerForActivityResult(
+            FirebaseAuthUIActivityResultContract()
+        ) { res ->
+            this.signInResult(res)
+        }
+
+
+        private fun signInResult(result: FirebaseAuthUIAuthenticationResult) {
+            val response = result.idpResponse
+            if (result.resultCode == RESULT_OK) {
+                user = FirebaseAuth.getInstance().currentUser
+                setContent {
+                    DefaultPreview()
+                }
+            } else {
+                Log.e("Login.kt", "Error logging in " + response?.error?.errorCode)
+            }
+        }
 }
 
 @Preview(showBackground = true)
