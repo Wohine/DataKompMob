@@ -29,9 +29,14 @@ import androidx.compose.ui.unit.sp
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun Produkter(navController: NavController) {
-    Scaffold(bottomBar = {
-        printBotBarIcon(navController = navController)
-    }) {
+    Scaffold(
+        bottomBar = {
+            printBotBarIcon(navController = navController)
+        },
+        topBar = {
+            printTopBarIcon(navController = navController)
+        }
+    ) {
 
                 // A surface container using the 'background' color from the theme
                 Surface(

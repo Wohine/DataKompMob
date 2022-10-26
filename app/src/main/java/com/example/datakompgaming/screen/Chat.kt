@@ -75,9 +75,14 @@ fun MessageCard(msg: Message) {
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun Conversation(messages: List<Message>, navController: NavController) {
-    Scaffold(bottomBar = {
-        printBotBarIcon(navController = navController)
-    }) {
+    Scaffold(
+        bottomBar = {
+            printBotBarIcon(navController = navController)
+        },
+        topBar = {
+            printTopBarIcon(navController = navController)
+        }
+    ) {
         LazyColumn {
             items(messages) { message ->
                 MessageCard(message)

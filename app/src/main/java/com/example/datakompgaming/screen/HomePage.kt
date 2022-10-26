@@ -23,10 +23,14 @@ import androidx.navigation.NavController
 @Composable
 fun HomePage(navController: NavController) {
 
-    Scaffold(bottomBar = {
-        printBotBarIcon(navController = navController)
-    })
-    {
+    Scaffold(
+        bottomBar = {
+            printBotBarIcon(navController = navController)
+        },
+        topBar = {
+            printTopBarIcon(navController = navController)
+        }
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()

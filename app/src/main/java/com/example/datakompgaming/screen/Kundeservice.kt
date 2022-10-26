@@ -28,14 +28,19 @@ import com.example.datakompgaming.R
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun Kundeservice(navController: NavController) {
-    Scaffold(bottomBar = {
+    Scaffold(
+        bottomBar = {
         printBotBarIcon(navController = navController)
-    }) {
+        },
+        topBar = {
+            printTopBarIcon(navController = navController)
+        }
+    ) {
 
         Column(
             modifier = Modifier
                 .background(Color.White)
-                .verticalScroll(rememberScrollState(),enabled = true),
+                .verticalScroll(rememberScrollState(), enabled = true),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         )

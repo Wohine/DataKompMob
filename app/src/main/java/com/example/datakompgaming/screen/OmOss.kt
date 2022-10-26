@@ -21,9 +21,14 @@ import androidx.navigation.NavController
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun OmOss(navController: NavController) {
-    Scaffold(bottomBar = {
-        printBotBarIcon(navController = navController)
-    }) {
+    Scaffold(
+        bottomBar = {
+            printBotBarIcon(navController = navController)
+        },
+        topBar = {
+            printTopBarIcon(navController = navController)
+        }
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()

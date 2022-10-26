@@ -44,9 +44,14 @@ import com.google.firebase.auth.FirebaseUser
 @Composable
 fun LoginPage(navController: NavHostController) {
 
-    Scaffold(bottomBar = {
-        printBotBarIcon(navController = navController)
-    }) {
+    Scaffold(
+        bottomBar = {
+            printBotBarIcon(navController = navController)
+        },
+        topBar = {
+            printTopBarIcon(navController = navController)
+        }
+    ) {
         Box(modifier = Modifier.fillMaxSize()) {
             ClickableText(
                 text = AnnotatedString("Registrer deg her"),
