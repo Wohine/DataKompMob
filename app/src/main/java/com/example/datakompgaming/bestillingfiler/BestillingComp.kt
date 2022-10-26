@@ -1,5 +1,6 @@
 package com.example.datakompgaming.bestillingfiler
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -20,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.datakompgaming.screen.printBotBar
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun printOrders(bestillingListe: List<Order>, navController: NavController) {
     Scaffold(bottomBar = {
@@ -60,6 +62,7 @@ fun printProdukt(produkt: Produkt){
 }
 
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 private fun itemBilde(produkt: Produkt) {
     Image(

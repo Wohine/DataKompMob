@@ -1,5 +1,6 @@
 package com.example.datakompgaming.screen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -24,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.datakompgaming.R
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun Kundeservice(navController: NavController) {
     Scaffold(bottomBar = {

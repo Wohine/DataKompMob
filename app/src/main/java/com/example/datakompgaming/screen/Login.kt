@@ -1,5 +1,8 @@
 package com.example.datakompgaming.screen
 
+import android.annotation.SuppressLint
+import android.app.Activity.RESULT_OK
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -26,10 +29,21 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.datakompgaming.MainActivity
 import com.example.datakompgaming.ui.theme.Purple700
+import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
+import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
+
+
+
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun LoginPage(navController: NavHostController) {
+
     Scaffold(bottomBar = {
         printBotBarIcon(navController = navController)
     }) {
@@ -39,7 +53,9 @@ fun LoginPage(navController: NavHostController) {
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .absolutePadding(bottom = Dp(100f)),
-                onClick = { },
+                onClick = {
+
+                },
                 style = TextStyle(
                     fontSize = 14.sp,
                     fontFamily = FontFamily.Default,
@@ -78,7 +94,9 @@ fun LoginPage(navController: NavHostController) {
             Spacer(modifier = Modifier.height(20.dp))
             Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
                 Button(
-                    onClick = { },
+                    onClick = {
+
+                    },
                     shape = RoundedCornerShape(50.dp),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -100,3 +118,11 @@ fun LoginPage(navController: NavHostController) {
         }
     }
 }
+
+
+
+
+
+
+
+

@@ -1,5 +1,6 @@
 package com.example.datakompgaming.screen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -17,6 +18,7 @@ import androidx.navigation.NavController
 
 
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun OmOss(navController: NavController) {
     Scaffold(bottomBar = {
