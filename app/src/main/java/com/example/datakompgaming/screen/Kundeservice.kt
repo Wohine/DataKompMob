@@ -26,6 +26,8 @@ import androidx.navigation.NavController
 import com.example.datakompgaming.R
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+
+
 @Composable
 fun Kundeservice(navController: NavController) {
     Scaffold(bottomBar = {

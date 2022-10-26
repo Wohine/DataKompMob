@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+
 @Composable
 fun Produkter(navController: NavController) {
     Scaffold(bottomBar = {
@@ -88,7 +89,6 @@ fun KortLabel(tittel: String) {
         color = Color(0xFFf7f7f7)
     )
 }
-
 
 @Composable
 fun Kort(tittel: String,pris: String,igjen: String, imagePainter: Painter, farge: Color) {
