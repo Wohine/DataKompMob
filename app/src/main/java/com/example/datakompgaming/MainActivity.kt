@@ -22,6 +22,7 @@ import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
+var mainActivity: MainActivity? = null
 
 class MainActivity : ComponentActivity() {
 
@@ -29,6 +30,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mainActivity = this
         setContent {
             MaterialTheme{
                 Surface(
@@ -92,7 +94,7 @@ class MainActivity : ComponentActivity() {
                     DefaultPreview()
                 }
             } else {
-                Log.e("Login.kt", "Error logging in " + response?.error?.errorCode)
+                Log.e("Produkt.kt", "Error logging in " + response?.error?.errorCode)
             }
         }
 }

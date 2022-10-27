@@ -16,12 +16,12 @@ fun ScreenMain(){
     // parameter
     // lag en scaffold med botbar se linje 28-30 for eksempel
 
-    NavHost(navController = navController, startDestination = Routes.Login.route) {
-        composable(Routes.Login.route) {
-            LoginPage(navController = navController)
-        }
+    NavHost(navController = navController, startDestination = Routes.HomePage.route) {
         composable(Routes.BestillingComp.route){
             printOrders(Bestillinger.bestilligListe, navController)
+        }
+        composable(Routes.test.route){
+            test(navController)
         }
         composable(Routes.Chat.route){
             PreviewConversation(navController)
