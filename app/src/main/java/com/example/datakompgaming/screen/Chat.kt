@@ -77,7 +77,7 @@ fun MessageCard(msg: Message) {
 fun Conversation(messages: List<Message>, navController: NavController) {
     Scaffold(
         bottomBar = {
-            printBotBarIcon(navController = navController)
+            printBotBarIcon(navController = navController, 1)
         },
         topBar = {
             printTopBarIcon(navController = navController)

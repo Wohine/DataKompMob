@@ -20,14 +20,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.datakompgaming.screen.printBotBar
+import com.example.datakompgaming.screen.printBotBarIcon
+import com.example.datakompgaming.screen.printTopBarIcon
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun printOrders(bestillingListe: List<Order>, navController: NavController) {
-    Scaffold(bottomBar = {
-        printBotBar(navController = navController)
-    })
-    {
+    Scaffold(
+        bottomBar = {
+            printBotBarIcon(navController = navController, 5)
+        },
+        topBar = {
+            printTopBarIcon(navController = navController)
+        }
+    ) {
         Column() {
             Text(text = "Dine bestillinger")
             for (bestilling in bestillingListe){

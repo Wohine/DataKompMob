@@ -30,7 +30,7 @@ import com.example.datakompgaming.R
 fun Kundeservice(navController: NavController) {
     Scaffold(
         bottomBar = {
-        printBotBarIcon(navController = navController)
+        printBotBarIcon(navController = navController, 2)
         },
         topBar = {
             printTopBarIcon(navController = navController)

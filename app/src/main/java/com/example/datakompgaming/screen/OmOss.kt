@@ -23,7 +23,7 @@ import androidx.navigation.NavController
 fun OmOss(navController: NavController) {
     Scaffold(
         bottomBar = {
-            printBotBarIcon(navController = navController)
+            printBotBarIcon(navController = navController, 3)
         },
         topBar = {
             printTopBarIcon(navController = navController)

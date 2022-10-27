@@ -23,12 +23,14 @@ import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
+var mainActivity: MainActivity? = null
 
 class MainActivity : ComponentActivity() {
 
     private var user: FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        mainActivity = this
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme{
@@ -75,6 +77,13 @@ class MainActivity : ComponentActivity() {
             this.signInResult(res)
         }
 
+        fun logOut(){
+            FirebaseAuth.getInstance().signOut();
+            setContent {
+                LogoutPreview()
+            }
+        }
+
 
         private fun signInResult(result: FirebaseAuthUIAuthenticationResult) {
             val response = result.idpResponse
@@ -89,10 +98,18 @@ class MainActivity : ComponentActivity() {
         }
 }
 
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MaterialTheme {
         ScreenMain()
+    }
+}
+
+@Composable
+fun LogoutPreview() {
+    MaterialTheme {
+        mainActivity?.login()
     }
 }

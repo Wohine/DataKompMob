@@ -25,7 +25,7 @@ fun HomePage(navController: NavController) {
 
     Scaffold(
         bottomBar = {
-            printBotBarIcon(navController = navController)
+            printBotBarIcon(navController = navController, 0)
         },
         topBar = {
             printTopBarIcon(navController = navController)

@@ -18,6 +18,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import com.example.datakompgaming.mainActivity
 
 
 @Composable
@@ -27,7 +28,6 @@ fun printTopBarIcon(navController: NavController){
     Row(horizontalArrangement = Arrangement.End,modifier = Modifier
         .background(Color(0xFF6200FF))
         .fillMaxWidth()) {
-
         Box{
             IconButton(onClick = { expanded = true }) {
                 Icon(
@@ -44,10 +44,12 @@ fun printTopBarIcon(navController: NavController){
                 DropdownMenuItem(onClick = { /* Handle refresh! */ }) {
                     Text("handlekurv")
                 }
-                DropdownMenuItem(onClick = { /* Handle settings! */ }) {
+                DropdownMenuItem(onClick = {
+                    navController.navigate("bestilling")
+                }) {
                     Text("bestillinger")
                 }
-                DropdownMenuItem(onClick = { /* Handle send feedback! */ }) {
+                DropdownMenuItem(onClick = { mainActivity?.logOut() }) {
                     Text("logg ut")
                 }
             }

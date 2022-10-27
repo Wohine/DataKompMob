@@ -13,6 +13,8 @@ import androidx.compose.material.icons.rounded.Chat
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,8 +33,8 @@ import com.example.datakompgaming.ui.theme.Purple700
 
 
 @Composable
-fun printBotBarIcon(navController: NavController){
-
+fun printBotBarIcon(navController: NavController, nummer: Int){
+    // 0 = hjem, 1 = chat, 2 = kundesevice, 3 = om oss, 4 = produkter
     Row(modifier = Modifier
         .background(Color(0xFF6200FF))
         .fillMaxWidth().padding(horizontal = 17.dp)) {
@@ -46,7 +48,7 @@ fun printBotBarIcon(navController: NavController){
                 Icons.Default.Home,
                 contentDescription = "hjemside",
                 Modifier.size(35.dp),
-                tint = MaterialTheme.colors.secondary
+                tint = if(nummer == 0 ) MaterialTheme.colors.secondaryVariant else MaterialTheme.colors.secondary
             )
         }
         IconButton(modifier = Modifier.padding(horizontal = 15.dp)
@@ -57,7 +59,7 @@ fun printBotBarIcon(navController: NavController){
             Icon(Icons.Default.Chat,
                 contentDescription = "chat",
                 Modifier.size(35.dp),
-                tint = MaterialTheme.colors.secondary
+                tint = if(nummer == 1 ) MaterialTheme.colors.secondaryVariant else MaterialTheme.colors.secondary
             )
         }
         IconButton(modifier = Modifier.padding(horizontal = 15.dp)
@@ -68,7 +70,7 @@ fun printBotBarIcon(navController: NavController){
             Icon(Icons.Default.Help,
                 contentDescription = "kundeservice",
                 Modifier.size(35.dp),
-                tint = MaterialTheme.colors.secondary
+                tint = if(nummer == 2 ) MaterialTheme.colors.secondaryVariant else MaterialTheme.colors.secondary
             )
         }
         IconButton(modifier = Modifier.padding(horizontal = 15.dp)
@@ -79,7 +81,7 @@ fun printBotBarIcon(navController: NavController){
             Icon(Icons.Default.Info,
                 contentDescription = "om oss ",
                 Modifier.size(35.dp),
-                tint = MaterialTheme.colors.secondary
+                tint = if(nummer == 3 ) MaterialTheme.colors.secondaryVariant else MaterialTheme.colors.secondary
             )
         }
         IconButton(modifier = Modifier.padding(horizontal = 15.dp)
@@ -90,7 +92,7 @@ fun printBotBarIcon(navController: NavController){
             Icon(Icons.Default.Shop,
                 contentDescription = "produkter",
                 Modifier.size(35.dp),
-                tint = MaterialTheme.colors.secondary
+                tint = if(nummer == 4 ) MaterialTheme.colors.secondaryVariant else MaterialTheme.colors.secondary
             )
         }
     }

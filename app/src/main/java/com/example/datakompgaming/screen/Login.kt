@@ -46,7 +46,7 @@ fun LoginPage(navController: NavHostController) {
 
     Scaffold(
         bottomBar = {
-            printBotBarIcon(navController = navController)
+            printBotBarIcon(navController = navController, 5)
         },
         topBar = {
             printTopBarIcon(navController = navController)
