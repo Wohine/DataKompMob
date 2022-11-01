@@ -1,7 +1,7 @@
 package com.example.datakompgaming
 
 sealed class Routes(val route: String) {
-    object Login : Routes("Login")
+    object test : Routes("test")
     object BestillingComp : Routes("Bestilling")
     object Chat : Routes("Chat")
     object OmOss : Routes("OmOss")
