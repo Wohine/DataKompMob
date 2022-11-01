@@ -1,5 +1,6 @@
 package com.example.datakompgaming.screen
 
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -9,6 +10,7 @@ import com.example.datakompgaming.Routes
 import com.example.datakompgaming.bestillingfiler.Bestillinger
 import com.example.datakompgaming.bestillingfiler.printOrders
 
+@ExperimentalMaterial3Api
 @Composable
 fun ScreenMain(){
     val navController = rememberNavController()
