@@ -4,15 +4,14 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,6 +22,7 @@ import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
+var mainActivity: MainActivity? = null
 
 class MainActivity : ComponentActivity() {
 
@@ -30,6 +30,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mainActivity = this
         setContent {
             MaterialTheme{
                 Surface(
@@ -45,14 +46,21 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun login(
     ) {
-        Column {
+        Column(verticalArrangement = Arrangement.SpaceEvenly, horizontalAlignment = Alignment.CenterHorizontally) {
+            Row(modifier = Modifier.padding(all = 2.dp)) {
+                Text(text = "DataKomp")
+            }
             Row(modifier = Modifier.padding(all = 2.dp)) {
                 Button(
                     onClick = {
                         signIn()
-                    }
+                    },
+                    shape = RoundedCornerShape(50.dp),
+                    modifier = Modifier
+                        .width(300.dp)
+                        .height(50.dp)
                 ) {
-                    Text(text = "Logg inn")    
+                    Text(text = "Logg inn eller registrer ny bruker")
                 }
             }
         }
@@ -60,7 +68,9 @@ class MainActivity : ComponentActivity() {
 
         private fun signIn() {
             val providers = arrayListOf(
-                AuthUI.IdpConfig.EmailBuilder().build()
+                AuthUI.IdpConfig.EmailBuilder().build(),
+                AuthUI.IdpConfig.GoogleBuilder().build(),
+                AuthUI.IdpConfig.AnonymousBuilder().build()
             )
             val signinIntent = AuthUI.getInstance()
                 .createSignInIntentBuilder()
@@ -84,7 +94,7 @@ class MainActivity : ComponentActivity() {
                     DefaultPreview()
                 }
             } else {
-                Log.e("Login.kt", "Error logging in " + response?.error?.errorCode)
+                Log.e("Produkt.kt", "Error logging in " + response?.error?.errorCode)
             }
         }
 }
