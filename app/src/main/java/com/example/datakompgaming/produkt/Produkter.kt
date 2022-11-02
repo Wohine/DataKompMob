@@ -1,4 +1,4 @@
-package com.example.datakompgaming.produkt
+package com.example.datakompgaming.screen
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
@@ -23,15 +23,28 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.datakompgaming.screen.printBotBar
+import com.example.datakompgaming.mainActivity
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@ExperimentalMaterial3Api
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+
 @Composable
 fun Produkter(navController: NavController, produktListe: MutableList<ProdukterFire>) {
     Scaffold(bottomBar = {
         printBotBar(navController = navController)
     }) {
+fun Produkter(navController: NavController) {
+
+    Scaffold(
+        bottomBar = {
+            printBotBarIcon(navController = navController, 4)
+        },
+        topBar = {
+            printTopBarIcon(navController = navController)
+        }
+    ) {
+
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier
@@ -88,11 +101,9 @@ fun KortLabel(tittel: String) {
     )
 }
 
-
 @Composable
 fun Kort(tittel: String,pris: String,igjen: String, imagePainter: Painter) {
     Card (
-
         modifier = Modifier
             .width(300.dp)
             .height(150.dp)

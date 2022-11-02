@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
     private var user: FirebaseUser? = null
 
 
-    @OptIn(ExperimentalMaterial3Api::class)
+    @ExperimentalMaterial3Api
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainActivity = this
@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    login()
+                    ScreenMain()
                 }
             }
         }
@@ -68,7 +68,15 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
     @ExperimentalMaterial3Api
+    private val signInLauncher = registerForActivityResult(
+        FirebaseAuthUIActivityResultContract()
+    ) { res ->
+        this.signInResult(res)
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
     private fun signIn() {
         val providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build(),
@@ -81,8 +89,7 @@ class MainActivity : ComponentActivity() {
             .build()
         signInLauncher.launch(signinIntent)
     }
-
-
+    @ExperimentalMaterial3Api
     private val signInLauncher = registerForActivityResult(
         FirebaseAuthUIActivityResultContract()
     ) { res ->
@@ -102,13 +109,30 @@ class MainActivity : ComponentActivity() {
             Log.e("Produkt.kt", "Error logging in " + response?.error?.errorCode)
         }
     }
+
+    fun logOut(){
+        FirebaseAuth.getInstance().signOut();
+        setContent {
+            LogoutPreview()
+        }
+    }
+
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Preview(showBackground = true)
+
+
+@ExperimentalMaterial3Api
 @Composable
 fun DefaultPreview() {
     MaterialTheme {
         ScreenMain()
     }
 }
+@ExperimentalMaterial3Api
+@Composable
+fun LogoutPreview() {
+    MaterialTheme {
+        mainActivity?.login()
+    }
+}
+
