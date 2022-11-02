@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.DataKompGaming" parent="Theme.Material3.Light">
+        <item name="android:statusBarColor">@android:color/system_accent1_600</item>
+        <item name="cardBackgroundColor">@android:color/system_accent1_600</item>
+        <item name="android:colorPrimary">@android:color/system_accent1_600</item>
+    </style>
+</resources>
