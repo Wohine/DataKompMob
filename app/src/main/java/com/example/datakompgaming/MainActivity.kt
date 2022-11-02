@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.datakompgaming.screen.ScreenMain
+import com.example.datakompgaming.ui.theme.DataKompGamingTheme
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
@@ -25,11 +26,13 @@ class MainActivity : ComponentActivity() {
 
     private var user: FirebaseUser? = null
 
+
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainActivity = this
         setContent {
-            MaterialTheme{
+            DataKompGamingTheme{
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -40,6 +43,8 @@ class MainActivity : ComponentActivity() {
         }
 
     }
+
+    @ExperimentalMaterial3Api
     @Composable
     fun login(
     ) {
@@ -62,7 +67,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
+    @ExperimentalMaterial3Api
         private fun signIn() {
             val providers = arrayListOf(
                 AuthUI.IdpConfig.EmailBuilder().build(),
@@ -75,14 +80,14 @@ class MainActivity : ComponentActivity() {
                 .build()
             signInLauncher.launch(signinIntent)
         }
-
+    @ExperimentalMaterial3Api
         private val signInLauncher = registerForActivityResult(
             FirebaseAuthUIActivityResultContract()
         ) { res ->
             this.signInResult(res)
         }
 
-
+    @ExperimentalMaterial3Api
         private fun signInResult(result: FirebaseAuthUIAuthenticationResult) {
             val response = result.idpResponse
             if (result.resultCode == RESULT_OK) {
@@ -96,7 +101,7 @@ class MainActivity : ComponentActivity() {
         }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@ExperimentalMaterial3Api
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {

@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -70,7 +71,7 @@ fun ImageCard(
                 AssistChip(
                     onClick = { },
                     colors = AssistChipDefaults.assistChipColors(
-                        leadingIconContentColor = MaterialTheme.colorScheme.surfaceVariant
+                        leadingIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant
                     ),
                     leadingIcon =
                     {
@@ -78,8 +79,30 @@ fun ImageCard(
                             imageVector = Icons.Outlined.FavoriteBorder,
                             contentDescription = null
                         )
-
+                    },
+                    label =
+                    {
+                        Text(text = "Legg til i handlekurv")
                     }
+                )
+
+                AssistChip(
+                    onClick = { },
+                    colors = AssistChipDefaults.assistChipColors(
+                        leadingIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant
+                    ),
+                    leadingIcon =
+                    {
+                        Icon(
+                            imageVector = Icons.Outlined.Share,
+                            contentDescription = null
+                        )
+                    },
+                    label =
+                    {
+                        Text(text = "Legg til i handlekurv")
+                    }
+
                 )
 
 

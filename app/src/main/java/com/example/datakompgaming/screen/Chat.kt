@@ -38,7 +38,7 @@ fun MessageCard(msg: Message) {
             modifier = Modifier
                 .size(40.dp)
                 .clip(CircleShape)
-                .border(1.5.dp, MaterialTheme.colorScheme.secondaryVariant, CircleShape)
+                .border(1.5.dp, MaterialTheme.colorScheme.secondary, CircleShape)  // -- secondaryVariant = secondary color
         )
         Spacer(modifier = Modifier.width(8.dp))
 
@@ -47,21 +47,21 @@ fun MessageCard(msg: Message) {
         Column(modifier = Modifier.clickable { isExpanded = !isExpanded }) {
             Text(
                 text = msg.author,
-                color = MaterialTheme.colorScheme.secondaryVariant,
-                style = MaterialTheme.typography.subtitle2
+                color = MaterialTheme.colorScheme.secondary,
+                style = MaterialTheme.typography.titleSmall     // -- subtitle2, Liten text medium weight?
             )
 
             Spacer(modifier = Modifier.height(4.dp))
 
             Surface(
                 shape = MaterialTheme.shapes.medium,
-                elevation = 1.dp,
+                shadowElevation = 1.dp
             ) {
                 Text(
                     text = msg.body,
                     modifier = Modifier.padding(all = 4.dp),
                     maxLines = if (isExpanded) Int.MAX_VALUE else 1,
-                    style = MaterialTheme.typography.body2
+                    style = MaterialTheme.typography.bodySmall    // -- Body2, small body
                 )
             }
         }
