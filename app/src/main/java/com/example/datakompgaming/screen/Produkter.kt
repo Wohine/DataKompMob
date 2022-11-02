@@ -10,7 +10,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,7 +26,9 @@ import androidx.compose.ui.unit.sp
 import com.example.datakompgaming.mainActivity
 
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@ExperimentalMaterial3Api
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+
 @Composable
 fun Produkter(navController: NavController) {
 
@@ -43,7 +45,7 @@ fun Produkter(navController: NavController) {
                 Surface(
                     modifier = Modifier
                         .fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    color = MaterialTheme.colorScheme.background
 
                 ) {
                     Column(
@@ -95,7 +97,6 @@ fun KortLabel(tittel: String) {
     )
 }
 
-
 @Composable
 fun Kort(tittel: String,pris: String,igjen: String, imagePainter: Painter, farge: Color) {
     Card (
@@ -105,7 +106,10 @@ fun Kort(tittel: String,pris: String,igjen: String, imagePainter: Painter, farge
             .absolutePadding(right = Dp(35f))
             .clickable { println("Clicked") },
         shape = RoundedCornerShape(8.dp),
-        backgroundColor = farge,
+        colors = CardDefaults.cardColors(
+            farge,
+        )
+       //backgroundColor =  farge,
 
         ) {
         Row() {
