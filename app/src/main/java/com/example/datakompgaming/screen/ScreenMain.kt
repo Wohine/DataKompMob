@@ -25,6 +25,14 @@ fun ScreenMain(){
         composable(Routes.Test2Chris.route){
             Test2Chris(navController)
         }
+
+        /*
+        composable(Routes.test.route){
+            Test(navController)
+        }
+
+         */
+
         composable(Routes.Chat.route){
             PreviewConversation(navController)
         }

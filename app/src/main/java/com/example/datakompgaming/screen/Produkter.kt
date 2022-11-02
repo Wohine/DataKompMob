@@ -100,7 +100,10 @@ fun Kort(tittel: String,pris: String,igjen: String, imagePainter: Painter, farge
             .absolutePadding(right = Dp(35f))
             .clickable { println("Clicked") },
         shape = RoundedCornerShape(8.dp),
-        //backgroundColor = farge,
+        colors = CardDefaults.cardColors(
+            farge,
+        )
+       //backgroundColor =  farge,
 
         ) {
         Row() {

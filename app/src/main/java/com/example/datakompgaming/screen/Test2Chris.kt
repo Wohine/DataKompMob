@@ -11,36 +11,45 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.datakompgaming.ui.theme.DataKompGamingTheme
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Test2Chris(navController: NavController) {
-    Scaffold(
-        floatingActionButton = {
-            FloatingActionButton(onClick = {}) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = null
-                )
+    DataKompGamingTheme {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.onBackground
+        ) {
+            Scaffold(
+                floatingActionButton = {
+                    FloatingActionButton(onClick = {}) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = null
+                        )
 
-            }
-        },
+                    }
+                },
 
-        bottomBar = {
-            printBotBar(navController = navController)
-        }
+                bottomBar = {
+                    printBotBar(navController = navController)
+                }
 
-    )
-    { values ->
-        LazyColumn(contentPadding = values) {
-            items(6) {
-                ImageCard(
-                    title = "Yada yada",
-                    description = "Yada yada yada yada yada yada yada yada yada yada yada ",
-                    modifier = Modifier.padding(16.dp)
-                )
+            )
+            { values ->
+                LazyColumn(contentPadding = values) {
+                    items(6) {
+                        ImageCard(
+                            title = "Yada yada",
+                            description = "Yada yada yada yada yada yada yada yada yada yada yada ",
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
+                }
             }
         }
     }
+
 }
