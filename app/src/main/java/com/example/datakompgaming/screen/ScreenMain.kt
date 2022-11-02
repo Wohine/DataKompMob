@@ -5,10 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.datakompgaming.MainActivity
 import com.example.datakompgaming.Routes
 import com.example.datakompgaming.bestillingfiler.Bestillinger
-import com.example.datakompgaming.bestillingfiler.Produkt
 import com.example.datakompgaming.bestillingfiler.printOrders
 import com.example.datakompgaming.produkt.ProduktObject
 
@@ -37,7 +35,7 @@ fun ScreenMain(){
             Kundeservice(navController)
         }
         composable(Routes.Produkter.route){
-            Produkter(navController, ProduktObject.produktListe)
+            com.example.datakompgaming.produkt.Produkter(navController, ProduktObject.produktListe)
         }
         composable(Routes.HomePage.route){
             HomePage(navController)

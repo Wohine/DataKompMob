@@ -1,11 +1,10 @@
-package com.example.datakompgaming.screen
+package com.example.datakompgaming.produkt
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.util.Log
 import androidx.navigation.NavController
 import com.example.datakompgaming.R
-
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,7 +22,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.datakompgaming.produkt.ProdukterFire
+import com.example.datakompgaming.screen.printBotBar
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,10 +46,10 @@ fun Produkter(navController: NavController, produktListe: MutableList<ProdukterF
                     ) {
                         Title("Produkter")
                         hovedKortRad("Hovedkort",Color(0xFF82d0d9), produktListe)
-                        Rad("Skjermkort",Color(0xFFd9a932))
-                        Rad("Prosessorer",Color(0xFFbd4fdb))
-                        Rad("*Eventuelle andre ting*",Color(0xFF6dd6ac))
-                        Rad("Jørans syltetøyutvalg",Color(0xFFd18888))
+                        Rad("Skjermkort")
+                        Rad("Prosessorer")
+                        Rad("*Eventuelle andre ting*")
+                        Rad("Jørans syltetøyutvalg")
 
                         Spacer(modifier = Modifier.height(100.dp))
                     }
@@ -165,6 +164,7 @@ fun hovedKortRad(tittel: String, farge: Color, produktListe: MutableList<Produkt
         .horizontalScroll(rememberScrollState(), enabled = true),
     ) {
         for (produkt in produktListe){
+            Log.d(ContentValues.TAG, "Kvisli")
             HovedKortKort(
                 produkt.tittel,
                 produkt.pris.toString(),
@@ -178,7 +178,7 @@ fun hovedKortRad(tittel: String, farge: Color, produktListe: MutableList<Produkt
 
 @Composable
 fun HovedKortKort(tittel: String,pris: String,igjen: String, bilde: String, farge: Color) {
-    Log.d(ContentValues.TAG, bilde)
+    Log.d(ContentValues.TAG, "hei")
     Card (
         modifier = Modifier
             .width(300.dp)
@@ -186,11 +186,13 @@ fun HovedKortKort(tittel: String,pris: String,igjen: String, bilde: String, farg
             .absolutePadding(right = Dp(35f))
             .clickable { println("Clicked") },
         shape = RoundedCornerShape(8.dp),
-        backgroundColor = farge,
+        colors = CardDefaults.cardColors(
+            farge
+        )
         ) {
         Row() {
             AsyncImage(
-                model = "$bilde",
+                model = bilde,
                 contentDescription = "null",
                 modifier = Modifier
                 .fillMaxSize()

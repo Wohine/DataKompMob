@@ -6,22 +6,20 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.datakompgaming.produkt.Produkter
 import com.example.datakompgaming.screen.ScreenMain
+import com.example.datakompgaming.ui.theme.DataKompGamingTheme
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.rpc.context.AttributeContext
 
 var mainActivity: MainActivity? = null
 
@@ -83,18 +81,20 @@ class MainActivity : ComponentActivity() {
             .build()
         signInLauncher.launch(signinIntent)
     }
-    @ExperimentalMaterial3Api
+
+
     private val signInLauncher = registerForActivityResult(
         FirebaseAuthUIActivityResultContract()
     ) { res ->
         this.signInResult(res)
     }
 
-    @ExperimentalMaterial3Api
+
     private fun signInResult(result: FirebaseAuthUIAuthenticationResult) {
         val response = result.idpResponse
         if (result.resultCode == RESULT_OK) {
             user = FirebaseAuth.getInstance().currentUser
+            Produkter()
             setContent {
                 DefaultPreview()
             }
@@ -102,22 +102,9 @@ class MainActivity : ComponentActivity() {
             Log.e("Produkt.kt", "Error logging in " + response?.error?.errorCode)
         }
     }
-
-        private fun signInResult(result: FirebaseAuthUIAuthenticationResult) {
-            val response = result.idpResponse
-            if (result.resultCode == RESULT_OK) {
-                user = FirebaseAuth.getInstance().currentUser
-                Produkter()
-                setContent {
-                    DefaultPreview()
-                }
-            } else {
-                Log.e("Produkt.kt", "Error logging in " + response?.error?.errorCode)
-            }
-        }
 }
 
-@ExperimentalMaterial3Api
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
