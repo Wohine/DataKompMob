@@ -1,23 +1,34 @@
 package com.example.datakompgaming.screen
 
-import android.widget.Toast
-import androidx.navigation.NavController
-import com.example.datakompgaming.MainActivity
-import com.example.datakompgaming.mainActivity
+import android.content.ContentValues.TAG
+import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Source
 
 fun Produkter() {
 
+    data class produkt(
+        val tittel: String = "",
+        val pris: Double = 0.0,
+        val varebeholdning: Int = 0
+    )
+
     var firestore: FirebaseFirestore
+
     firestore = FirebaseFirestore.getInstance()
-    firestore.collection("users")
-        .get()
-        .addOnSuccessListener {
-            Toast.makeText(mainActivity, "Your first name is ${it.documents.get(0).data?.get("first_name") }  and last name is ${it.documents.get(0).data?.get("last_name") }", Toast.LENGTH_SHORT).show()
+
+    var docRef = firestore.collection("Produkter").document("NyeProdukter").collection("Hovedkort")
+    var source = Source.CACHE
+
+    docRef.get(source).addOnSuccessListener { documents ->
+        for (document in documents) {
+            Log.d(TAG, "${document.id} => ${document.data}")
+        }
     }
-    .addOnFailureListener{
-        it.printStackTrace()
-        Toast.makeText(mainActivity, "Failed", Toast.LENGTH_SHORT).show()
+    .addOnFailureListener { exception ->
+        Log.w(TAG, "Error getting documents: ", exception)
     }
+
+
 
 }
