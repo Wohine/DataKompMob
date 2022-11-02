@@ -3,10 +3,15 @@ package com.example.datakompgaming.screen
 
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
+import android.content.ContentValues.TAG
+import android.nfc.Tag
+import android.util.Log
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,6 +31,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.datakompgaming.R
+import com.example.datakompgaming.produkt.HovedKortKort
+import com.example.datakompgaming.produkt.KortLabel
+import com.example.datakompgaming.produkt.ProduktObject.produktListe
+import com.example.datakompgaming.produkt.ProdukterFire
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -37,6 +46,10 @@ import kotlinx.coroutines.launch as launch
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomePage(navController: NavController) {
+
+
+    var z = produktListe.size
+    Log.d(TAG,"TEESTTSSSTT TEST TEST TEST $z")
     Scaffold(bottomBar = {
         printBotBar(navController = navController)
     })
@@ -48,7 +61,7 @@ fun HomePage(navController: NavController) {
         ) {
             LogoBanner(title = "test")
             WelcomeSlider()
-            FeatProd("Gode Tilbud")
+            FeatProd("De beste Hovedkortene")
             FeatProd("Ukens Produkter")
             FeatProd("Våre Beste Produkter")
         }
@@ -65,7 +78,7 @@ fun LogoBanner(title: String) {
 }
 
 @Composable
-fun Kort(imagePainter: Painter) {
+fun Kort(tittel: String,pris: String,igjen: String, bilde: String, farge: Color) {
     Column(modifier = Modifier
         .padding(horizontal = 10.dp)
         .fillMaxHeight()
@@ -73,17 +86,24 @@ fun Kort(imagePainter: Painter) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "testprodukt",
+        Text(text = tittel,
             modifier = Modifier
                 .width(150.dp)
                 .absolutePadding(left = 38.dp),
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
         )
-        Image(painter = imagePainter, contentDescription = "test",
+        AsyncImage(model = bilde, contentDescription = "test",
             modifier = Modifier
                 .height(180.dp),
             alignment = Alignment.CenterStart
+        )
+        Text(text = igjen,
+        modifier = Modifier
+            .width(150.dp)
+            .absolutePadding(left = 38.dp),
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Bold,
         )
         Button(onClick = { /*TODO*/ },
         modifier = Modifier
@@ -117,18 +137,22 @@ fun PreHomePage() {
         }
     }
 }
-@Preview
 @Composable
-fun ProduktSlider() {
+fun ProduktSlider(tittel: String, farge: Color, produktListe: MutableList<ProdukterFire>,) {
     Row(modifier = Modifier
         .height(250.dp)
         .horizontalScroll(rememberScrollState(), enabled = true),
     ) {
-        Kort(painterResource(id = R.drawable.slider1))
-        Kort(painterResource(id = R.drawable.slider2))
-        Kort(painterResource(id = R.drawable.slider3))
-        Kort(painterResource(id = R.drawable.slider4))
-        Kort(painterResource(id = R.drawable.slider5))
+        for (produkt in produktListe){
+            Log.d(ContentValues.TAG, "Kvisli")
+            HovedKortKort(
+                produkt.tittel,
+                produkt.pris.toString(),
+                produkt.varebeholdning,
+                produkt.bilde,
+                farge
+            )
+        }
     }
 }
 
@@ -198,11 +222,9 @@ fun FeatProd(title: String) {
             color = Color(0xFFbd4fdb),
 
         )
-        ProduktSlider()
+        ProduktSlider("Hovedkort",Color(0xFF82d0d9), produktListe)
     }
 }
-
-
 
 
 
