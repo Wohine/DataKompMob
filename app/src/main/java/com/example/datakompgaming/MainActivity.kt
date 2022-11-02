@@ -69,37 +69,37 @@ class MainActivity : ComponentActivity() {
         }
     }
     @ExperimentalMaterial3Api
-        private fun signIn() {
-            val providers = arrayListOf(
-                AuthUI.IdpConfig.EmailBuilder().build(),
-                AuthUI.IdpConfig.GoogleBuilder().build(),
-                AuthUI.IdpConfig.AnonymousBuilder().build()
-            )
-            val signinIntent = AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(providers)
-                .build()
-            signInLauncher.launch(signinIntent)
-        }
+    private fun signIn() {
+        val providers = arrayListOf(
+            AuthUI.IdpConfig.EmailBuilder().build(),
+            AuthUI.IdpConfig.GoogleBuilder().build(),
+            AuthUI.IdpConfig.AnonymousBuilder().build()
+        )
+        val signinIntent = AuthUI.getInstance()
+            .createSignInIntentBuilder()
+            .setAvailableProviders(providers)
+            .build()
+        signInLauncher.launch(signinIntent)
+    }
     @ExperimentalMaterial3Api
-        private val signInLauncher = registerForActivityResult(
-            FirebaseAuthUIActivityResultContract()
-        ) { res ->
-            this.signInResult(res)
-        }
+    private val signInLauncher = registerForActivityResult(
+        FirebaseAuthUIActivityResultContract()
+    ) { res ->
+        this.signInResult(res)
+    }
 
     @ExperimentalMaterial3Api
-        private fun signInResult(result: FirebaseAuthUIAuthenticationResult) {
-            val response = result.idpResponse
-            if (result.resultCode == RESULT_OK) {
-                user = FirebaseAuth.getInstance().currentUser
-                setContent {
-                    DefaultPreview()
-                }
-            } else {
-                Log.e("Produkt.kt", "Error logging in " + response?.error?.errorCode)
+    private fun signInResult(result: FirebaseAuthUIAuthenticationResult) {
+        val response = result.idpResponse
+        if (result.resultCode == RESULT_OK) {
+            user = FirebaseAuth.getInstance().currentUser
+            setContent {
+                DefaultPreview()
             }
+        } else {
+            Log.e("Produkt.kt", "Error logging in " + response?.error?.errorCode)
         }
+    }
 }
 
 @ExperimentalMaterial3Api
