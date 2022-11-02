@@ -8,6 +8,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.datakompgaming.produkt.ProduktObject
+import com.example.datakompgaming.produkt.ProdukterFire
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Source
 
@@ -15,8 +17,29 @@ var produktListe = mutableListOf<ProdukterFire>()
 
 
 fun Produkter() {
+    /*
+    data class produkt(
+        val tittel: String?,
+        val pris: Double?,
+        val varebeholdning: Int?,
+        val bilde: String?,
+        val rating: Int?
+    ) {
+        @Exclude
+        fun toMap(): Map<String, Any?> {
+            return mapOf(
+                "tittel" to tittel,
+                "pris" to pris,
+                "varebeholdning" to varebeholdning,
+                "bilde" to bilde,
+                "rating" to rating
+            )
+        }
+    }
+     */
 
     var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+
 
     var docRef = firestore.collection("Produkter").document("NyeProdukter").collection("Hovedkort")
     var source = Source.DEFAULT
@@ -40,6 +63,7 @@ fun Produkter() {
         Log.w(TAG, "Error getting documents: ", exception)
     }
 }
+
 
 @Composable
 fun qwert(){

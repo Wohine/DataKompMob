@@ -1,12 +1,11 @@
 package com.example.datakompgaming.screen
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
+import android.util.Log
 import androidx.navigation.NavController
 import com.example.datakompgaming.R
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,20 +19,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import com.example.datakompgaming.produkt.ProdukterFire
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun Produkter(navController: NavController) {
+fun Produkter(navController: NavController, produktListe: MutableList<ProdukterFire>) {
     Scaffold(bottomBar = {
         printBotBar(navController = navController)
     }) {
-
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier
@@ -47,11 +46,12 @@ fun Produkter(navController: NavController) {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Title("Produkter")
-                        Rad("Hovedkort")
-                        Rad("Skjermkort")
-                        Rad("Prosessorer")
-                        Rad("*Eventuelle andre ting*")
-                        Rad("Jørans syltetøyutvalg")
+                        hovedKortRad("Hovedkort",Color(0xFF82d0d9), produktListe)
+                        Rad("Skjermkort",Color(0xFFd9a932))
+                        Rad("Prosessorer",Color(0xFFbd4fdb))
+                        Rad("*Eventuelle andre ting*",Color(0xFF6dd6ac))
+                        Rad("Jørans syltetøyutvalg",Color(0xFFd18888))
+
                         Spacer(modifier = Modifier.height(100.dp))
                     }
 
@@ -146,5 +146,69 @@ fun Rad(tittel: String) {
         Kort("Test Vare 3","750","2", painterResource(id = R.drawable.datakomplogo))
         Kort("Test Vare 4","1250","1", painterResource(id = R.drawable.datakomplogo))
         Kort("Test Vare 5","2750","5", painterResource(id = R.drawable.datakomplogo))
+    }
+}
+
+@Composable
+fun hovedKortRad(tittel: String, farge: Color, produktListe: MutableList<ProdukterFire>, ) {
+    Text(
+        text = tittel,
+        modifier = Modifier
+            .fillMaxSize()
+            .absolutePadding(bottom = Dp(10f)),
+        fontWeight = FontWeight.Bold,
+        fontSize = 25.sp,
+        textAlign = TextAlign.Center
+    )
+    Row(modifier = Modifier
+        .height(150.dp)
+        .horizontalScroll(rememberScrollState(), enabled = true),
+    ) {
+        for (produkt in produktListe){
+            HovedKortKort(
+                produkt.tittel,
+                produkt.pris.toString(),
+                produkt.varebeholdning,
+                produkt.bilde,
+                farge
+            )
+        }
+    }
+}
+
+@Composable
+fun HovedKortKort(tittel: String,pris: String,igjen: String, bilde: String, farge: Color) {
+    Log.d(ContentValues.TAG, bilde)
+    Card (
+        modifier = Modifier
+            .width(300.dp)
+            .height(150.dp)
+            .absolutePadding(right = Dp(35f))
+            .clickable { println("Clicked") },
+        shape = RoundedCornerShape(8.dp),
+        backgroundColor = farge,
+        ) {
+        Row() {
+            AsyncImage(
+                model = "$bilde",
+                contentDescription = "null",
+                modifier = Modifier
+                .fillMaxSize()
+                .weight(1f),
+                alignment = Alignment.CenterStart
+            )
+            Column(modifier = Modifier
+                .padding(horizontal = 19.dp)
+                .fillMaxHeight()
+                .background(Color.Transparent),
+
+                ) {
+                KortLabel(tittel)
+                KortLabel("Pris: $pris"+"kr")
+                KortLabel("Kun $igjen igjen!")
+            }
+
+        }
+
     }
 }
