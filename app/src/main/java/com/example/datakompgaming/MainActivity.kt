@@ -10,9 +10,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.datakompgaming.produkt.Produkter
+import com.example.datakompgaming.produkt.*
 import com.example.datakompgaming.screen.ScreenMain
 import com.example.datakompgaming.ui.theme.DataKompGamingTheme
 import com.firebase.ui.auth.AuthUI
@@ -32,7 +31,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainActivity = this
-        Produkter()
+        ProdukterUthentingDB()
+        Skjermkort()
+        Prosessorer()
         setContent {
             DataKompGamingTheme{
                 Surface(
