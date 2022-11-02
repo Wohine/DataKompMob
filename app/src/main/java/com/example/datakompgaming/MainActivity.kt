@@ -32,13 +32,14 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainActivity = this
+        Produkter()
         setContent {
             DataKompGamingTheme{
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ScreenMain()
+                    login()
                 }
             }
         }
@@ -95,7 +96,6 @@ class MainActivity : ComponentActivity() {
         val response = result.idpResponse
         if (result.resultCode == RESULT_OK) {
             user = FirebaseAuth.getInstance().currentUser
-            Produkter()
             setContent {
                 DefaultPreview()
             }

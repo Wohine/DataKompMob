@@ -3,6 +3,8 @@ package com.example.datakompgaming.screen
 
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
+import android.util.Log
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
@@ -26,6 +28,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.datakompgaming.R
+import com.example.datakompgaming.produkt.ProduktObject.produktListe
+import com.example.datakompgaming.produkt.ProdukterFire
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -129,7 +133,7 @@ fun PreHomePage() {
         }
     }
 }
-@Preview
+
 @Composable
 fun ProduktSlider(tittel: String, farge: Color, produktListe: MutableList<ProdukterFire>,) {
     Row(modifier = Modifier
