@@ -11,16 +11,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.datakompgaming.produkt.ProduktObject.produktListe
 import com.google.firebase.database.*
 import com.google.protobuf.Value
 
 @Composable
 fun Test(navController: NavController) {
-    Produkter()
-    for (produkt in produktListe){
-        Spacer(modifier = Modifier.height(20.dp))
-        Text(text = produkt.tittel)
-    }
+
     Column(verticalArrangement = Arrangement.SpaceEvenly, horizontalAlignment = Alignment.CenterHorizontally) {
         Row(modifier = Modifier.padding(all = 2.dp)) {
             Text(text = "Testside :)")

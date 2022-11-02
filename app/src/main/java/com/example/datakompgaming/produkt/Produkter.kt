@@ -1,6 +1,8 @@
 package com.example.datakompgaming.screen
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
+import android.util.Log
 import androidx.navigation.NavController
 import com.example.datakompgaming.R
 
@@ -165,7 +167,7 @@ fun hovedKortRad(tittel: String, farge: Color, produktListe: MutableList<Produkt
                 produkt.tittel,
                 produkt.pris.toString(),
                 produkt.varebeholdning,
-                produkt.bilde!!,
+                produkt.bilde,
                 farge
             )
         }
@@ -174,6 +176,7 @@ fun hovedKortRad(tittel: String, farge: Color, produktListe: MutableList<Produkt
 
 @Composable
 fun HovedKortKort(tittel: String,pris: String,igjen: String, bilde: String, farge: Color) {
+    Log.d(ContentValues.TAG, bilde)
     Card (
         modifier = Modifier
             .width(300.dp)
@@ -185,7 +188,7 @@ fun HovedKortKort(tittel: String,pris: String,igjen: String, bilde: String, farg
         ) {
         Row() {
             AsyncImage(
-                model = bilde,
+                model = "$bilde",
                 contentDescription = "null",
                 modifier = Modifier
                 .fillMaxSize()

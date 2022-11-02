@@ -15,7 +15,6 @@ import com.google.firebase.firestore.Source
 
 
 
-
 fun Produkter() {
 
     var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -31,12 +30,11 @@ fun Produkter() {
                 tittel = document["tittel"].toString(),
                 pris = document.getDouble("pris"),
                 varebeholdning = document["varebeholdning"].toString(),
-                bilde = document.get("bilde") as String?,
+                bilde = document["bilde"].toString(),
                 rating = document["rating"].toString()
             )
             ProduktObject.produktListe.add(p1)
-            Log.d(TAG, document["tittel"].toString())
-            Log.d(TAG, document["rating"].toString())
+
         }
     }
     .addOnFailureListener { exception ->
