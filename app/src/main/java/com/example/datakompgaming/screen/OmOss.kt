@@ -3,9 +3,10 @@ package com.example.datakompgaming.screen
 import android.annotation.SuppressLint
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,8 +18,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 
-
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@ExperimentalMaterial3Api
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun OmOss(navController: NavController) {
     Scaffold(bottomBar = {

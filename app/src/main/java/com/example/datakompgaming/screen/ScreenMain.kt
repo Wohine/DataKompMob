@@ -1,5 +1,6 @@
 package com.example.datakompgaming.screen
 
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -9,6 +10,7 @@ import com.example.datakompgaming.Routes
 import com.example.datakompgaming.bestillingfiler.Bestillinger
 import com.example.datakompgaming.bestillingfiler.printOrders
 
+@ExperimentalMaterial3Api
 @Composable
 fun ScreenMain(){
     val navController = rememberNavController()
@@ -16,12 +18,12 @@ fun ScreenMain(){
     // parameter
     // lag en scaffold med botbar se linje 28-30 for eksempel
 
-    NavHost(navController = navController, startDestination = Routes.Login.route) {
-        composable(Routes.Login.route) {
-            LoginPage(navController = navController)
-        }
+    NavHost(navController = navController, startDestination = Routes.HomePage.route) {
         composable(Routes.BestillingComp.route){
             printOrders(Bestillinger.bestilligListe, navController)
+        }
+        composable(Routes.test.route){
+            test(navController)
         }
         composable(Routes.Chat.route){
             PreviewConversation(navController)
