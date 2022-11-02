@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    login()
+                    ScreenMain()
                 }
             }
         }
@@ -66,6 +66,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+        @OptIn(ExperimentalMaterial3Api::class)
         private fun signIn() {
             val providers = arrayListOf(
                 AuthUI.IdpConfig.EmailBuilder().build(),

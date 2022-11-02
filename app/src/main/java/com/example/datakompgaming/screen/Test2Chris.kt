@@ -34,7 +34,7 @@ fun Test2Chris(navController: NavController) {
                 },
 
                 bottomBar = {
-                    printBotBar(navController = navController)
+                    printBotBarIcon(navController = navController, 5)
                 }
 
             )

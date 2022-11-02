@@ -26,6 +26,7 @@ import androidx.navigation.NavController
 import com.example.datakompgaming.screen.printBotBarIcon
 import com.example.datakompgaming.screen.printTopBarIcon
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable

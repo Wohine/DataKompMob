@@ -27,7 +27,7 @@ fun OmOss(navController: NavController) {
             printBotBarIcon(navController = navController, 3)
         },
         topBar = {
-            printTopBarIcon(navController = navController)
+            //printTopBarIcon(navController = navController)
         }
     ) {
         Column(
