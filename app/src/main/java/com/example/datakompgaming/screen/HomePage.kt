@@ -3,6 +3,7 @@ package com.example.datakompgaming.screen
 
 
 import android.annotation.SuppressLint
+import android.view.Gravity
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
@@ -13,10 +14,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -91,14 +95,15 @@ fun Kort(imagePainter: Painter) {
                 .height(180.dp),
             alignment = Alignment.CenterStart
         )
-        Button(onClick = {},
-            modifier = Modifier
-                .width(150.dp)
-                .absolutePadding(left = 35.dp),
+        Button(onClick = { /*TODO*/ },
+        modifier = Modifier
+            .width(150.dp)
+            .absolutePadding(left = 35.dp),
         ) {
             Text(text = "Kjøp")
         }
     }
+
 }
 
 @Composable
@@ -131,9 +136,9 @@ fun PreHomePage() {
         ) {
             LogoBanner(title = "test")
             WelcomeSlider()
-            FeatProd()
-            FeatProd()
-            FeatProd()
+            FeatProd("Gode Tilbud")
+            FeatProd("Ukens Produkter")
+            FeatProd("Våre Beste Produkter")
         }
     }
 }
@@ -141,7 +146,7 @@ fun PreHomePage() {
 @Composable
 fun ProduktSlider() {
     Row(modifier = Modifier
-        .height(150.dp)
+        .height(250.dp)
         .horizontalScroll(rememberScrollState(), enabled = true),
     ) {
         Kort(painterResource(id = R.drawable.slider1))
@@ -200,17 +205,17 @@ fun createItems() = listOf(
     test123("https://cdn.discordapp.com/attachments/970741785406111754/1037385940047499365/unknown.png")
     )
 
-@Preview
+//@Preview
 @Composable
-fun FeatProd() {
+fun FeatProd(title: String) {
     Column(
         modifier = Modifier
     ) {
-        Text(text = "Sample text",
+        Text(text = title,
             modifier = Modifier
                 .absolutePadding(bottom = Dp(5f))
                 .background(Color.Transparent),
-            textAlign = TextAlign.Right,
+            textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
             fontSize = 16.sp,
             color = Color(0xFFbd4fdb),
@@ -225,7 +230,6 @@ fun FeatProd() {
 
 
 
-
 // TODO: sliding cards
 // TODO: clickable images
-// TODO: drepe chris
+// TODO: drepe chris (done)
