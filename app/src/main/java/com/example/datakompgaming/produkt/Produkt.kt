@@ -27,7 +27,7 @@ fun Produkter() {
                 bilde = document["bilde"].toString(),
                 rating = document["rating"].toString()
             )
-            produktListe.add(p1)
+            ProduktObject.produktListe.add(p1)
             Log.d(TAG, document["tittel"].toString())
             Log.d(TAG, p1.toString())
         }

@@ -32,7 +32,8 @@ import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch as launch
 
-@ExperimentalMaterial3Api
+
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomePage(navController: NavController) {
@@ -69,7 +70,7 @@ fun LogoBanner(title: String) {
 }
 
 @Composable
-fun Kort(imagePainter: Painter) {
+fun Kort(tittel: String,pris: String,igjen: String, bilde: String, farge: Color) {
     Column(modifier = Modifier
         .padding(horizontal = 10.dp)
         .fillMaxHeight()
@@ -77,17 +78,24 @@ fun Kort(imagePainter: Painter) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "testprodukt",
+        Text(text = tittel,
             modifier = Modifier
                 .width(150.dp)
                 .absolutePadding(left = 38.dp),
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
         )
-        Image(painter = imagePainter, contentDescription = "test",
+        AsyncImage(model = bilde, contentDescription = "test",
             modifier = Modifier
                 .height(180.dp),
             alignment = Alignment.CenterStart
+        )
+        Text(text = igjen,
+        modifier = Modifier
+            .width(150.dp)
+            .absolutePadding(left = 38.dp),
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Bold,
         )
         Button(onClick = { /*TODO*/ },
         modifier = Modifier
@@ -123,16 +131,21 @@ fun PreHomePage() {
 }
 @Preview
 @Composable
-fun ProduktSlider() {
+fun ProduktSlider(tittel: String, farge: Color, produktListe: MutableList<ProdukterFire>,) {
     Row(modifier = Modifier
         .height(250.dp)
         .horizontalScroll(rememberScrollState(), enabled = true),
     ) {
-        Kort(painterResource(id = R.drawable.slider1))
-        Kort(painterResource(id = R.drawable.slider2))
-        Kort(painterResource(id = R.drawable.slider3))
-        Kort(painterResource(id = R.drawable.slider4))
-        Kort(painterResource(id = R.drawable.slider5))
+        for (produkt in produktListe){
+            Log.d(ContentValues.TAG, "Kvisli")
+            HovedKortKort(
+                produkt.tittel,
+                produkt.pris.toString(),
+                produkt.varebeholdning,
+                produkt.bilde,
+                farge
+            )
+        }
     }
 }
 
@@ -202,7 +215,7 @@ fun FeatProd(title: String) {
             color = Color(0xFFbd4fdb),
 
         )
-        ProduktSlider()
+        ProduktSlider("Hovedkort",Color(0xFF82d0d9), produktListe)
     }
 }
 
