@@ -12,7 +12,10 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
@@ -20,34 +23,58 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.datakompgaming.screen.printBotBar
+import com.example.datakompgaming.screen.printBotBarIcon
+import com.example.datakompgaming.screen.printTopBarIcon
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun printOrders(bestillingListe: List<Order>, navController: NavController) {
-    Scaffold(bottomBar = {
-        printBotBar(navController = navController)
-    })
-    {
-        Column() {
-            Text(text = "Dine bestillinger")
-            for (bestilling in bestillingListe){
-                Column(modifier = Modifier
-                    .padding(10.dp)
-                    .border(BorderStroke(1.dp, SolidColor(Color.Black)))) {
-                    Text(text = "Bestilling")
-                    Text(text = bestilling.dato)
-                    Text(text = bestilling.key)
-                    for (item in bestilling.liste){
-                        printProdukt(item)
-                    }
-                    Text(text = bestilling.totalPris)
-                }
+    Scaffold(
+        bottomBar = {
+            printBotBarIcon(navController = navController, 5)
+        },
+        topBar = {
+            printTopBarIcon(navController = navController)
+        }
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState(), enabled = true)
+                .background(Color.White),
+            verticalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Text(text = "Dine Bestillinger")
+            for(bestilling in bestillingListe){
+                BestillingerCard(bestilling)
+                Spacer(modifier = Modifier.height(5.dp))
             }
+            Spacer(modifier = Modifier.height(45.dp))
         }
     }
 }
+@Composable
+fun BestillingerCard(bestilling: Order) {
+    Row(modifier = Modifier
+        .border(3.dp, Color.Black)
+        .padding(10.dp)
+    ) {
+        Column() {
+            Text(text = "Bestilling")
+            Text(text = bestilling.dato)
+            Text(text = bestilling.key)
+            for (item in bestilling.liste){
+                printProdukt(item)
+            }
+            Text(text = bestilling.totalPris)
+        }
+    }
+}
+
+
+
 @Composable
 fun printProdukt(produkt: Produkt){
     Row() {

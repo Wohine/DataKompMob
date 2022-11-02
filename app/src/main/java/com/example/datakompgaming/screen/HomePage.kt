@@ -32,15 +32,19 @@ import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch as launch
 
-
-@OptIn(ExperimentalMaterial3Api::class)
+@ExperimentalMaterial3Api
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomePage(navController: NavController) {
-    Scaffold(bottomBar = {
-        printBotBar(navController = navController)
-    })
-    {
+
+    Scaffold(
+        bottomBar = {
+            printBotBarIcon(navController = navController, 0)
+        },
+        topBar = {
+            printTopBarIcon(navController = navController)
+        }
+    ) {
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState(),enabled = true),

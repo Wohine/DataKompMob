@@ -25,6 +25,7 @@ fun ScreenMain(){
         composable(Routes.test.route){
             Test(navController)
         }
+
         composable(Routes.Chat.route){
             PreviewConversation(navController)
         }
@@ -35,7 +36,7 @@ fun ScreenMain(){
             Kundeservice(navController)
         }
         composable(Routes.Produkter.route){
-            com.example.datakompgaming.produkt.Produkter(navController, ProduktObject.produktListe)
+           Produkter(navController, ProduktObject.produktListe)
         }
         composable(Routes.HomePage.route){
             HomePage(navController)
