@@ -2,8 +2,8 @@
 <resources>
 
     <style name="Theme.DataKompGaming" parent="Theme.Material3.Light">
-        <item name="android:statusBarColor">@color/purple_700</item>
-        <item name="cardBackgroundColor">@android:color/system_accent2_600</item>
+        <item name="android:statusBarColor">@android:color/system_accent1_600</item>
+        <item name="cardBackgroundColor">@android:color/system_accent1_600</item>
         <item name="android:colorPrimary">@android:color/system_accent1_600</item>
     </style>
 </resources>

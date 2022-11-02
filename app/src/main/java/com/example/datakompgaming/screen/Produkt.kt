@@ -4,12 +4,18 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.Text
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.example.datakompgaming.bestillingfiler.Order
+import com.google.firebase.firestore.Exclude
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Source
+import java.util.stream.Collectors.toMap
 
 var produktListe = mutableListOf<ProdukterFire>()
 

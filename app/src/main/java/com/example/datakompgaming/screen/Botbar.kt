@@ -18,12 +18,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.datakompgaming.bestillingfiler.Produkt
+import com.example.datakompgaming.ui.theme.BotbarBC
 import com.example.datakompgaming.ui.theme.Purple700
 
 @Composable
 fun printBotBar(navController: NavController){
     Row(modifier = Modifier
-        .background(Color(0xFF6200FF))
+        .background(color = BotbarBC)
         .fillMaxWidth()) {
         ClickableText(
             text = AnnotatedString("bestilling"),
@@ -35,12 +36,12 @@ fun printBotBar(navController: NavController){
             }
         )
         ClickableText(
-            text = AnnotatedString("test"),
+            text = AnnotatedString("TestC"),
             modifier = Modifier
                 .padding(5.dp),
             style = TextStyle(color = Color.White),
             onClick = {
-                navController.navigate("test")
+                navController.navigate("Test2Chris")
             }
         )
         ClickableText(

@@ -10,7 +10,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,7 +26,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun Produkter(navController: NavController) {
     Scaffold(bottomBar = {
@@ -37,7 +38,7 @@ fun Produkter(navController: NavController) {
                 Surface(
                     modifier = Modifier
                         .fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    color = MaterialTheme.colorScheme.background
 
                 ) {
                     Column(
@@ -46,12 +47,11 @@ fun Produkter(navController: NavController) {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Title("Produkter")
-                        Rad("Hovedkort",Color(0xFF82d0d9))
-                        Rad("Skjermkort",Color(0xFFd9a932))
-                        Rad("Prosessorer",Color(0xFFbd4fdb))
-                        Rad("*Eventuelle andre ting*",Color(0xFF6dd6ac))
-                        Rad("Jørans syltetøyutvalg",Color(0xFFd18888))
-                        
+                        Rad("Hovedkort")
+                        Rad("Skjermkort")
+                        Rad("Prosessorer")
+                        Rad("*Eventuelle andre ting*")
+                        Rad("Jørans syltetøyutvalg")
                         Spacer(modifier = Modifier.height(100.dp))
                     }
 
@@ -91,15 +91,16 @@ fun KortLabel(tittel: String) {
 
 
 @Composable
-fun Kort(tittel: String,pris: String,igjen: String, imagePainter: Painter, farge: Color) {
+fun Kort(tittel: String,pris: String,igjen: String, imagePainter: Painter) {
     Card (
+
         modifier = Modifier
             .width(300.dp)
             .height(150.dp)
             .absolutePadding(right = Dp(35f))
             .clickable { println("Clicked") },
         shape = RoundedCornerShape(8.dp),
-        backgroundColor = farge,
+
 
         ) {
         Row() {
@@ -126,7 +127,7 @@ fun Kort(tittel: String,pris: String,igjen: String, imagePainter: Painter, farge
 }
 
 @Composable
-fun Rad(tittel: String, farge: Color) {
+fun Rad(tittel: String) {
     Text(
         text = tittel,
         modifier = Modifier
@@ -140,10 +141,10 @@ fun Rad(tittel: String, farge: Color) {
         .height(150.dp)
         .horizontalScroll(rememberScrollState(), enabled = true),
     ) {
-        Kort("Test Vare","500","1", painterResource(id = R.drawable.datakomplogo), farge)
-        Kort("Test Vare 2","250","3", painterResource(id = R.drawable.datakomplogo), farge)
-        Kort("Test Vare 3","750","2", painterResource(id = R.drawable.datakomplogo), farge)
-        Kort("Test Vare 4","1250","1", painterResource(id = R.drawable.datakomplogo), farge)
-        Kort("Test Vare 5","2750","5", painterResource(id = R.drawable.datakomplogo), farge)
+        Kort("Test Vare","500","1", painterResource(id = R.drawable.datakomplogo))
+        Kort("Test Vare 2","250","3", painterResource(id = R.drawable.datakomplogo))
+        Kort("Test Vare 3","750","2", painterResource(id = R.drawable.datakomplogo))
+        Kort("Test Vare 4","1250","1", painterResource(id = R.drawable.datakomplogo))
+        Kort("Test Vare 5","2750","5", painterResource(id = R.drawable.datakomplogo))
     }
 }
