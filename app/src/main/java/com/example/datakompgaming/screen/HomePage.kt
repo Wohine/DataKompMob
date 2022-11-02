@@ -3,7 +3,6 @@ package com.example.datakompgaming.screen
 
 
 import android.annotation.SuppressLint
-import android.view.Gravity
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
@@ -14,13 +13,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,29 +36,20 @@ import kotlinx.coroutines.launch as launch
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun HomePage(navController: NavController) {
-
     Scaffold(bottomBar = {
         printBotBar(navController = navController)
     })
     {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .background(Color.White),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceEvenly
-
-
+                .verticalScroll(rememberScrollState(),enabled = true),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             LogoBanner(title = "test")
-            SaleBanner(title = "test")
-            SaleBanner(title = "test")
-            SaleBanner(title = "test")
-            SaleBanner(title = "test")
-            SaleBanner(title = "test")
-            
-            Spacer(modifier = Modifier.height(100.dp))
+            WelcomeSlider()
+            FeatProd("Gode Tilbud")
+            FeatProd("Ukens Produkter")
+            FeatProd("Våre Beste Produkter")
         }
     }
 }
@@ -82,6 +69,8 @@ fun Kort(imagePainter: Painter) {
         .padding(horizontal = 10.dp)
         .fillMaxHeight()
         .background(Color.Transparent),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = "testprodukt",
             modifier = Modifier
@@ -97,27 +86,12 @@ fun Kort(imagePainter: Painter) {
         )
         Button(onClick = { /*TODO*/ },
         modifier = Modifier
-            .width(150.dp)
-            .absolutePadding(left = 35.dp),
+            .width(150.dp),
         ) {
             Text(text = "Kjøp")
         }
     }
 
-}
-
-@Composable
-fun SaleBanner(title: String) {
-    Row(modifier = Modifier
-        .border(3.dp, Color.Black)
-        .padding(10.dp)
-    ) {
-        Column() {
-            Spacer(modifier = Modifier.height(5.dp))
-            Image(painter = painterResource(com.example.datakompgaming.R.drawable.lurius), contentDescription = null)
-            Spacer(modifier = Modifier.height(5.dp))
-        }
-    }
 }
 
 //denne brukes bare til development
@@ -195,6 +169,8 @@ fun WelcomeSlider() {
 
 }
 
+
+//data for welcome banner
 data class test123(
     val img: String
     )
