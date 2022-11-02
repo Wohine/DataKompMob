@@ -44,10 +44,7 @@ fun printOrders(bestillingListe: List<Order>, navController: NavController) {
                 }
             }
         }
-
     }
-
-
 }
 @Composable
 fun printProdukt(produkt: Produkt){
