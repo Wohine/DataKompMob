@@ -54,7 +54,7 @@ fun printTopBarIcon(navController: NavController){
                             })
                         DropdownMenuItem(
                             text = { Text("logg ut") },
-                            onClick = { /* Handle edit! */ })
+                            onClick = { mainActivity?.logOut() })
                     }
                 }
             }

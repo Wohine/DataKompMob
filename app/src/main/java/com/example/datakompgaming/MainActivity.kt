@@ -23,12 +23,12 @@ import com.google.firebase.auth.FirebaseUser
 
 var mainActivity: MainActivity? = null
 
+@OptIn(ExperimentalMaterial3Api::class)
 class MainActivity : ComponentActivity() {
 
     private var user: FirebaseUser? = null
 
 
-    @ExperimentalMaterial3Api
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainActivity = this
@@ -88,12 +88,6 @@ class MainActivity : ComponentActivity() {
             .setAvailableProviders(providers)
             .build()
         signInLauncher.launch(signinIntent)
-    }
-    @ExperimentalMaterial3Api
-    private val signInLauncher = registerForActivityResult(
-        FirebaseAuthUIActivityResultContract()
-    ) { res ->
-        this.signInResult(res)
     }
 
 

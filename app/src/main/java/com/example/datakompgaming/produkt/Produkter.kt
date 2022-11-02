@@ -22,8 +22,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.datakompgaming.screen.printBotBar
 import com.example.datakompgaming.mainActivity
+import com.example.datakompgaming.produkt.ProdukterFire
 
 
 @ExperimentalMaterial3Api
@@ -31,10 +31,6 @@ import com.example.datakompgaming.mainActivity
 
 @Composable
 fun Produkter(navController: NavController, produktListe: MutableList<ProdukterFire>) {
-    Scaffold(bottomBar = {
-        printBotBar(navController = navController)
-    }) {
-fun Produkter(navController: NavController) {
 
     Scaffold(
         bottomBar = {
