@@ -9,7 +9,8 @@ import com.google.firebase.firestore.Source
 
 
 
-fun Produkter() {
+fun ProdukterUthentingDB(
+) {
 
     var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 

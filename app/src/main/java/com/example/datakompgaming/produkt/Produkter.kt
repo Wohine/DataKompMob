@@ -24,13 +24,15 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.datakompgaming.mainActivity
 import com.example.datakompgaming.produkt.ProdukterFire
+import com.example.datakompgaming.produkt.ProsessorerFire
+import com.example.datakompgaming.produkt.SkjermKortFire
 
 
 @ExperimentalMaterial3Api
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 
 @Composable
-fun Produkter(navController: NavController, produktListe: MutableList<ProdukterFire>) {
+fun Produkter(navController: NavController, produktListe: MutableList<ProdukterFire>, SkjermKortListe: MutableList<SkjermKortFire>,ProsessorerListe: MutableList<ProsessorerFire> ) {
 
     Scaffold(
         bottomBar = {
@@ -55,10 +57,8 @@ fun Produkter(navController: NavController, produktListe: MutableList<ProdukterF
                     ) {
                         Title("Produkter")
                         hovedKortRad("Hovedkort",Color(0xFF82d0d9), produktListe)
-                        Rad("Skjermkort")
-                        Rad("Prosessorer")
-                        Rad("*Eventuelle andre ting*")
-                        Rad("Jørans syltetøyutvalg")
+                        skjermKortRad("Skjermkort",Color(0xFF82d0d9), SkjermKortListe)
+                        prosessorerRad("Prosessorer",Color(0xFF82d0d9), ProsessorerListe)
 
                         Spacer(modifier = Modifier.height(100.dp))
                     }
@@ -157,6 +157,62 @@ fun Rad(tittel: String) {
 
 @Composable
 fun hovedKortRad(tittel: String, farge: Color, produktListe: MutableList<ProdukterFire>, ) {
+    Text(
+        text = tittel,
+        modifier = Modifier
+            .fillMaxSize()
+            .absolutePadding(bottom = Dp(10f)),
+        fontWeight = FontWeight.Bold,
+        fontSize = 25.sp,
+        textAlign = TextAlign.Center
+    )
+    Row(modifier = Modifier
+        .height(150.dp)
+        .horizontalScroll(rememberScrollState(), enabled = true),
+    ) {
+        for (produkt in produktListe){
+            Log.d(ContentValues.TAG, "Kvisli")
+            HovedKortKort(
+                produkt.tittel,
+                produkt.pris.toString(),
+                produkt.varebeholdning,
+                produkt.bilde,
+                farge
+            )
+        }
+    }
+}
+
+@Composable
+fun skjermKortRad(tittel: String, farge: Color, produktListe: MutableList<SkjermKortFire>, ) {
+    Text(
+        text = tittel,
+        modifier = Modifier
+            .fillMaxSize()
+            .absolutePadding(bottom = Dp(10f)),
+        fontWeight = FontWeight.Bold,
+        fontSize = 25.sp,
+        textAlign = TextAlign.Center
+    )
+    Row(modifier = Modifier
+        .height(150.dp)
+        .horizontalScroll(rememberScrollState(), enabled = true),
+    ) {
+        for (produkt in produktListe){
+            Log.d(ContentValues.TAG, "Kvisli")
+            HovedKortKort(
+                produkt.tittel,
+                produkt.pris.toString(),
+                produkt.varebeholdning,
+                produkt.bilde,
+                farge
+            )
+        }
+    }
+}
+
+@Composable
+fun prosessorerRad(tittel: String, farge: Color, produktListe: MutableList<ProsessorerFire>, ) {
     Text(
         text = tittel,
         modifier = Modifier

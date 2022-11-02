@@ -17,7 +17,7 @@ fun Prosessorer() {
     docRef.get(source).addOnSuccessListener { documents ->
         for (document in documents) {
             Log.d(TAG, "${document.id} => ${document.data}")
-            var p1 = ProdukterFire(
+            var p1 = ProsessorerFire(
                 tittel = document["tittel"].toString(),
                 pris = document.getDouble("pris"),
                 varebeholdning = document["varebeholdning"].toString(),
