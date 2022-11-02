@@ -102,6 +102,7 @@ fun ImageCard(
                     {
                         Text(text = "Legg til i handlekurv")
                     }
+
                 )
 
 
