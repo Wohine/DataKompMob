@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -23,6 +24,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.example.datakompgaming.R
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -63,24 +65,40 @@ fun HomePage(navController: NavController) {
 
 @Composable
 fun LogoBanner(title: String) {
-    Image(painter = painterResource(com.example.datakompgaming.R.drawable.datakomplogo), contentDescription = null)
+    Image(painter = painterResource(com.example.datakompgaming.R.drawable.datakomplogo),
+        contentDescription = null,
+        contentScale = ContentScale.Fit,
+        modifier = Modifier.size(150.dp)
+    )
 }
 
 @Composable
 fun Kort(imagePainter: Painter) {
     Column(modifier = Modifier
-        .padding(horizontal = 19.dp)
+        .padding(horizontal = 10.dp)
         .fillMaxHeight()
         .background(Color.Transparent),
     ) {
-        Text(text = "test test test")
+        Text(text = "testprodukt",
+            modifier = Modifier
+                .width(150.dp)
+                .absolutePadding(left = 38.dp),
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+        )
         Image(painter = imagePainter, contentDescription = "test",
             modifier = Modifier
-                .fillMaxSize(),
+                .height(180.dp),
             alignment = Alignment.CenterStart
         )
+        Button(onClick = {},
+            modifier = Modifier
+                .width(150.dp)
+                .absolutePadding(left = 35.dp),
+        ) {
+            Text(text = "Kjøp")
+        }
     }
-
 }
 
 @Composable
@@ -144,14 +162,14 @@ fun WelcomeSlider() {
 
     LaunchedEffect(key1 = pagerState.currentPage) {
         launch {
-            delay(3000)
+            delay(4000)
             with(pagerState) {
                 val target = if (currentPage < pageCount - 1) currentPage + 1 else 0
 
                 animateScrollToPage(
                     page = target,
                     animationSpec = tween(
-                        durationMillis = 500,
+                        durationMillis = 1000,
                         easing = FastOutSlowInEasing
                     )
                 )
@@ -164,12 +182,8 @@ fun WelcomeSlider() {
         state = pagerState,
     ) { currentPage ->
         Column() {
-            Image(painter = painterResource(com.example.datakompgaming.R.drawable.banner1), contentDescription = "123")
-//            Image(painter = items[currentPage].imagePainter, contentDescription = "123")
-//            Text(
-//                text = "test",
-//            )
-//            Spacer(modifier = Modifier.height(10.dp))
+            AsyncImage(model = items[currentPage].img, contentDescription = null,contentScale = ContentScale.Fit,modifier = Modifier
+                .fillMaxSize())
         }
 
     }
@@ -181,8 +195,9 @@ data class test123(
     )
 
 fun createItems() = listOf(
-   test123("test"),
-    test123("test")
+    test123("https://cdn.discordapp.com/attachments/970741785406111754/1037376850890063872/unknown.png"),
+    test123("https://cdn.discordapp.com/attachments/970741785406111754/1037380583682220162/cover2.png"),
+    test123("https://cdn.discordapp.com/attachments/970741785406111754/1037385940047499365/unknown.png")
     )
 
 @Preview
