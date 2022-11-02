@@ -16,7 +16,7 @@ import com.google.protobuf.Value
 
 @Composable
 fun Test(navController: NavController) {
-
+    Produkter()
     for (produkt in produktListe){
         Spacer(modifier = Modifier.height(20.dp))
         Text(text = produkt.tittel)

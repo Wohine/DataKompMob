@@ -1,4 +1,4 @@
-package com.example.datakompgaming.screen
+package com.example.datakompgaming.produkt
 
 import com.google.firebase.firestore.Exclude
 

@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.datakompgaming.screen.Produkter
 import com.example.datakompgaming.screen.ScreenMain
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
@@ -94,6 +95,7 @@ class MainActivity : ComponentActivity() {
             val response = result.idpResponse
             if (result.resultCode == RESULT_OK) {
                 user = FirebaseAuth.getInstance().currentUser
+                Produkter()
                 setContent {
                     DefaultPreview()
                 }
