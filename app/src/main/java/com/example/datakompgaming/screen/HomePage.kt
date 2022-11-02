@@ -3,17 +3,19 @@ package com.example.datakompgaming.screen
 
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,7 +27,8 @@ import com.example.datakompgaming.R
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch as launch
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -109,6 +112,7 @@ fun PreHomePage() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             LogoBanner(title = "test")
+            WelcomeSlider()
             FeatProd()
             FeatProd()
             FeatProd()
@@ -136,50 +140,51 @@ fun ProduktSlider() {
 fun WelcomeSlider() {
     val items = createItems()
     val pagerState = rememberPagerState()
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(key1 = pagerState.currentPage) {
+        launch {
+            delay(3000)
+            with(pagerState) {
+                val target = if (currentPage < pageCount - 1) currentPage + 1 else 0
+
+                animateScrollToPage(
+                    page = target,
+                    animationSpec = tween(
+                        durationMillis = 500,
+                        easing = FastOutSlowInEasing
+                    )
+                )
+            }
+        }
+    }
 
     HorizontalPager(
         count = items.size,
         state = pagerState,
     ) { currentPage ->
         Column() {
-            Text(
-                text = items[currentPage].title,
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(
-                text = items[currentPage].subtitle,
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(
-                text = items[currentPage].description,
-            )
+            Image(painter = painterResource(com.example.datakompgaming.R.drawable.banner1), contentDescription = "123")
+//            Image(painter = items[currentPage].imagePainter, contentDescription = "123")
+//            Text(
+//                text = "test",
+//            )
+//            Spacer(modifier = Modifier.height(10.dp))
         }
 
     }
 
-    val coroutineScope = rememberCoroutineScope()
-    //knapp boilerplate
-//    Button(
-//        onClick = {
-//            coroutineScope.launch {
-//                pagerState.animateScrollToPage(page = 2)
-//            }
-//        },
-//    ) {
-//        Text(text = "Scroll to the third page")
-//    }
 }
 
 data class test123(
-    val title: String,
-    val subtitle: String,
-    val description: String
+    val img: String
     )
 
-fun createItems() = listOf(test123(title = "Title1", subtitle = "Subtitle1", description = "Description1"),
-    test123(title = "Title2", subtitle = "Subtitle1", description = "Description1"),
-    test123(title = "Title3", subtitle = "Subtitle1", description = "Description1")
-)
+fun createItems() = listOf(
+   test123("test"),
+    test123("test")
+    )
+
 @Preview
 @Composable
 fun FeatProd() {
@@ -199,6 +204,7 @@ fun FeatProd() {
         ProduktSlider()
     }
 }
+
 
 
 
