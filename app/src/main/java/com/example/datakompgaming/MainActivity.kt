@@ -108,7 +108,7 @@ class MainActivity : ComponentActivity() {
     fun logOut(){
         FirebaseAuth.getInstance().signOut();
         setContent {
-            LogoutPreview()
+            login()
         }
     }
 

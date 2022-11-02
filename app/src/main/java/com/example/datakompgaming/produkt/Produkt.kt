@@ -28,7 +28,7 @@ fun ProdukterUthentingDB(
                 bilde = document["bilde"].toString(),
                 rating = document["rating"].toString()
             )
-            ProduktObject.produktListe.add(p1)
+            produktListe.add(p1)
             Log.d(TAG, document["tittel"].toString())
             Log.d(TAG, p1.toString())
         }

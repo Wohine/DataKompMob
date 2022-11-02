@@ -66,6 +66,7 @@ fun HomePage(navController: NavController) {
 
 @Composable
 fun LogoBanner(title: String) {
+    Spacer(modifier = Modifier.height(15.dp))
     Image(painter = painterResource(com.example.datakompgaming.R.drawable.datakomplogo),
         contentDescription = null,
         contentScale = ContentScale.Fit,
