@@ -3,20 +3,20 @@ package com.example.datakompgaming.screen
 import com.google.firebase.firestore.Exclude
 
 data class ProdukterFire(
-    val tittel: String,
-    val pris: Double?,
-    val varebeholdning: Int?,
     val bilde: String?,
-    val rating: Int?
+    val rating: String,
+    val varebeholdning: String,
+    val pris: Double?,
+    val tittel: String,
 ) {
     @Exclude
     fun toMap(): Map<String, Any?> {
         return mapOf(
-            "tittel" to tittel,
-            "pris" to pris,
-            "varebeholdning" to varebeholdning,
             "bilde" to bilde,
-            "rating" to rating
+            "varebeholdning" to varebeholdning,
+            "rating" to rating,
+            "pris" to pris,
+            "tittel" to tittel,
         )
     }
 }

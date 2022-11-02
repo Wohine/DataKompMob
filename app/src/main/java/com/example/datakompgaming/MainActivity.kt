@@ -21,6 +21,7 @@ import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.rpc.context.AttributeContext
 
 var mainActivity: MainActivity? = null
 
@@ -64,6 +65,9 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+    interface FirebaseCallback {
+        fun onResponse(response: AttributeContext.Response)
     }
 
         private fun signIn() {

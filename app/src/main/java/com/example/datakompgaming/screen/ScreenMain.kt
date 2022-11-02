@@ -21,7 +21,7 @@ fun ScreenMain(){
             printOrders(Bestillinger.bestilligListe, navController)
         }
         composable(Routes.test.route){
-            qwert(navController)
+            Test(navController)
         }
         composable(Routes.Chat.route){
             PreviewConversation(navController)
