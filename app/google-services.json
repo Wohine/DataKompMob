@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "220991526486",
+    "project_id": "datakompkotlin",
+    "storage_bucket": "datakompkotlin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:220991526486:android:00bd6003cee83f4964cdf7",
+        "android_client_info": {
+          "package_name": "com.example.datakompgaming"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "220991526486-cqqhjfukllhde99sk26l6u1jiemjuaat.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.datakompgaming",
+            "certificate_hash": "e11d54a0af7d009f45ca191d70fc40f9ac1cf1bc"
+          }
+        },
+        {
+          "client_id": "220991526486-8ns5m4v4p10psjl6p581nkqak00q1onm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyLeFJuteXPLKsNxQv5CQfOqbtqoknupM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "220991526486-8ns5m4v4p10psjl6p581nkqak00q1onm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
+
