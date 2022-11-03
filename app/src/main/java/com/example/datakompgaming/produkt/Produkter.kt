@@ -171,7 +171,7 @@ fun hovedKortRad(tittel: String, farge: Color, produktListe: MutableList<Produkt
         .horizontalScroll(rememberScrollState(), enabled = true),
     ) {
         for (produkt in produktListe){
-            Log.d(ContentValues.TAG, "Kvisli")
+            Log.d(ContentValues.TAG, "Produktliste ok!")
             HovedKortKort(
                 produkt.tittel,
                 produkt.pris.toString(),
@@ -199,7 +199,7 @@ fun skjermKortRad(tittel: String, farge: Color, produktListe: MutableList<Skjerm
         .horizontalScroll(rememberScrollState(), enabled = true),
     ) {
         for (produkt in produktListe){
-            Log.d(ContentValues.TAG, "Kvisli")
+            Log.d(ContentValues.TAG, "Produktliste ok!")
             HovedKortKort(
                 produkt.tittel,
                 produkt.pris.toString(),
@@ -227,7 +227,7 @@ fun prosessorerRad(tittel: String, farge: Color, produktListe: MutableList<Prose
         .horizontalScroll(rememberScrollState(), enabled = true),
     ) {
         for (produkt in produktListe){
-            Log.d(ContentValues.TAG, "Kvisli")
+            Log.d(ContentValues.TAG, "Produktliste ok!")
             HovedKortKort(
                 produkt.tittel,
                 produkt.pris.toString(),

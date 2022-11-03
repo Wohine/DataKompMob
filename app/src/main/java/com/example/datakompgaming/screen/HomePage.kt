@@ -142,7 +142,6 @@ fun ProduktSlider(tittel: String, farge: Color, produktListe: MutableList<Produk
         .horizontalScroll(rememberScrollState(), enabled = true),
     ) {
         for (produkt in produktListe){
-            Log.d(ContentValues.TAG, "Kvisli")
             HovedKortKort(
                 produkt.tittel,
                 produkt.pris.toString(),
