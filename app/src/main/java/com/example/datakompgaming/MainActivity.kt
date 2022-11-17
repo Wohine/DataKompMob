@@ -10,8 +10,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.datakompgaming.produkt.*
 import com.example.datakompgaming.screen.ScreenMain
 import com.example.datakompgaming.ui.theme.DataKompGamingTheme
 import com.firebase.ui.auth.AuthUI
@@ -22,15 +22,18 @@ import com.google.firebase.auth.FirebaseUser
 
 var mainActivity: MainActivity? = null
 
+@OptIn(ExperimentalMaterial3Api::class)
 class MainActivity : ComponentActivity() {
 
     private var user: FirebaseUser? = null
 
 
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainActivity = this
+        ProdukterUthentingDB()
+        Skjermkort()
+        Prosessorer()
         setContent {
             DataKompGamingTheme{
                 Surface(
@@ -67,45 +70,64 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-    @ExperimentalMaterial3Api
-        private fun signIn() {
-            val providers = arrayListOf(
-                AuthUI.IdpConfig.EmailBuilder().build(),
-                AuthUI.IdpConfig.GoogleBuilder().build(),
-                AuthUI.IdpConfig.AnonymousBuilder().build()
-            )
-            val signinIntent = AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(providers)
-                .build()
-            signInLauncher.launch(signinIntent)
-        }
-    @ExperimentalMaterial3Api
-        private val signInLauncher = registerForActivityResult(
-            FirebaseAuthUIActivityResultContract()
-        ) { res ->
-            this.signInResult(res)
-        }
 
     @ExperimentalMaterial3Api
-        private fun signInResult(result: FirebaseAuthUIAuthenticationResult) {
-            val response = result.idpResponse
-            if (result.resultCode == RESULT_OK) {
-                user = FirebaseAuth.getInstance().currentUser
-                setContent {
-                    DefaultPreview()
-                }
-            } else {
-                Log.e("Produkt.kt", "Error logging in " + response?.error?.errorCode)
+    private val signInLauncher = registerForActivityResult(
+        FirebaseAuthUIActivityResultContract()
+    ) { res ->
+        this.signInResult(res)
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    private fun signIn() {
+        val providers = arrayListOf(
+            AuthUI.IdpConfig.EmailBuilder().build(),
+            AuthUI.IdpConfig.GoogleBuilder().build(),
+            AuthUI.IdpConfig.AnonymousBuilder().build()
+        )
+        val signinIntent = AuthUI.getInstance()
+            .createSignInIntentBuilder()
+            .setAvailableProviders(providers)
+            .build()
+        signInLauncher.launch(signinIntent)
+    }
+
+
+    private fun signInResult(result: FirebaseAuthUIAuthenticationResult) {
+        val response = result.idpResponse
+        if (result.resultCode == RESULT_OK) {
+            user = FirebaseAuth.getInstance().currentUser
+            setContent {
+                DefaultPreview()
             }
+        } else {
+            Log.e("Produkt.kt", "Error logging in " + response?.error?.errorCode)
         }
+    }
+
+    fun logOut(){
+        FirebaseAuth.getInstance().signOut();
+        setContent {
+            login()
+        }
+    }
+
 }
 
+
+
 @ExperimentalMaterial3Api
-@Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MaterialTheme {
         ScreenMain()
     }
 }
+@ExperimentalMaterial3Api
+@Composable
+fun LogoutPreview() {
+    MaterialTheme {
+        mainActivity?.login()
+    }
+}
+

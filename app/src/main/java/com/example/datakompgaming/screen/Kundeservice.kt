@@ -33,14 +33,19 @@ import com.example.datakompgaming.R
 
 @Composable
 fun Kundeservice(navController: NavController) {
-    Scaffold(bottomBar = {
-        printBotBar(navController = navController)
-    }) {
+    Scaffold(
+        bottomBar = {
+        printBotBarIcon(navController = navController, 2)
+        },
+        topBar = {
+            printTopBarIcon(navController = navController)
+        }
+    ) {
 
         Column(
             modifier = Modifier
                 .background(Color.White)
-                .verticalScroll(rememberScrollState(),enabled = true),
+                .verticalScroll(rememberScrollState(), enabled = true),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         )

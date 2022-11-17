@@ -5,10 +5,12 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.datakompgaming.MainActivity
 import com.example.datakompgaming.Routes
 import com.example.datakompgaming.bestillingfiler.Bestillinger
 import com.example.datakompgaming.bestillingfiler.printOrders
+import com.example.datakompgaming.produkt.ProduktObject
+import com.example.datakompgaming.produkt.ProsessorerObject
+import com.example.datakompgaming.produkt.SkjermKortObject
 
 @ExperimentalMaterial3Api
 @Composable
@@ -22,17 +24,6 @@ fun ScreenMain(){
         composable(Routes.BestillingComp.route){
             printOrders(Bestillinger.bestilligListe, navController)
         }
-        composable(Routes.Test2Chris.route){
-            Test2Chris(navController)
-        }
-
-        /*
-        composable(Routes.test.route){
-            Test(navController)
-        }
-
-         */
-
         composable(Routes.Chat.route){
             PreviewConversation(navController)
         }
@@ -43,7 +34,7 @@ fun ScreenMain(){
             Kundeservice(navController)
         }
         composable(Routes.Produkter.route){
-            Produkter(navController)
+           Produkter(navController, ProduktObject.produktListe, SkjermKortObject.SkjermKortListe, ProsessorerObject.ProsessorerListe)
         }
         composable(Routes.HomePage.route){
             HomePage(navController)
