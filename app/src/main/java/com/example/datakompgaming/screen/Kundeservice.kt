@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.datakompgaming.R
+import com.example.datakompgaming.ui.theme.DataKompGamingTheme
 
 
 @ExperimentalMaterial3Api
@@ -33,73 +34,85 @@ import com.example.datakompgaming.R
 
 @Composable
 fun Kundeservice(navController: NavController) {
-    Scaffold(
-        bottomBar = {
-        printBotBarIcon(navController = navController, 2)
-        },
-        topBar = {
-            printTopBarIcon(navController = navController)
-        }
-    ) {
+    DataKompGamingTheme {
+        Surface(
+            modifier = Modifier.fillMaxWidth(),
+            color = MaterialTheme.colorScheme.onBackground
+        ) {
+            Scaffold(
+                bottomBar = {
+                    printBotBarIcon(navController = navController, 2)
+                },
+                topBar = {
+                    printTopBarIcon(navController = navController)
+                }
+            ) {
 
-        Column(
-            modifier = Modifier
-                .background(Color.White)
-                .verticalScroll(rememberScrollState(), enabled = true),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        )
-        {
-
-            val navn = remember { mutableStateOf(TextFieldValue()) }
-            val email = remember { mutableStateOf(TextFieldValue()) }
-            val tema = remember { mutableStateOf(TextFieldValue()) }
-            val hjelptxt = remember { mutableStateOf(TextFieldValue()) }
-
-            Image(painter = painterResource(R.drawable.datakomplogo), contentDescription = null)
-
-
-            Spacer(modifier = Modifier.height(20.dp))
-            Text(
-                text = "Kontakt Oss",
-                style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold)
-            )
-
-            Spacer(modifier = Modifier.height(5.dp))
-            Text(text = "Hva lurer du på?", style = TextStyle(fontSize = 10.sp))
-
-            Spacer(modifier = Modifier.height(20.dp))
-            TextField(label = { Text(text = "Ditt navn") },
-                value = navn.value,
-                onValueChange = { navn.value = it })
-
-            Spacer(modifier = Modifier.height(20.dp))
-            TextField(label = { Text(text = "Din email") },
-                value = email.value,
-                onValueChange = { email.value = it })
-
-            Spacer(modifier = Modifier.height(20.dp))
-            TextField(label = { Text(text = "Tema") },
-                value = tema.value,
-                onValueChange = { tema.value = it })
-
-            Spacer(modifier = Modifier.height(20.dp))
-            TextField(label = { Text(text = "Hva kan vi hjelpe deg med?") },
-                value = hjelptxt.value,
-                onValueChange = { hjelptxt.value = it })
-
-            Spacer(modifier = Modifier.height(25.dp))
-            Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
-                Button(
-                    onClick = { },
-                    shape = RoundedCornerShape(50.dp),
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp)
-                ) {
-                    Text(text = "Send inn")
+                       // .background(Color.White)
+                        .verticalScroll(rememberScrollState(), enabled = true),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                )
+                {
+
+                    val navn = remember { mutableStateOf(TextFieldValue()) }
+                    val email = remember { mutableStateOf(TextFieldValue()) }
+                    val tema = remember { mutableStateOf(TextFieldValue()) }
+                    val hjelptxt = remember { mutableStateOf(TextFieldValue()) }
+
+                    Spacer(modifier = Modifier.height(40.dp))
+                    Image(
+                        painter = painterResource(R.drawable.datakomplogo),
+                        contentDescription = null
+                    )
+
+
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Text(
+                        text = "Kontakt Oss",
+                        style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    )
+
+                    Spacer(modifier = Modifier.height(5.dp))
+                    Text(text = "Hva lurer du på?", style = TextStyle(fontSize = 10.sp))
+
+                    Spacer(modifier = Modifier.height(20.dp))
+                    TextField(label = { Text(text = "Ditt navn") },
+                        value = navn.value,
+                        onValueChange = { navn.value = it })
+
+                    Spacer(modifier = Modifier.height(20.dp))
+                    TextField(label = { Text(text = "Din email") },
+                        value = email.value,
+                        onValueChange = { email.value = it })
+
+                    Spacer(modifier = Modifier.height(20.dp))
+                    TextField(label = { Text(text = "Tema") },
+                        value = tema.value,
+                        onValueChange = { tema.value = it })
+
+                    Spacer(modifier = Modifier.height(20.dp))
+                    TextField(label = { Text(text = "Hva kan vi hjelpe deg med?") },
+                        value = hjelptxt.value,
+                        onValueChange = { hjelptxt.value = it })
+
+                    Spacer(modifier = Modifier.height(25.dp))
+                    Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
+                        Button(
+                            onClick = { },
+                            shape = RoundedCornerShape(50.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(50.dp)
+                        ) {
+                            Text(text = "Send inn")
+                        }
+                    }
                 }
             }
         }
     }
 }
+
