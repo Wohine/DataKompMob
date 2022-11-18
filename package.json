@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/Wohine/DataKompGaming/issues"
   },
-  "homepage": "https://github.com/Wohine/DataKompGaming#readme"
+  "homepage": "https://github.com/Wohine/DataKompGaming#readme",
+  "dependencies": {
+    "firebase-functions": "^4.1.0"
+  }
 }
