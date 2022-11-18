@@ -11,6 +11,7 @@ import com.example.datakompgaming.bestillingfiler.printOrders
 import com.example.datakompgaming.produkt.ProduktObject
 import com.example.datakompgaming.produkt.ProsessorerObject
 import com.example.datakompgaming.produkt.SkjermKortObject
+import com.example.datakompgaming.screen.chat.ChatApp
 
 @ExperimentalMaterial3Api
 @Composable
@@ -25,7 +26,7 @@ fun ScreenMain(){
             printOrders(Bestillinger.bestilligListe, navController)
         }
         composable(Routes.Chat.route){
-            PreviewConversation(navController)
+            ChatApp(navController)
         }
         composable(Routes.OmOss.route){
             OmOss(navController)
