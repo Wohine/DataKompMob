@@ -70,9 +70,6 @@ fun TopProfile(
     profile: Painter,
     isOnline: Boolean
 ) {
-    Column() {
-
-    }
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -188,12 +185,13 @@ fun MessageSection() {
             },
             shape = RoundedCornerShape(25.dp),
             trailingIcon = {
-//                Icon(
-//                    painter = painterResource(id = R.drawable.floppa),
-//                    contentDescription = null,
-//                    tint = MaterialTheme.colorScheme.primary,
-//                    modifier = Modifier.clickable {}
-//                )
+                Icon(
+                    painter = painterResource(id = R.drawable.floppa),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(32.dp)
+                        .clickable {  }
+                )
             },
             modifier = Modifier
                 .padding(10.dp),
