@@ -39,6 +39,9 @@ fun ScreenMain(){
         composable(Routes.HomePage.route){
             HomePage(navController)
         }
+        composable(Routes.UserPage.route){
+            UserPage(navController)
+        }
 
     }
 }

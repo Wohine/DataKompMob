@@ -45,15 +45,20 @@ fun printTopBarIcon(navController: NavController){
                         onDismissRequest = { expanded = false }
                     ) {
                         DropdownMenuItem(
-                            text = { Text("handlekurv") },
-                            onClick = { /* Handle edit! */ })
-                        DropdownMenuItem(
-                            text = { Text("bestillinger") },
+                            text = { Text("Din side") },
                             onClick = {
-                                navController.navigate("bestilling")
+                                navController.navigate("UserPage")
                             })
                         DropdownMenuItem(
-                            text = { Text("logg ut") },
+                            text = { Text("Handlekurv") },
+                            onClick = { /* Handle edit! */ })
+                        DropdownMenuItem(
+                            text = { Text("Bestillinger") },
+                            onClick = {
+                                navController.navigate("Bestilling")
+                            })
+                        DropdownMenuItem(
+                            text = { Text("Logg ut") },
                             onClick = { mainActivity?.logOut() })
                     }
                 }
