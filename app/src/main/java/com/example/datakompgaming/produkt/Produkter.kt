@@ -1,4 +1,4 @@
-package com.example.datakompgaming.screen
+package com.example.datakompgaming.produkt
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
@@ -22,10 +22,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.datakompgaming.mainActivity
-import com.example.datakompgaming.produkt.ProdukterFire
-import com.example.datakompgaming.produkt.ProsessorerFire
-import com.example.datakompgaming.produkt.SkjermKortFire
+import com.example.datakompgaming.screen.printBotBarIcon
+import com.example.datakompgaming.screen.printTopBarIcon
 
 
 @ExperimentalMaterial3Api

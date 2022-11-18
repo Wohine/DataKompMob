@@ -9,6 +9,7 @@ import com.example.datakompgaming.Routes
 import com.example.datakompgaming.bestillingfiler.Bestillinger
 import com.example.datakompgaming.bestillingfiler.printOrders
 import com.example.datakompgaming.produkt.ProduktObject
+import com.example.datakompgaming.produkt.Produkter
 import com.example.datakompgaming.produkt.ProsessorerObject
 import com.example.datakompgaming.produkt.SkjermKortObject
 

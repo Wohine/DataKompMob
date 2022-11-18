@@ -93,6 +93,7 @@ class MainActivity : ComponentActivity() {
     }
 
 
+
     private fun signInResult(result: FirebaseAuthUIAuthenticationResult) {
         val response = result.idpResponse
         if (result.resultCode == RESULT_OK) {
