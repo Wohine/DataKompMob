@@ -27,13 +27,16 @@ class MainActivity : ComponentActivity() {
 
     private var user: FirebaseUser? = null
 
+     var skjermRef = firestore.collection("Produkter").document("NyeProdukter").collection("Skjermkort")
+     var prossRef = firestore.collection("Produkter").document("NyeProdukter").collection("Prosessorer")
+     var hovedRef = firestore.collection("Produkter").document("NyeProdukter").collection("Hovedkort")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainActivity = this
-        ProdukterUthentingDB()
-        Skjermkort()
-        Prosessorer()
+        ProdukterUthentingDB(skjermRef, 1)  // 1-skjerm
+        ProdukterUthentingDB(prossRef, 2)   // 2-pross
+        ProdukterUthentingDB(hovedRef, 3)   // 3-hoved
         setContent {
             DataKompGamingTheme{
                 Surface(
@@ -101,7 +104,7 @@ class MainActivity : ComponentActivity() {
                 DefaultPreview()
             }
         } else {
-            Log.e("Produkt.kt", "Error logging in " + response?.error?.errorCode)
+            Log.e("ProduktDB.kt", "Error logging in " + response?.error?.errorCode)
         }
     }
 
