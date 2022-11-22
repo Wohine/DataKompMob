@@ -1,5 +1,6 @@
 package com.example.datakompgaming
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -19,6 +20,7 @@ import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.flow.Flow
 
 var mainActivity: MainActivity? = null
 
@@ -93,6 +95,14 @@ class MainActivity : ComponentActivity() {
             .setAvailableProviders(providers)
             .build()
         signInLauncher.launch(signinIntent)
+    }
+
+    interface ProfileImageRepository {
+        suspend fun addImageToFirebaseStorage(imageUri: Uri): Flow<Response<Uri>>
+
+        suspend fun addImageToFirestore(downloadUrl: Uri): Flow<Response<Boolean>>
+
+        suspend fun getImageFromFirestore(): Flow<Response<String>>
     }
 
 

@@ -2,7 +2,11 @@ package com.example.datakompgaming.produkt
 
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -11,43 +15,45 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toFile
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
 import com.example.datakompgaming.R
 import com.example.datakompgaming.screen.printBotBarIcon
 import com.example.datakompgaming.screen.printTopBarIcon
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.output.ByteArrayOutputStream
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import java.io.Console
 
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "SuspiciousIndentation")
 @ExperimentalMaterial3Api
 @Composable
 
 
 
 fun bruktProduktSkjema(navController: NavController) {
-    var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
-    var firebaseAuth = FirebaseAuth.getInstance()
+
+
+
 
         Scaffold(
             bottomBar = {
@@ -74,6 +80,10 @@ fun bruktProduktSkjema(navController: NavController) {
                     mutableStateOf(TextFieldValue())
                 }
 
+                val kategori = remember {
+                    mutableStateOf(TextFieldValue())
+                }
+
                 val produsent = remember {
                     mutableStateOf(TextFieldValue())
                 }
@@ -86,15 +96,25 @@ fun bruktProduktSkjema(navController: NavController) {
                     mutableStateOf(TextFieldValue())
                 }
 
-                val pickedImage = rememberLauncherForActivityResult(ActivityResultContracts.GetMultipleContents()) { uriList ->
-                    // process eith the received image uri
+                var firebaseAuth = FirebaseAuth.getInstance()
+
+
+
+                val storageRef = Firebase.storage.reference;
+
+                var imageUri by remember {
+                    mutableStateOf<Uri?>(null)
+                }
+                val context = LocalContext.current
+                val bitmap =  remember {
+                    mutableStateOf<Bitmap?>(null)
                 }
 
-                var selectImages by remember { mutableStateOf(listOf<Uri>()) }
-                val galleryLauncher =
-                    rememberLauncherForActivityResult(ActivityResultContracts.GetMultipleContents()) {
-                        selectImages = it
-                    }
+                val launcher = rememberLauncherForActivityResult(contract =
+                ActivityResultContracts.GetContent()) { uri: Uri? ->
+                    imageUri = uri
+                }
+
 
                 Spacer(modifier = Modifier.height(20.dp))
 
@@ -113,6 +133,14 @@ fun bruktProduktSkjema(navController: NavController) {
                     label = { Text(text = "Produktnavn") },
                     value = produktNavn.value,
                     onValueChange = { produktNavn.value = it }
+                )
+
+                Spacer(modifier = Modifier.height(15.dp))
+
+                TextField(
+                    label = { Text(text = "Kategori") },
+                    value = kategori.value,
+                    onValueChange = { kategori.value = it }
                 )
 
                 Spacer(modifier = Modifier.height(15.dp))
@@ -142,7 +170,7 @@ fun bruktProduktSkjema(navController: NavController) {
                 Spacer(modifier = Modifier.height(15.dp))
 
                 Button(
-                    onClick = { galleryLauncher.launch("image/*") },
+                    onClick = { launcher.launch("image/*") },
                     modifier = Modifier
                         .wrapContentSize()
                         .padding(10.dp)
@@ -152,6 +180,24 @@ fun bruktProduktSkjema(navController: NavController) {
 
                 Spacer(modifier = Modifier.height(15.dp))
 
+                imageUri?.let {
+                    if (Build.VERSION.SDK_INT < 28) {
+                        bitmap.value = MediaStore.Images
+                            .Media.getBitmap(context.contentResolver,it)
+
+                    } else {
+                        val source = ImageDecoder
+                            .createSource(context.contentResolver,it)
+                        bitmap.value = ImageDecoder.decodeBitmap(source)
+                    }
+
+                    bitmap.value?.let {  btm ->
+                        Image(bitmap = btm.asImageBitmap(),
+                            contentDescription = null,
+                            modifier = Modifier.size(400.dp))
+                    }
+                }
+
                 Spacer(modifier = Modifier.height(15.dp))
 
                 Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
@@ -159,12 +205,14 @@ fun bruktProduktSkjema(navController: NavController) {
                         onClick = {
 
                             val produktNavnString = produktNavn.value.text
+                            val kategoriString = kategori.value.text
                             val produsentString = produsent.value.text
                             val prisString = pris.value.text
                             val tilstandString = tilstand.value.text
 
                             data class BruktProdukt(
                                 val produktNavn: String? = null,
+                                val kategori: String? = null,
                                 val produsent: String? = null,
                                 val pris: String? = null,
                                 val tilstand: String? = null
@@ -172,18 +220,31 @@ fun bruktProduktSkjema(navController: NavController) {
 
                             val bruktProdukt = BruktProdukt(
                                 produktNavnString,
+                                kategoriString,
                                 produsentString,
                                 prisString,
                                 tilstandString
                             )
 
                             firebaseAuth.currentUser?.let { it1 ->
-                                firestore.collection("users").document(it1.uid).collection("bruktProduktSkjema").document(Math.random().toString())
+                                firestore.collection("Produkter").document("BrukteProdukter").collection(kategoriString).document(Math.random().toString())
                                     .set(
                                         bruktProdukt
                                     )
                                     .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
                                     .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
+                            }
+
+                            val baos = ByteArrayOutputStream()
+                            val data = baos.toByteArray()
+                            val mountainsRef = storageRef.child("")
+
+                            var uploadTask = mountainsRef.putBytes(data)
+                            uploadTask.addOnFailureListener {
+                                // Handle unsuccessful uploads
+                            }.addOnSuccessListener { taskSnapshot ->
+                                // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+                                // ...
                             }
 
                         },
