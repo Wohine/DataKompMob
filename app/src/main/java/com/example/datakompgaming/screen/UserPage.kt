@@ -11,11 +11,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.datakompgaming.R
 import com.example.datakompgaming.ui.theme.DataKompGamingTheme
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 @ExperimentalMaterial3Api
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -23,6 +29,9 @@ import com.example.datakompgaming.ui.theme.DataKompGamingTheme
 @Composable
 fun UserPage(navController: NavController)
 {
+    var firebaseAuth = FirebaseAuth.getInstance()
+
+
     DataKompGamingTheme{
         Surface(
             modifier = Modifier.fillMaxWidth(),
@@ -52,6 +61,16 @@ fun UserPage(navController: NavController)
                         painter = painterResource(R.drawable.datakomplogo),
                         contentDescription = null
                     )
+
+
+
+
+                    Text(
+                        text = "Din bruker: " + firebaseAuth.currentUser?.email,
+                        style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Bold)
+                    )
+
+
 
                     Row(
                         horizontalArrangement = Arrangement.Center,
