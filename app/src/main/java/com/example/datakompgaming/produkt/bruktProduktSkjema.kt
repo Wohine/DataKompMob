@@ -1,7 +1,9 @@
 package com.example.datakompgaming.produkt
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.net.Uri
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.*
@@ -33,14 +35,19 @@ import coil.compose.rememberImagePainter
 import com.example.datakompgaming.R
 import com.example.datakompgaming.screen.printBotBarIcon
 import com.example.datakompgaming.screen.printTopBarIcon
-
-
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @ExperimentalMaterial3Api
 @Composable
+
+
+
 fun bruktProduktSkjema(navController: NavController) {
+    var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+    var firebaseAuth = FirebaseAuth.getInstance()
 
         Scaffold(
             bottomBar = {
@@ -149,7 +156,37 @@ fun bruktProduktSkjema(navController: NavController) {
 
                 Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
                     Button(
-                        onClick = {},
+                        onClick = {
+
+                            val produktNavnString = produktNavn.value.text
+                            val produsentString = produsent.value.text
+                            val prisString = pris.value.text
+                            val tilstandString = tilstand.value.text
+
+                            data class BruktProdukt(
+                                val produktNavn: String? = null,
+                                val produsent: String? = null,
+                                val pris: String? = null,
+                                val tilstand: String? = null
+                            )
+
+                            val bruktProdukt = BruktProdukt(
+                                produktNavnString,
+                                produsentString,
+                                prisString,
+                                tilstandString
+                            )
+
+                            firebaseAuth.currentUser?.let { it1 ->
+                                firestore.collection("users").document(it1.uid).collection("bruktProduktSkjema").document(Math.random().toString())
+                                    .set(
+                                        bruktProdukt
+                                    )
+                                    .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
+                                    .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
+                            }
+
+                        },
                         shape = RoundedCornerShape(50.dp),
                         modifier = Modifier
                             .fillMaxWidth()
@@ -170,26 +207,4 @@ fun bruktProduktSkjema(navController: NavController) {
 
 }
 
-@Composable
-fun ImagePickerView(
-    modifier: Modifier = Modifier,
-    lastSelectedImage: Uri?,
-    onSelection: (Uri?) -> Unit
-) {
-    val galleryLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.GetContent()) {
-        onSelection(it)
-    }
-    Image(
-        modifier = modifier
-            .size(100.dp)
-            .clip(CircleShape)
-            .background(Color.LightGray)
-            .clickable {
-                galleryLauncher.launch("image/*")
-            },
-        painter = rememberImagePainter(lastSelectedImage),
-        contentDescription = "Profile Picture",
-        contentScale = ContentScale.Crop
-    )
-}
+
