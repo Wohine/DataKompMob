@@ -62,11 +62,9 @@ fun Kundeservice(navController: NavController) {
                     val tema = remember { mutableStateOf(TextFieldValue()) }
                     val hjelptxt = remember { mutableStateOf(TextFieldValue()) }
 
-                    Spacer(modifier = Modifier.height(40.dp))
-                    Image(
-                        painter = painterResource(R.drawable.datakomplogo),
-                        contentDescription = null
-                    )
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Image(painter = painterResource(R.drawable.datakomplogo), contentDescription = null)
 
 
                     Spacer(modifier = Modifier.height(20.dp))

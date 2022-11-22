@@ -1,9 +1,6 @@
 package com.example.datakompgaming.screen
 
-import android.graphics.drawable.Icon
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.Icon
@@ -11,24 +8,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.datakompgaming.R
-import com.example.datakompgaming.bestillingfiler.Produkt
 import com.example.datakompgaming.ui.theme.DataKompGamingTheme
-import com.example.datakompgaming.ui.theme.Purple700
 
 
 @Composable
@@ -71,7 +54,7 @@ fun printBotBarIcon(navController: NavController, nummer: Int){
                 IconButton(modifier = Modifier.padding(horizontal = 15.dp)
                         then (Modifier.size(45.dp)),
                     onClick = {
-                        navController.navigate("kundeservice")
+                        navController.navigate("bruktProduktSkjema")
                     }) {
                     Icon(
                         Icons.Default.Help,

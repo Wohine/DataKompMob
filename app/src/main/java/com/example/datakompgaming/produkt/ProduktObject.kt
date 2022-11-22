@@ -1,5 +1,7 @@
 package com.example.datakompgaming.produkt
 
 object ProduktObject {
-    var produktListe = mutableListOf<ProdukterFire>()
+    var HovedKortListe = mutableListOf<ProdukterFire>()
+    var SkjermKortListe = mutableListOf<ProdukterFire>()
+    var ProsessorerListe = mutableListOf<ProdukterFire>()
 }

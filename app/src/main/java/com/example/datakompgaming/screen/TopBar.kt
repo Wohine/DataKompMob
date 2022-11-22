@@ -55,8 +55,11 @@ fun printTopBarIcon(navController: NavController){
                         DropdownMenuItem(
                             text = { Text("Bestillinger") },
                             onClick = {
-                                navController.navigate("Bestilling")
+                                navController.navigate("bestilling")
                             })
+                        DropdownMenuItem(
+                            text = { Text("Kundeservice") },
+                            onClick = { navController.navigate("kundeservice") })
                         DropdownMenuItem(
                             text = { Text("Logg ut") },
                             onClick = { mainActivity?.logOut() })
