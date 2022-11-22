@@ -1,4 +1,4 @@
-package com.example.datakompgaming.produkt
+package com.example.datakompgaming.screen
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
@@ -22,15 +22,15 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.datakompgaming.screen.printBotBarIcon
-import com.example.datakompgaming.screen.printTopBarIcon
+import com.example.datakompgaming.produkt.ProdukterFire
 
 
 @ExperimentalMaterial3Api
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 
 @Composable
-fun Produkter(navController: NavController, produktListe: MutableList<ProdukterFire>, SkjermKortListe: MutableList<SkjermKortFire>,ProsessorerListe: MutableList<ProsessorerFire> ) {
+fun Produkter(navController: NavController, hovedListe: MutableList<ProdukterFire>,
+            prosesstListe: MutableList<ProdukterFire>, skjermListe: MutableList<ProdukterFire>) {
 
     Scaffold(
         bottomBar = {
@@ -54,9 +54,9 @@ fun Produkter(navController: NavController, produktListe: MutableList<ProdukterF
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Title("Produkter")
-                        hovedKortRad("Hovedkort",Color(0xFF82d0d9), produktListe)
-                        skjermKortRad("Skjermkort",Color(0xFF82d0d9), SkjermKortListe)
-                        prosessorerRad("Prosessorer",Color(0xFF82d0d9), ProsessorerListe)
+                        produkterRad("Hovedkort",Color(0xFF82d0d9), hovedListe)
+                        produkterRad("Skjermkort",Color(0xFF82d0d9), prosesstListe)
+                        produkterRad("Prosessorer",Color(0xFF82d0d9), skjermListe)
 
                         Spacer(modifier = Modifier.height(100.dp))
                     }
@@ -154,7 +154,7 @@ fun Rad(tittel: String) {
 }
 
 @Composable
-fun hovedKortRad(tittel: String, farge: Color, produktListe: MutableList<ProdukterFire>, ) {
+fun produkterRad(tittel: String, farge: Color, produktListe: MutableList<ProdukterFire>, ) {
     Text(
         text = tittel,
         modifier = Modifier
@@ -170,7 +170,7 @@ fun hovedKortRad(tittel: String, farge: Color, produktListe: MutableList<Produkt
     ) {
         for (produkt in produktListe){
             Log.d(ContentValues.TAG, "Produktliste ok!")
-            HovedKortKort(
+            ProdukterKort(
                 produkt.tittel,
                 produkt.pris.toString(),
                 produkt.varebeholdning,
@@ -181,64 +181,12 @@ fun hovedKortRad(tittel: String, farge: Color, produktListe: MutableList<Produkt
     }
 }
 
-@Composable
-fun skjermKortRad(tittel: String, farge: Color, produktListe: MutableList<SkjermKortFire>, ) {
-    Text(
-        text = tittel,
-        modifier = Modifier
-            .fillMaxSize()
-            .absolutePadding(bottom = Dp(10f)),
-        fontWeight = FontWeight.Bold,
-        fontSize = 25.sp,
-        textAlign = TextAlign.Center
-    )
-    Row(modifier = Modifier
-        .height(150.dp)
-        .horizontalScroll(rememberScrollState(), enabled = true),
-    ) {
-        for (produkt in produktListe){
-            Log.d(ContentValues.TAG, "Produktliste ok!")
-            HovedKortKort(
-                produkt.tittel,
-                produkt.pris.toString(),
-                produkt.varebeholdning,
-                produkt.bilde,
-                farge
-            )
-        }
-    }
-}
+
+
+
 
 @Composable
-fun prosessorerRad(tittel: String, farge: Color, produktListe: MutableList<ProsessorerFire>, ) {
-    Text(
-        text = tittel,
-        modifier = Modifier
-            .fillMaxSize()
-            .absolutePadding(bottom = Dp(10f)),
-        fontWeight = FontWeight.Bold,
-        fontSize = 25.sp,
-        textAlign = TextAlign.Center
-    )
-    Row(modifier = Modifier
-        .height(150.dp)
-        .horizontalScroll(rememberScrollState(), enabled = true),
-    ) {
-        for (produkt in produktListe){
-            Log.d(ContentValues.TAG, "Produktliste ok!")
-            HovedKortKort(
-                produkt.tittel,
-                produkt.pris.toString(),
-                produkt.varebeholdning,
-                produkt.bilde,
-                farge
-            )
-        }
-    }
-}
-
-@Composable
-fun HovedKortKort(tittel: String,pris: String,igjen: String, bilde: String, farge: Color) {
+fun ProdukterKort(tittel: String,pris: String,igjen: String, bilde: String, farge: Color) {
     Log.d(ContentValues.TAG, "hei")
     Card (
         modifier = Modifier
