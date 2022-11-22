@@ -54,25 +54,36 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun login(
     ) {
-        Column(verticalArrangement = Arrangement.SpaceEvenly, horizontalAlignment = Alignment.CenterHorizontally) {
-            Row(modifier = Modifier.padding(all = 2.dp)) {
-                Text(text = "DataKomp")
-            }
-            Row(modifier = Modifier.padding(all = 2.dp)) {
-                Button(
-                    onClick = {
-                        signIn()
-                    },
-                    shape = RoundedCornerShape(50.dp),
-                    modifier = Modifier
-                        .width(300.dp)
-                        .height(50.dp)
+        DataKompGamingTheme {
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                color = MaterialTheme.colorScheme.background
+            ) {
+                Column(
+                    verticalArrangement = Arrangement.SpaceEvenly,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(text = "Logg inn eller registrer ny bruker")
+                    Row(modifier = Modifier.padding(all = 2.dp)) {
+                        Text(text = "DataKomp")
+                    }
+                    Row(modifier = Modifier.padding(all = 2.dp)) {
+                        Button(
+                            onClick = {
+                                signIn()
+                            },
+                            shape = RoundedCornerShape(50.dp),
+                            modifier = Modifier
+                                .width(300.dp)
+                                .height(50.dp)
+                        ) {
+                            Text(text = "Logg inn eller registrer ny bruker")
+                        }
+                    }
                 }
             }
         }
     }
+
 
     @ExperimentalMaterial3Api
     private val signInLauncher = registerForActivityResult(
@@ -123,15 +134,25 @@ class MainActivity : ComponentActivity() {
 @ExperimentalMaterial3Api
 @Composable
 fun DefaultPreview() {
-    MaterialTheme {
-        ScreenMain()
+    DataKompGamingTheme {
+        Surface(
+            modifier = Modifier.fillMaxWidth(),
+            color = MaterialTheme.colorScheme.onBackground
+        ) {
+            ScreenMain()
+        }
     }
 }
 @ExperimentalMaterial3Api
 @Composable
 fun LogoutPreview() {
-    MaterialTheme {
-        mainActivity?.login()
+    DataKompGamingTheme {
+        Surface(
+            modifier = Modifier.fillMaxWidth(),
+            color = MaterialTheme.colorScheme.onBackground
+        ) {
+            mainActivity?.login()
+        }
     }
 }
 

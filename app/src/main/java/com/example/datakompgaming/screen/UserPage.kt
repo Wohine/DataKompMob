@@ -8,16 +8,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.datakompgaming.R
 import com.example.datakompgaming.ui.theme.DataKompGamingTheme
@@ -63,7 +58,10 @@ fun UserPage(navController: NavController)
                         //verticalAlignment = Alignment.CenterVertically
                     ) {
 
-                        Box(modifier = Modifier.padding(10.dp, 10.dp, 10.dp, 10.dp)) {
+                        Box(modifier = Modifier
+                            .padding(10.dp, 10.dp, 10.dp, 10.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
                             Button(
                                 onClick = {
                                     navController.navigate("Bestilling")
@@ -71,27 +69,18 @@ fun UserPage(navController: NavController)
                                 shape = RoundedCornerShape(30.dp),
                                 modifier = Modifier
                                     .width(120.dp)
-                                    .height(40.dp)
+                                    .height(60.dp),
                             ) {
-                                Text(text = "B1")
+                                Text(text = "Bruker instillinger",
+                                    textAlign = TextAlign.Center)
                             }
                         }
 
-                        Box(modifier = Modifier.padding(10.dp, 10.dp, 10.dp, 10.dp)) {
-                            Button(
-                                onClick = {
-                                    navController.navigate("Bestilling")
-                                },
-                                shape = RoundedCornerShape(30.dp),
-                                modifier = Modifier
-                                    .width(120.dp)
-                                    .height(40.dp)
-                            ) {
-                                Text(text = "B2")
-                            }
-                        }
 
-                        Box(modifier = Modifier.padding(10.dp, 10.dp, 10.dp, 10.dp)) {
+                        Box(modifier = Modifier
+                            .padding(10.dp, 10.dp, 10.dp, 10.dp),
+                        contentAlignment = Alignment.Center
+                        ) {
                             Button(
                                 onClick = {
                                     navController.navigate("Bestilling")
@@ -101,18 +90,29 @@ fun UserPage(navController: NavController)
                                     .width(120.dp)
                                     .height(60.dp)
                             ) {
-                                Text(text = "Bruker instillinger")
+                                Text(text = "Bestilling historikk",
+                                    textAlign = TextAlign.Center)
                             }
                         }
 
-
-
-
-
+                        Box(modifier = Modifier
+                            .padding(10.dp, 10.dp, 10.dp, 10.dp),
+                            contentAlignment = Alignment.CenterEnd
+                        ) {
+                            Button(
+                                onClick = {
+                                    navController.navigate("Bestilling")
+                                },
+                                shape = RoundedCornerShape(30.dp),
+                                modifier = Modifier
+                                    .width(120.dp)
+                                    .height(60.dp)
+                            ) {
+                                Text(text = "B3",
+                                    textAlign = TextAlign.Center)
+                            }
+                        }
                     }
-
-
-
 
                     Spacer(modifier = Modifier.height(25.dp))
                     Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
@@ -128,10 +128,6 @@ fun UserPage(navController: NavController)
                     }
                 }
             }
-
-
-
-
         }
     }
 }
