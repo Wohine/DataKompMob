@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.datakompgaming.R
@@ -73,9 +74,12 @@ fun TopProfile(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(60.dp)
+            .fillMaxHeight(0.14f)
         // TODO: farge på card og elevation?
     ) {
+        Column(modifier = Modifier
+            .fillMaxSize()) {
+            Spacer(modifier = Modifier.height(43.dp))
         Row(
             modifier = Modifier
                 .fillMaxSize()
@@ -100,7 +104,7 @@ fun TopProfile(
                 )
             }
         }
-
+    }
     }
 }
 
@@ -111,7 +115,7 @@ fun ChatSection(
     val SimpleDateFormat = SimpleDateFormat("h:mm a", Locale.ENGLISH)
     LazyColumn(
         modifier = Modifier
-//            .fillMaxSize()
+            .fillMaxHeight(0.83f)
             .padding(16.dp),
         reverseLayout = true
     ) {
@@ -171,10 +175,7 @@ fun MessageItem(
 @Composable
 fun MessageSection() {
     val context = LocalContext.current
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        // TODO: farge på card og elevation?
-    ) {
+
         OutlinedTextField(
             placeholder = {
                 Text(text = "Message..")
@@ -189,23 +190,29 @@ fun MessageSection() {
                     painter = painterResource(id = R.drawable.floppa),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(32.dp)
-                        .clickable {  }
+                    modifier = Modifier
+                        .size(32.dp)
+                        .clickable { }
                 )
             },
             modifier = Modifier
-                .padding(10.dp),
+                .padding(0.dp)
+                .fillMaxWidth()
+                .fillMaxHeight(.5f),
         )
-    }
+
 }
 
 @Preview
 @Composable
 fun defaultPre() {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize(0.87f)
+            .absolutePadding(top = Dp(35F)),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
+
         TopProfile(
             username = "Test",
             profile = painterResource(id = R.drawable.floppa),
