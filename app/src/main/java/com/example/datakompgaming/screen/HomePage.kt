@@ -140,10 +140,7 @@ fun ProduktSlider(tittel: String, farge: Color, produktListe: MutableList<Produk
     ) {
         for (produkt in produktListe){
             ProdukterKort(
-                produkt.tittel,
-                produkt.pris.toString(),
-                produkt.varebeholdning,
-                produkt.bilde,
+                produkt,
                 farge
             )
         }

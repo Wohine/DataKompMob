@@ -10,10 +10,18 @@ import com.google.firebase.firestore.Source
 
 
 var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+fun ProdukterUthentingDB(){
+    ProdukterUthentingDB("Skjermkort")
+    ProdukterUthentingDB("Prosessorer")
+    ProdukterUthentingDB("Hovedkort")
+}
+fun ProdukterUthentingDB(collectionType: String) { // 1-skjerm, 2-pross, 3-hoved
+    ProduktObject.SkjermKortListe.clear()
+    ProduktObject.ProsessorerListe.clear()
+    ProduktObject.HovedKortListe.clear()
 
-fun ProdukterUthentingDB(docRef : CollectionReference, i : Int) { // 1-skjerm, 2-pross, 3-hoved
-
-
+    var docRef = firestore.collection("Produkter").document("NyeProdukter")
+                                            .collection(collectionType)
     var source = Source.DEFAULT
 
     docRef.get(source).addOnSuccessListener { documents ->
@@ -24,13 +32,15 @@ fun ProdukterUthentingDB(docRef : CollectionReference, i : Int) { // 1-skjerm, 2
                 pris = document.getDouble("pris"),
                 varebeholdning = document["varebeholdning"].toString(),
                 bilde = document["bilde"].toString(),
-                rating = document["rating"].toString()
+                rating = document["rating"].toString(),
+                typeProdukt =  collectionType,
+                docNavn = document["docNavn"].toString()
             )
-            if(i == 1)
+            if(collectionType.equals("Skjermkort"))
                 ProduktObject.SkjermKortListe.add(p1)
-            else if(i == 2)
+            else if(collectionType.equals("Prosessorer"))
                 ProduktObject.ProsessorerListe.add(p1)
-            else if(i == 3)
+            else
                 ProduktObject.HovedKortListe.add(p1)
 
             Log.d(TAG, document["tittel"].toString())

@@ -39,12 +39,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "SuspiciousIndentation")
 @ExperimentalMaterial3Api
 @Composable
-
-
-
 fun bruktProduktSkjema(navController: NavController) {
     var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
     var firebaseAuth = FirebaseAuth.getInstance()
