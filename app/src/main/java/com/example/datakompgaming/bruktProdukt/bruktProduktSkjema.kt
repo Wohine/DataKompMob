@@ -218,7 +218,7 @@ fun bruktProduktSkjema(navController: NavController) {
                             val varebeholdningString = "1"
 
                             data class BruktProdukt(
-                                val produktNavn: String? = null,
+                                val tittel: String? = null,
                                 val kategori: String? = null,
                                 val produsent: String? = null,
                                 val pris: String? = null,
