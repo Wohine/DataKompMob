@@ -2,7 +2,6 @@ package com.example.datakompgaming.screen.chat
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
-import android.icu.text.SimpleDateFormat
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -39,9 +38,13 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.childEvents
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import com.example.datakompgaming.screen.chat.Car
+import androidx.lifecycle.viewmodel.compose.viewModel
+import java.text.SimpleDateFormat
 
 val message = mutableStateOf("")
 private val BotChatBubbleShape = RoundedCornerShape(0.dp,8.dp,8.dp,8.dp)
@@ -71,6 +74,7 @@ fun ChatApp(navController: NavController) {
 //                )
 //
 //                ChatSection(Modifier.weight(1f))
+//                MessageSection()
                 MessageScreen()
                 MessageSection()
             }
@@ -208,9 +212,10 @@ fun MessageItem(
 @Composable
 fun MessageSection() {
     val context = LocalContext.current
+
     val database =
         Firebase.database("https://datakompkotlin-default-rtdb.europe-west1.firebasedatabase.app")
-    val test = database.getReference("/messages/0/text")
+
         OutlinedTextField(
             placeholder = {
                 Text(text = "Message..")
@@ -228,15 +233,14 @@ fun MessageSection() {
                     modifier = Modifier
                         .size(32.dp)
                         .clickable {
+//                            val messageID = database.getReference("/messages").push().key
+//                            println(messageID)
+                            val messageTxt = database.getReference("/messages/${0}/text")
+                            val messageSender = database.getReference("/messages/${0}/sender")
+                            val messageOut = database.getReference("/messages/${0}/isOut")
 
 
-                            val messageId = 0
-
-                            val messageTxt = database.getReference("/messages/${messageId}/text")
-                            val messageSender =
-                                database.getReference("/messages/${messageId}/sender")
-                            val messageOut = database.getReference("/messages/${messageId}/isOut")
-
+//                            Calendar.getInstance().timeInMillis
                             messageTxt.setValue(message.value)
                             messageSender.setValue("test user")
                             messageOut.setValue(true)
@@ -273,20 +277,5 @@ fun defaultPre() {
 }
 
 
-val database = Firebase.database("https://datakompkotlin-default-rtdb.europe-west1.firebasedatabase.app")
-fun getCount(): Long {
-    var messageId: Long = 0
-    database.getReference("messages")
-        .addValueEventListener(
-            object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    messageId = dataSnapshot.childrenCount
-                }
 
-                override fun onCancelled(error: DatabaseError) {
-                    Log.w(ContentValues.TAG, "Failed to read value.", error.toException())
-                }
-            }
-        )
-    return messageId}
 
