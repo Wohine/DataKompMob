@@ -11,15 +11,17 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
-import java.util.Calendar
+import java.util.*
+
 
 data class Message(
     var text: String = "",
-    var sender: String = ""
+    var sender: String = "",
 //    var recipientID: String,
-////    var time: Long = Calendar.getInstance().timeInMillis,
+    var time: Long = Calendar.getInstance().timeInMillis,
 //    var time: Long = 0,
-//    var isOut: Boolean = false
+    @field:JvmField
+    var isOut: Boolean? = null,
 )
 
 class MessageViewModel : ViewModel() {
@@ -29,7 +31,6 @@ class MessageViewModel : ViewModel() {
     private var _messages = mutableStateOf<List<Message>>(emptyList())
     val messages: State<List<Message>> = _messages
     var guh = getMessages()
-
     private fun getMessages(): Int {
         database.getReference("messages")
             .addValueEventListener(
