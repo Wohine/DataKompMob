@@ -2,7 +2,7 @@ package com.example.datakompgaming.produkt
 
 import com.google.firebase.firestore.Exclude
 
-data class ProdukterFire(
+data class BrukteProdukterFire(
     val bilde: String,
     val rating: String,
     val varebeholdning: String,

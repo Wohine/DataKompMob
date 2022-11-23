@@ -1,7 +1,4 @@
-package com.example.datakompgaming.produkt
-
-import com.example.datakompgaming.screen.printBotBarIcon
-import com.example.datakompgaming.screen.printTopBarIcon
+package com.example.datakompgaming.screen
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
@@ -17,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -25,6 +23,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.datakompgaming.handlekurv.HandlekurvObject
+import com.example.datakompgaming.produkt.BrukteProdukterFire
 import com.example.datakompgaming.produkt.ProdukterFire
 
 
@@ -32,8 +32,8 @@ import com.example.datakompgaming.produkt.ProdukterFire
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 
 @Composable
-fun BruktMarked(navController: NavController, hovedListe: MutableList<ProdukterFire>,
-              prosesstListe: MutableList<ProdukterFire>, skjermListe: MutableList<ProdukterFire>) {
+fun BruktMarked(navController: NavController, bruktHovedkortListe: MutableList<BrukteProdukterFire>,
+              bruktProsessorListe: MutableList<BrukteProdukterFire>, bruktSkjermkortListe: MutableList<BrukteProdukterFire>) {
 
     Scaffold(
         bottomBar = {
@@ -56,10 +56,10 @@ fun BruktMarked(navController: NavController, hovedListe: MutableList<ProdukterF
                     .verticalScroll(rememberScrollState(),enabled = true),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Title("Produkter")
-                produkterRad("Hovedkort",Color(0xFF82d0d9), hovedListe)
-                produkterRad("Skjermkort",Color(0xFF82d0d9), prosesstListe)
-                produkterRad("Prosessorer",Color(0xFF82d0d9), skjermListe)
+                Title("Markedsplass")
+                brukteProdukterRad("Hovedkort",Color(0xFF82d0d9), bruktHovedkortListe)
+                brukteProdukterRad("Skjermkort",Color(0xFF82d0d9), bruktSkjermkortListe)
+                brukteProdukterRad("Prosessorer",Color(0xFF82d0d9), bruktProsessorListe)
 
                 Spacer(modifier = Modifier.height(100.dp))
             }
@@ -69,7 +69,7 @@ fun BruktMarked(navController: NavController, hovedListe: MutableList<ProdukterF
 }
 
 @Composable
-fun Title(name: String) {
+fun BruktTitle(name: String) {
     Text(
         text = name,
         fontSize = 35.sp,
@@ -85,7 +85,7 @@ fun Title(name: String) {
 }
 
 @Composable
-fun KortLabel(tittel: String) {
+fun BruktKortLabel(tittel: String) {
     Text(
         text = tittel,
         modifier = Modifier
@@ -99,7 +99,7 @@ fun KortLabel(tittel: String) {
 }
 
 @Composable
-fun Kort(tittel: String,pris: String,igjen: String, imagePainter: Painter) {
+fun BruktKort(tittel: String,pris: String,tilstand: String, imagePainter: Painter) {
     Card (
         modifier = Modifier
             .width(300.dp)
@@ -123,9 +123,9 @@ fun Kort(tittel: String,pris: String,igjen: String, imagePainter: Painter) {
                 .background(Color.Transparent),
 
                 ) {
-                KortLabel(tittel)
-                KortLabel("Pris: $pris"+"kr")
-                KortLabel("Kun $igjen igjen!")
+                BruktKortLabel(tittel)
+                BruktKort("Pris: $pris"+"kr")
+                BruktKort("Tilstand $tilstand ")
             }
 
         }
@@ -134,7 +134,7 @@ fun Kort(tittel: String,pris: String,igjen: String, imagePainter: Painter) {
 }
 
 @Composable
-fun Rad(tittel: String) {
+fun BruktRad(tittel: String) {
     Text(
         text = tittel,
         modifier = Modifier
@@ -148,16 +148,16 @@ fun Rad(tittel: String) {
         .height(150.dp)
         .horizontalScroll(rememberScrollState(), enabled = true),
     ) {
-        Kort("Test Vare","500","1", painterResource(id = R.drawable.datakomplogo))
-        Kort("Test Vare 2","250","3", painterResource(id = R.drawable.datakomplogo))
-        Kort("Test Vare 3","750","2", painterResource(id = R.drawable.datakomplogo))
-        Kort("Test Vare 4","1250","1", painterResource(id = R.drawable.datakomplogo))
-        Kort("Test Vare 5","2750","5", painterResource(id = R.drawable.datakomplogo))
+        BruktKort("Test Vare","500","1", painterResource(id = R.drawable.datakomplogo))
+        BruktKort("Test Vare 2","250","3", painterResource(id = R.drawable.datakomplogo))
+        BruktKort("Test Vare 3","750","2", painterResource(id = R.drawable.datakomplogo))
+        BruktKort("Test Vare 4","1250","1", painterResource(id = R.drawable.datakomplogo))
+        BruktKort("Test Vare 5","2750","5", painterResource(id = R.drawable.datakomplogo))
     }
 }
 
 @Composable
-fun produkterRad(tittel: String, farge: Color, produktListe: MutableList<ProdukterFire>, ) {
+fun brukteProdukterRad(tittel: String, farge: Color, bruktProduktListe: MutableList<ProdukterFire>, ) {
     Text(
         text = tittel,
         modifier = Modifier
@@ -171,13 +171,10 @@ fun produkterRad(tittel: String, farge: Color, produktListe: MutableList<Produkt
         .height(150.dp)
         .horizontalScroll(rememberScrollState(), enabled = true),
     ) {
-        for (produkt in produktListe){
+        for (produkt in bruktProduktListe){
             Log.d(ContentValues.TAG, "Produktliste ok!")
-            ProdukterKort(
-                produkt.tittel,
-                produkt.pris.toString(),
-                produkt.varebeholdning,
-                produkt.bilde,
+            BrukteProdukterKort(
+                bruktProdukt,
                 farge
             )
         }
@@ -189,14 +186,19 @@ fun produkterRad(tittel: String, farge: Color, produktListe: MutableList<Produkt
 
 
 @Composable
-fun ProdukterKort(tittel: String,pris: String,igjen: String, bilde: String, farge: Color) {
-    Log.d(ContentValues.TAG, "hei")
+fun BrukteProdukterKort(bruktProdukt: BrukteProdukterFire, farge: Color) {
+    var tilstand = bruktProdukt.tilstand
+    var pris = bruktProdukt.pris
+    var cont = LocalContext.current
     Card (
         modifier = Modifier
             .width(300.dp)
             .height(150.dp)
             .absolutePadding(right = Dp(35f))
-            .clickable { println("Clicked") },
+            .clickable {
+                HandlekurvObject.handlekurvListe.add(bruktProdukt)
+
+            },
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(
             farge
@@ -204,7 +206,7 @@ fun ProdukterKort(tittel: String,pris: String,igjen: String, bilde: String, farg
     ) {
         Row() {
             AsyncImage(
-                model = bilde,
+                model = bruktProdukt.bilde,
                 contentDescription = "null",
                 modifier = Modifier
                     .fillMaxSize()
@@ -217,9 +219,9 @@ fun ProdukterKort(tittel: String,pris: String,igjen: String, bilde: String, farg
                 .background(Color.Transparent),
 
                 ) {
-                KortLabel(tittel)
+                KortLabel(bruktProdukt.tittel)
                 KortLabel("Pris: $pris"+"kr")
-                KortLabel("Kun $igjen igjen!")
+                KortLabel("Tilstand: $tilstand")
             }
 
         }

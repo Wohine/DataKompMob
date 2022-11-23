@@ -16,7 +16,7 @@ import com.example.datakompgaming.ui.theme.DataKompGamingTheme
 
 @Composable
 fun printBotBarIcon(navController: NavController, nummer: Int){
-    // 0 = hjem, 1 = chat, 2 = kundesevice, 3 = om oss, 4 = produkter
+    // 0 = hjem, 1 = chat, 2 = brukt produkt skjema, 3 = om oss, 4 = produkter
     DataKompGamingTheme {
         Surface(
             modifier = Modifier.fillMaxWidth(),
@@ -57,8 +57,8 @@ fun printBotBarIcon(navController: NavController, nummer: Int){
                         navController.navigate("bruktProduktSkjema")
                     }) {
                     Icon(
-                        Icons.Default.Help,
-                        contentDescription = "kundeservice",
+                        Icons.Default.Publish,
+                        contentDescription = "bruktProduktSkjema",
                         Modifier.size(35.dp),
                         tint = if (nummer == 2) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.secondary
                     )

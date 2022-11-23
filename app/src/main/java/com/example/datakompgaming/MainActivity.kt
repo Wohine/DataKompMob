@@ -94,14 +94,6 @@ class MainActivity : ComponentActivity() {
         signInLauncher.launch(signinIntent)
     }
 
-    interface ProfileImageRepository {
-        suspend fun addImageToFirebaseStorage(imageUri: Uri): Flow<Response<Uri>>
-
-        suspend fun addImageToFirestore(downloadUrl: Uri): Flow<Response<Boolean>>
-
-        suspend fun getImageFromFirestore(): Flow<Response<String>>
-    }
-
 
 
     private fun signInResult(result: FirebaseAuthUIAuthenticationResult) {

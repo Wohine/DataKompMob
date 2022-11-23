@@ -54,7 +54,7 @@ fun bruktProduktSkjema(navController: NavController) {
 
         Scaffold(
             bottomBar = {
-                printBotBarIcon(navController = navController, 4)
+                printBotBarIcon(navController = navController, 2)
             },
             topBar = {
                 printTopBarIcon(navController = navController)
@@ -90,6 +90,10 @@ fun bruktProduktSkjema(navController: NavController) {
                 }
 
                 val tilstand = remember {
+                    mutableStateOf(TextFieldValue())
+                }
+
+                val bildeAdresse = remember {
                     mutableStateOf(TextFieldValue())
                 }
 
@@ -177,6 +181,14 @@ fun bruktProduktSkjema(navController: NavController) {
 
                 Spacer(modifier = Modifier.height(15.dp))
 
+                TextField(
+                    label = { Text(text = "Bildeadresse") },
+                    value = bildeAdresse.value,
+                    onValueChange = { bildeAdresse.value = it },
+                )
+
+                Spacer(modifier = Modifier.height(15.dp))
+
                 imageUri?.let {
                     if (Build.VERSION.SDK_INT < 28) {
                         bitmap.value = MediaStore.Images
@@ -206,13 +218,17 @@ fun bruktProduktSkjema(navController: NavController) {
                             val produsentString = produsent.value.text
                             val prisString = pris.value.text
                             val tilstandString = tilstand.value.text
+                            val bildeAdresseString = bildeAdresse.value.text
+                            val varebeholdningString = "1"
 
                             data class BruktProdukt(
                                 val produktNavn: String? = null,
                                 val kategori: String? = null,
                                 val produsent: String? = null,
                                 val pris: String? = null,
-                                val tilstand: String? = null
+                                val tilstand: String? = null,
+                                val bildeAdresse: String? = null,
+                                val varebeholdning: String? = null
                             )
 
                             val bruktProdukt = BruktProdukt(
@@ -220,7 +236,9 @@ fun bruktProduktSkjema(navController: NavController) {
                                 kategoriString,
                                 produsentString,
                                 prisString,
-                                tilstandString
+                                tilstandString,
+                                bildeAdresseString,
+                                varebeholdningString
                             )
 
                             firebaseAuth.currentUser?.let { it1 ->
@@ -228,20 +246,8 @@ fun bruktProduktSkjema(navController: NavController) {
                                     .set(
                                         bruktProdukt
                                     )
-                                    .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
+                                    .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!")}
                                     .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
-                            }
-
-                            val baos = ByteArrayOutputStream()
-                            val data = baos.toByteArray()
-                            val mountainsRef = storageRef.child("")
-
-                            var uploadTask = mountainsRef.putBytes(data)
-                            uploadTask.addOnFailureListener {
-                                // Handle unsuccessful uploads
-                            }.addOnSuccessListener { taskSnapshot ->
-                                // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-                                // ...
                             }
 
                         },
