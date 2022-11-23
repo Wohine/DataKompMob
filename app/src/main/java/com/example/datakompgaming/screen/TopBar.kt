@@ -41,12 +41,12 @@ fun printTopBarIcon(navController: NavController){
                             modifier = Modifier.size(35.dp)
                         )
                     }
-                    IconButton(onClick = { navController.navigate("Handlekurv") }) {
+                    IconButton(modifier = Modifier.absoluteOffset(-360.dp,0.dp), onClick = { navController.navigate("Handlekurv") }) {
                         Icon(
                             Icons.Default.ShoppingBasket,
                             contentDescription = "basket",
                             tint = MaterialTheme.colorScheme.secondary,
-                            modifier = Modifier.size(35.dp).absoluteOffset(-300.dp,0.dp)
+                            modifier = Modifier.size(35.dp)
                         )
                     }
                     DropdownMenu(
