@@ -47,9 +47,6 @@ import java.io.Console
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "SuspiciousIndentation")
 @ExperimentalMaterial3Api
 @Composable
-
-
-
 fun bruktProduktSkjema(navController: NavController) {
 
 

@@ -3,6 +3,7 @@ package com.example.datakompgaming.screen
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.util.Log
+import android.widget.Toast
 import androidx.navigation.NavController
 import com.example.datakompgaming.R
 import androidx.compose.foundation.*
@@ -14,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -22,6 +24,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.datakompgaming.handlekurv.HandlekurvObject
+import com.example.datakompgaming.produkt.ProduktObject
 import com.example.datakompgaming.produkt.ProdukterFire
 
 
@@ -171,10 +175,7 @@ fun produkterRad(tittel: String, farge: Color, produktListe: MutableList<Produkt
         for (produkt in produktListe){
             Log.d(ContentValues.TAG, "Produktliste ok!")
             ProdukterKort(
-                produkt.tittel,
-                produkt.pris.toString(),
-                produkt.varebeholdning,
-                produkt.bilde,
+                produkt,
                 farge
             )
         }
@@ -186,14 +187,24 @@ fun produkterRad(tittel: String, farge: Color, produktListe: MutableList<Produkt
 
 
 @Composable
-fun ProdukterKort(tittel: String,pris: String,igjen: String, bilde: String, farge: Color) {
-    Log.d(ContentValues.TAG, "hei")
+fun ProdukterKort(produkt: ProdukterFire, farge: Color) {
+    var varebeholdning = produkt.varebeholdning
+    var pris = produkt.pris
+    var cont = LocalContext.current
     Card (
         modifier = Modifier
             .width(300.dp)
             .height(150.dp)
             .absolutePadding(right = Dp(35f))
-            .clickable { println("Clicked") },
+            .clickable {
+                if(produkt.varebeholdning.toInt() < 1)
+                    Toast.makeText(cont, "Utsolgt..", Toast.LENGTH_SHORT).show()
+                else{
+                    Toast.makeText(cont, "lagt i kurv", Toast.LENGTH_SHORT).show()
+                    HandlekurvObject.handlekurvListe.add(produkt)
+                }
+
+            },
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(
             farge
@@ -201,7 +212,7 @@ fun ProdukterKort(tittel: String,pris: String,igjen: String, bilde: String, farg
         ) {
         Row() {
             AsyncImage(
-                model = bilde,
+                model = produkt.bilde,
                 contentDescription = "null",
                 modifier = Modifier
                 .fillMaxSize()
@@ -214,9 +225,9 @@ fun ProdukterKort(tittel: String,pris: String,igjen: String, bilde: String, farg
                 .background(Color.Transparent),
 
                 ) {
-                KortLabel(tittel)
+                KortLabel(produkt.tittel)
                 KortLabel("Pris: $pris"+"kr")
-                KortLabel("Kun $igjen igjen!")
+                KortLabel("Kun $varebeholdning igjen!")
             }
 
         }

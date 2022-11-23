@@ -41,6 +41,8 @@ fun ScreenMain(){
         composable(Routes.bruktProduktSkjema.route){
             bruktProduktSkjema(navController)
         }
-
+        composable(Routes.Handlekurv.route){
+            printHandlekurv(navController)
+        }
     }
 }

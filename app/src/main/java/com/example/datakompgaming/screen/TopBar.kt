@@ -46,7 +46,9 @@ fun printTopBarIcon(navController: NavController){
                     ) {
                         DropdownMenuItem(
                             text = { Text("Handlekurv") },
-                            onClick = { /* Handle edit! */ })
+                            onClick = {
+                                navController.navigate("Handlekurv")
+                            })
                         DropdownMenuItem(
                             text = { Text("Bestillinger") },
                             onClick = {

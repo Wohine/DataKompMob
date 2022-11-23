@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.datakompgaming.handlekurv.produktOppdateringDB
 import com.example.datakompgaming.produkt.*
 import com.example.datakompgaming.screen.ScreenMain
 import com.example.datakompgaming.ui.theme.DataKompGamingTheme
@@ -29,16 +30,12 @@ class MainActivity : ComponentActivity() {
 
     private var user: FirebaseUser? = null
 
-     var skjermRef = firestore.collection("Produkter").document("NyeProdukter").collection("Skjermkort")
-     var prossRef = firestore.collection("Produkter").document("NyeProdukter").collection("Prosessorer")
-     var hovedRef = firestore.collection("Produkter").document("NyeProdukter").collection("Hovedkort")
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainActivity = this
-        ProdukterUthentingDB(skjermRef, 1)  // 1-skjerm
-        ProdukterUthentingDB(prossRef, 2)   // 2-pross
-        ProdukterUthentingDB(hovedRef, 3)   // 3-hoved
+        ProdukterUthentingDB()
         setContent {
             DataKompGamingTheme{
                 Surface(
