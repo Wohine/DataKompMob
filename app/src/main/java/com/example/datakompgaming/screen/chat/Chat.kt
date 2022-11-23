@@ -52,6 +52,7 @@ import java.text.SimpleDateFormat
 val message = mutableStateOf("")
 private val BotChatBubbleShape = RoundedCornerShape(0.dp,8.dp,8.dp,8.dp)
 private val AuthorChatBubbleShape = RoundedCornerShape(8.dp,0.dp,8.dp,8.dp)
+
 var firebaseAuth = FirebaseAuth.getInstance()
 
 private val database =
@@ -110,7 +111,7 @@ fun MessageScreen(viewModel: MessageViewModel = viewModel()) {
     ) {
         val isOut: Boolean = true
         items(viewModel.messages.value) { message ->
-            isOut?.let { MessageItem(messageText = message.text, time = SimpleDateFormat.format(message.time), uid = message.uid, sender = message.sender) }
+            MessageItem(messageText = message.text, time = SimpleDateFormat.format(message.time), sender = message.sender, userUid = message.uid)
             Spacer(modifier = Modifier.height(8.dp))
             coroutineScope.launch {
                 listState.scrollToItem(size.toInt())
@@ -192,10 +193,10 @@ fun MessageItem(
     messageText: String?,
     time: String,
     sender: String,
-    uid: String,
+    userUid: String
 ) {
     var isOut = false
-    if (firebaseAuth.currentUser?.uid == uid){
+    if (firebaseAuth.currentUser?.uid == userUid){
         isOut = true
     }
     Column(
@@ -267,10 +268,11 @@ fun MessageSection() {
                             val messageId = size
                             val messageUid = database.getReference("/messages/${messageId}/uid")
                             val messageTxt = database.getReference("/messages/${messageId}/text")
-                            val messageSender = database.getReference("/messages/${messageId}/sender")
+                            val messageSender =
+                                database.getReference("/messages/${messageId}/sender")
                             val messageTime = database.getReference("/messages/${messageId}/time")
 
-//                            Calendar.getInstance().timeInMillis
+                            messageUid.setValue(firebaseAuth.currentUser?.uid)
                             messageTxt.setValue(message.value)
                             if (firebaseAuth.currentUser?.email == null){
                                 messageSender.setValue("Guest")
@@ -278,7 +280,6 @@ fun MessageSection() {
                                 messageSender.setValue(firebaseAuth.currentUser?.email)
                             }
                             messageTime.setValue(Calendar.getInstance().timeInMillis)
-                            messageUid.setValue(firebaseAuth.currentUser?.uid)
                         }
                 )
             },
