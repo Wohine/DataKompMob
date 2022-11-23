@@ -19,12 +19,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.datakompgaming.screen.HandlekurvCard
-import com.example.datakompgaming.screen.printBotBarIcon
-import com.example.datakompgaming.screen.printTopBarIcon
-import com.example.datakompgaming.screen.updateVarerPaLager
+import com.example.datakompgaming.screen.*
 import com.example.datakompgaming.user
 import com.google.firebase.auth.FirebaseAuth
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -102,6 +103,8 @@ fun printShippingSkjema(navController: NavController) {
                     onValueChange = { postkode.value = it }
                 )
                 Button(onClick = {
+                    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm ")
+                    val current = LocalDateTime.now().format(formatter)
 
                     var shipInfo = ShippingFire(
                         uid = uID,
@@ -110,12 +113,18 @@ fun printShippingSkjema(navController: NavController) {
                         mail = mail.value.text,
                         adresse = adresse.value.text,
                         by = by.value.text,
-                        postkode = postkode.value.text
+                        postkode = postkode.value.text,
+                        totalPris = pris.toString(),
+                        dato = current
                     )
+
                     for(item in HandlekurvObject.handlekurvListe)
                         shipInfo.basket.add(item.toMap())
                     for(item in HandlekurvObject.BruktHandleliste)
                         shipInfo.basket.add(item.toMap())
+
+
+
                     kjopProdukterDB(shipInfo)
                     updateVarerPaLager()
                     HandlekurvObject.handlekurvListe.clear()

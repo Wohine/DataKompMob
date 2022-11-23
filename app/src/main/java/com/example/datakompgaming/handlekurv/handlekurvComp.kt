@@ -29,7 +29,7 @@ import com.example.datakompgaming.handlekurv.produktOppdateringDB
 import com.example.datakompgaming.produkt.ProduktObject
 import com.example.datakompgaming.produkt.ProdukterFire
 
-
+var pris = 0.0
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -67,6 +67,7 @@ fun printHandlekurv(navController: NavController) {
             Text(text = "din totalpris: ${totalPris} ")
 
             Button(onClick = {
+                pris = totalPris
                 navController.navigate("Shipping")
             }) {
                 Text(text = "kjøp varer!")
@@ -117,13 +118,13 @@ fun bruktHandlekurvCard(item: BrukteProdukterFire,navController: NavController) 
         .fillMaxWidth()
     ) {
         AsyncImage(
-            model = item.produktNavn,
+            model = item.tittel,
             contentDescription = "null",
             modifier = Modifier
                 .fillMaxSize(0.5F)
         )
         Column() {
-            Text(text = item.produktNavn)
+            Text(text = item.tittel)
             Text(text = item.tilstand + " stjerners rangering")
             Text(text = pris + "kr")
             Button(onClick = {

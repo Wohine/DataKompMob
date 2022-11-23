@@ -2,6 +2,7 @@ package com.example.datakompgaming.screen
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.util.Log
 import android.widget.Toast
 import androidx.navigation.NavController
@@ -111,8 +112,9 @@ fun BrukteProdukterKort(produkt: BrukteProdukterFire, farge: Color) {
         )
     ) {
         Row() {
+            Log.d(TAG, produkt.bilde)
             AsyncImage(
-                model = "dd",
+                model = produkt.bilde,
                 contentDescription = "null",
                 modifier = Modifier
                     .fillMaxSize()
@@ -125,7 +127,7 @@ fun BrukteProdukterKort(produkt: BrukteProdukterFire, farge: Color) {
                 .background(Color.Transparent),
 
                 ) {
-                KortLabel(produkt.produktNavn)
+                KortLabel(produkt.tittel)
                 KortLabel("Pris: $pris"+"kr")
                 KortLabel("Kun $tilstand brukt!")
             }

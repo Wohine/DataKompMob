@@ -5,18 +5,20 @@ import com.google.firebase.firestore.Exclude
 data class BrukteProdukterFire(
     val kategori: String,
     val pris: Double,
-    val produktNavn: String,
+    val tittel: String,
     val produsent: String,
-    val tilstand: String
+    val tilstand: String,
+    val bilde: String
 ) {
     @Exclude
     fun toMap(): Map<String, Any?> {
         return mapOf(
             "kategori" to kategori,
             "pris" to pris,
-            "produktNavn" to produktNavn,
+            "tittel" to tittel,
             "produsent" to produsent,
             "tilstand" to tilstand,
+            "bilde" to bilde
         )
     }
 }

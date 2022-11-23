@@ -13,6 +13,8 @@ data class ShippingFire(
     val adresse: String,
     val by: String,
     val postkode : String,
+    val dato: String,
+    var totalPris: String,
     val basket: MutableList<Map<String, Any?>> = arrayListOf()
 ) {
     @Exclude
@@ -25,7 +27,9 @@ data class ShippingFire(
             "adresse" to adresse,
             "by" to by,
             "postkode" to postkode,
-            "basket" to basket
+            "basket" to basket,
+            "dato" to dato,
+            "totalPris" to totalPris
         )
     }
 }

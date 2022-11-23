@@ -23,6 +23,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.example.datakompgaming.screen.printBotBarIcon
 import com.example.datakompgaming.screen.printTopBarIcon
 
@@ -31,6 +32,9 @@ import com.example.datakompgaming.screen.printTopBarIcon
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun printOrders(bestillingListe: List<Order>, navController: NavController) {
+    if (bestillingListe.isEmpty())
+        bestillingHent()
+
     Scaffold(
         bottomBar = {
             printBotBarIcon(navController = navController, 5)
@@ -77,12 +81,11 @@ fun BestillingerCard(bestilling: Order) {
 
 @Composable
 fun printProdukt(produkt: Produkt){
-    Row() {
+    Row(modifier = Modifier.border(1.dp, Color.Black)) {
         itemBilde(produkt = produkt)
         Column(){
-            Text(text = produkt.description)
+            Text(text = produkt.tittel)
             Text(text = produkt.pris)
-            Text(text = produkt.stjerner)
         }
     }
 }
@@ -91,12 +94,11 @@ fun printProdukt(produkt: Produkt){
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 private fun itemBilde(produkt: Produkt) {
-    Image(
-        painter = painterResource(id = produkt.bildeId),
-        contentDescription = null,
-        contentScale = ContentScale.Crop,
+    AsyncImage(
+        model = produkt.bilde,
+        contentDescription = "null",
         modifier = Modifier
-            .padding(8.dp)
-            .size(84.dp)
+            .fillMaxWidth(0.3f),
+        alignment = Alignment.CenterStart
     )
 }
