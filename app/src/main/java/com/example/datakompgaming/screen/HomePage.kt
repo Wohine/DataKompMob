@@ -24,9 +24,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.example.datakompgaming.R
 import com.example.datakompgaming.produkt.ProduktObject
 
 import com.example.datakompgaming.produkt.ProdukterFire
+import com.example.datakompgaming.ui.theme.DataKompGamingTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -38,25 +40,31 @@ import kotlinx.coroutines.launch as launch
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomePage(navController: NavController) {
-
-    Scaffold(
-        bottomBar = {
-            printBotBarIcon(navController = navController, 0)
-        },
-        topBar = {
-            printTopBarIcon(navController = navController)
-        }
-    ) {
-        Column(
-            modifier = Modifier
-                .verticalScroll(rememberScrollState(),enabled = true),
-            horizontalAlignment = Alignment.CenterHorizontally
+    DataKompGamingTheme {
+        Surface(
+            modifier = Modifier.fillMaxWidth(),
+            color = MaterialTheme.colorScheme.onBackground
         ) {
-            LogoBanner(title = "test")
-            WelcomeSlider()
-            FeatProd("Gode Tilbud")
-            FeatProd("Ukens Produkter")
-            FeatProd("Våre Beste Produkter")
+            Scaffold(
+                bottomBar = {
+                    printBotBarIcon(navController = navController, 0)
+                },
+                topBar = {
+                    printTopBarIcon(navController = navController)
+                }
+            ) {
+                Column(
+                    modifier = Modifier
+                        .verticalScroll(rememberScrollState(), enabled = true),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    LogoBanner(title = "test")
+                    WelcomeSlider()
+                    FeatProd("Gode Tilbud")
+                    FeatProd("Ukens Produkter")
+                    FeatProd("Våre Beste Produkter")
+                }
+            }
         }
     }
 }
@@ -64,7 +72,7 @@ fun HomePage(navController: NavController) {
 @Composable
 fun LogoBanner(title: String) {
     Spacer(modifier = Modifier.height(15.dp))
-    Image(painter = painterResource(com.example.datakompgaming.R.drawable.datakomplogo),
+    Image(painter = painterResource(R.drawable.datakomplogo),
         contentDescription = null,
         contentScale = ContentScale.Fit,
         modifier = Modifier.size(150.dp)
