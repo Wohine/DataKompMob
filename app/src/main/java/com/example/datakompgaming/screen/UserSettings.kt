@@ -143,7 +143,6 @@ fun UserSettings(navController: NavController)
                                     emailString,
                                     adresseString,
                                     postNrString,
-
                                 )
 
 

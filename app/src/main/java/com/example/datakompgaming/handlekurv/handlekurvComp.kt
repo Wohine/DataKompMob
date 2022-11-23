@@ -126,7 +126,7 @@ fun bruktHandlekurvCard(item: BrukteProdukterFire,navController: NavController) 
                 .fillMaxSize(0.5F)
         )
         Column() {
-            Text(text = item.produktNavn)
+            Text(text = item.tittel)
             Text(text = item.tilstand + " stjerners rangering")
             Text(text = pris + "kr")
             Button(onClick = {

@@ -58,7 +58,8 @@ fun Produkter(navController: NavController, hovedListe: MutableList<ProdukterFir
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Spacer(modifier = Modifier.height(100.dp))
-                        Title("Produkter")
+                        Text(text = "NYE PRODUKTER", fontSize = 40.sp,color = Color(0xFF0888c4), fontWeight = FontWeight.Bold)
+                        Spacer(modifier = Modifier.height(30.dp))
                         produkterRad("Hovedkort",Color(0xFF0888c4), hovedListe)
                         produkterRad("Skjermkort",Color(0xFF0888c4), prosesstListe)
                         produkterRad("Prosessorer",Color(0xFF0888c4), skjermListe)
@@ -178,10 +179,14 @@ fun ProdukterKort(produkt: ProdukterFire, farge: Color) {
             .height(150.dp)
             .absolutePadding(right = Dp(35f))
             .clickable {
-                if(produkt.varebeholdning.toInt() < 1)
-                    Toast.makeText(cont, "Utsolgt..", Toast.LENGTH_SHORT).show()
-                else{
-                    Toast.makeText(cont, "lagt i kurv", Toast.LENGTH_SHORT).show()
+                if (produkt.varebeholdning.toInt() < 1)
+                    Toast
+                        .makeText(cont, "Utsolgt..", Toast.LENGTH_SHORT)
+                        .show()
+                else {
+                    Toast
+                        .makeText(cont, "lagt i kurv", Toast.LENGTH_SHORT)
+                        .show()
                     HandlekurvObject.handlekurvListe.add(produkt)
                 }
 
@@ -196,8 +201,8 @@ fun ProdukterKort(produkt: ProdukterFire, farge: Color) {
                 model = produkt.bilde,
                 contentDescription = "null",
                 modifier = Modifier
-                .fillMaxSize()
-                .weight(1f),
+                    .fillMaxSize()
+                    .weight(1f),
                 alignment = Alignment.CenterStart
             )
             Column(modifier = Modifier

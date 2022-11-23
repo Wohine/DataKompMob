@@ -58,7 +58,8 @@ fun BruktMarked(navController: NavController, bruktHovedkortListe: MutableList<B
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Spacer(modifier = Modifier.height(100.dp))
-                Title("Markedsplass")
+                Text(text = "BRUKTMARKED", fontSize = 40.sp,color = Color(0xFF0888c4), fontWeight = FontWeight.Bold)
+                Spacer(modifier = Modifier.height(30.dp))
                 brukteProdukterRad("Hovedkort",Color(0xFF0888c4), bruktHovedkortListe)
                 brukteProdukterRad("Skjermkort",Color(0xFF0888c4), bruktSkjermkortListe)
                 brukteProdukterRad("Prosessorer",Color(0xFF0888c4), bruktProsessorListe)
@@ -129,7 +130,7 @@ fun BrukteProdukterKort(produkt: BrukteProdukterFire, farge: Color) {
                 .background(Color.Transparent),
 
                 ) {
-                KortLabel(produkt.produktNavn)
+                KortLabel(produkt.tittel)
                 Spacer(modifier = Modifier.height(10.dp))
                 KortLabel("Pris: $pris"+"kr")
                 Spacer(modifier = Modifier.height(10.dp))

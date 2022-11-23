@@ -28,7 +28,7 @@ fun BrukteProdukterUthentingDB(collectionType: String) { // 1-skjerm, 2-pross, 3
             var p2 = BrukteProdukterFire(
                 kategori = document["kategori"].toString(),
                 pris = document["pris"].toString().toDouble(),
-                produktNavn = document["produktNavn"].toString(),
+                tittel = document["tittel"].toString(),
                 produsent = document["produsent"].toString(),
                 tilstand = document["tilstand"].toString(),
                 bilde = document["bildeAdresse"].toString()
