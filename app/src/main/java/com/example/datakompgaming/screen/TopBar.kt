@@ -32,7 +32,7 @@ fun printTopBarIcon(navController: NavController){
     DataKompGamingTheme {
         Surface(
             modifier = Modifier.fillMaxWidth(),
-            color = MaterialTheme.colorScheme.onBackground
+            color = MaterialTheme.colorScheme.secondaryContainer
         ) {
             Row(
                 horizontalArrangement = Arrangement.End, modifier = Modifier
@@ -61,6 +61,11 @@ fun printTopBarIcon(navController: NavController){
                         expanded = expanded,
                         onDismissRequest = { expanded = false }
                     ) {
+                        DropdownMenuItem(
+                            text = { Text("Din side") },
+                            onClick = {
+                                navController.navigate("UserPage")
+                            })
                         DropdownMenuItem(
                             text = { Text("Handlekurv") },
                             onClick = {

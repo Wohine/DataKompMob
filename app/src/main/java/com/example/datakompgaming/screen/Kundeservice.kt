@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.datakompgaming.R
+import com.example.datakompgaming.ui.theme.DataKompGamingTheme
 import com.example.datakompgaming.produkt.firestore
 import com.google.firebase.auth.FirebaseAuth
 
@@ -37,106 +38,132 @@ import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun Kundeservice(navController: NavController) {
-    Scaffold(
-        bottomBar = {
-        printBotBarIcon(navController = navController, 2)
-        },
-        topBar = {
-            printTopBarIcon(navController = navController)
-        }
-    ) {
+    DataKompGamingTheme {
+        Surface(
+            modifier = Modifier.fillMaxWidth(),
+            color = MaterialTheme.colorScheme.onBackground
+        ) {
+            Scaffold(
+                bottomBar = {
+                    printBotBarIcon(navController = navController, 2)
+                },
+                topBar = {
+                    printTopBarIcon(navController = navController)
+                }
+            ) {
 
-        Column(
-            modifier = Modifier
-                .background(Color.White)
-                .verticalScroll(rememberScrollState(), enabled = true),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        )
-        {
-
-            val navn = remember { mutableStateOf(TextFieldValue()) }
-            val email = remember { mutableStateOf(TextFieldValue()) }
-            val tema = remember { mutableStateOf(TextFieldValue()) }
-            val hjelptxt = remember { mutableStateOf(TextFieldValue()) }
-            var firebaseAuth = FirebaseAuth.getInstance()
-            var cont = LocalContext.current
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Image(painter = painterResource(R.drawable.datakomplogo), contentDescription = null)
-
-
-            Spacer(modifier = Modifier.height(20.dp))
-            Text(
-                text = "Kontakt Oss",
-                style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold)
-            )
-
-            Spacer(modifier = Modifier.height(5.dp))
-            Text(text = "Hva lurer du på?", style = TextStyle(fontSize = 10.sp))
-
-            Spacer(modifier = Modifier.height(20.dp))
-            TextField(label = { Text(text = "Ditt navn") },
-                value = navn.value,
-                onValueChange = { navn.value = it })
-
-            Spacer(modifier = Modifier.height(20.dp))
-            TextField(label = { Text(text = "Din email") },
-                value = email.value,
-                onValueChange = { email.value = it })
-
-            Spacer(modifier = Modifier.height(20.dp))
-            TextField(label = { Text(text = "Tema") },
-                value = tema.value,
-                onValueChange = { tema.value = it })
-
-            Spacer(modifier = Modifier.height(20.dp))
-            TextField(label = { Text(text = "Hva kan vi hjelpe deg med?") },
-                value = hjelptxt.value,
-                onValueChange = { hjelptxt.value = it })
-
-            Spacer(modifier = Modifier.height(25.dp))
-            Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
-                Button(
-                    onClick = {
-                        val navnString = navn.value.text
-                        val emailString = email.value.text
-                        val temaString = tema.value.text
-                        val hjelpString = hjelptxt.value.text
-
-                        data class KundeServiceObjekt(
-                            val navn: String? = null,
-                            val email: String? = null,
-                            val tema: String? = null,
-                            val beskrivelse: String? = null,
-                        )
-
-                        val kundeService = KundeServiceObjekt(
-                            navnString,
-                            emailString,
-                            temaString,
-                            hjelpString,
-                        )
-
-
-                        firebaseAuth.currentUser?.let { it1 ->
-                            firestore.collection("users").document(firebaseAuth.currentUser!!.uid.toString()).collection("Kundeservice").document("Saksnummer: " + Math.random().toString())
-                                .set(
-                                    kundeService
-                                )
-                                .addOnSuccessListener { Toast.makeText(cont, "Saken din er sendt inn!", Toast.LENGTH_LONG).show()}
-                                .addOnFailureListener { Toast.makeText(cont, "Noe gikk galt ved innsending av skjema", Toast.LENGTH_LONG).show() }
-                        }
-                    },
-                    shape = RoundedCornerShape(50.dp),
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp)
-                ) {
-                    Text(text = "Send inn")
+                        // .background(Color.White)
+                        .verticalScroll(rememberScrollState(), enabled = true),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                )
+                {
+
+                    val navn = remember { mutableStateOf(TextFieldValue()) }
+                    val email = remember { mutableStateOf(TextFieldValue()) }
+                    val tema = remember { mutableStateOf(TextFieldValue()) }
+                    val hjelptxt = remember { mutableStateOf(TextFieldValue()) }
+                    var firebaseAuth = FirebaseAuth.getInstance()
+                    var cont = LocalContext.current
+
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                    Image(
+                        painter = painterResource(R.drawable.datakomplogo),
+                        contentDescription = null
+                    )
+
+
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Text(
+                        text = "Kontakt Oss",
+                        style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    )
+
+                    Spacer(modifier = Modifier.height(5.dp))
+                    Text(text = "Hva lurer du på?", style = TextStyle(fontSize = 10.sp))
+
+                    Spacer(modifier = Modifier.height(20.dp))
+                    TextField(label = { Text(text = "Ditt navn") },
+                        value = navn.value,
+                        onValueChange = { navn.value = it })
+
+                    Spacer(modifier = Modifier.height(20.dp))
+                    TextField(label = { Text(text = "Din email") },
+                        value = email.value,
+                        onValueChange = { email.value = it })
+
+                    Spacer(modifier = Modifier.height(20.dp))
+                    TextField(label = { Text(text = "Tema") },
+                        value = tema.value,
+                        onValueChange = { tema.value = it })
+
+                    Spacer(modifier = Modifier.height(20.dp))
+                    TextField(label = { Text(text = "Hva kan vi hjelpe deg med?") },
+                        value = hjelptxt.value,
+                        onValueChange = { hjelptxt.value = it })
+
+                    Spacer(modifier = Modifier.height(25.dp))
+                    Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
+                        Button(
+                            onClick = {
+                                val navnString = navn.value.text
+                                val emailString = email.value.text
+                                val temaString = tema.value.text
+                                val hjelpString = hjelptxt.value.text
+
+                                data class KundeServiceObjekt(
+                                    val navn: String? = null,
+                                    val email: String? = null,
+                                    val tema: String? = null,
+                                    val beskrivelse: String? = null,
+                                )
+
+                                val kundeService = KundeServiceObjekt(
+                                    navnString,
+                                    emailString,
+                                    temaString,
+                                    hjelpString,
+                                )
+
+
+                                firebaseAuth.currentUser?.let { it1 ->
+                                    firestore.collection("users")
+                                        .document(firebaseAuth.currentUser!!.uid.toString())
+                                        .collection("Kundeservice")
+                                        .document("Saksnummer: " + Math.random().toString())
+                                        .set(
+                                            kundeService
+                                        )
+                                        .addOnSuccessListener {
+                                            Toast.makeText(
+                                                cont,
+                                                "Saken din er sendt inn!",
+                                                Toast.LENGTH_LONG
+                                            ).show()
+                                        }
+                                        .addOnFailureListener {
+                                            Toast.makeText(
+                                                cont,
+                                                "Noe gikk galt ved innsending av skjema",
+                                                Toast.LENGTH_LONG
+                                            ).show()
+                                        }
+                                }
+                            },
+                            shape = RoundedCornerShape(50.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(50.dp)
+                        ) {
+                            Text(text = "Send inn")
+                        }
+                    }
                 }
             }
         }
     }
 }
+

@@ -125,8 +125,13 @@ class MainActivity : ComponentActivity() {
 @ExperimentalMaterial3Api
 @Composable
 fun DefaultPreview() {
-    MaterialTheme {
-        ScreenMain()
+    DataKompGamingTheme {
+        Surface(
+            modifier = Modifier.fillMaxWidth(),
+            color = MaterialTheme.colorScheme.onBackground
+        ) {
+            ScreenMain()
+        }
     }
 }
 @ExperimentalMaterial3Api

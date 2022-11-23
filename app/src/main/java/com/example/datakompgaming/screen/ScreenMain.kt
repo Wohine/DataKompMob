@@ -41,8 +41,14 @@ fun ScreenMain(){
         composable(Routes.HomePage.route){
             HomePage(navController)
         }
+        composable(Routes.UserPage.route){
+            UserPage(navController)
+        }
         composable(Routes.bruktProduktSkjema.route){
             bruktProduktSkjema(navController)
+        }
+        composable(Routes.UserSettings.route){
+            UserSettings(navController)
         }
         composable(Routes.Handlekurv.route){
             printHandlekurv(navController)

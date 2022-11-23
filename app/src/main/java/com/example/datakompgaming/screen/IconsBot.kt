@@ -20,7 +20,7 @@ fun printBotBarIcon(navController: NavController, nummer: Int){
     DataKompGamingTheme {
         Surface(
             modifier = Modifier.fillMaxWidth(),
-            color = MaterialTheme.colorScheme.onBackground
+            color = MaterialTheme.colorScheme.secondaryContainer
         ) {
             Row(
                 modifier = Modifier
