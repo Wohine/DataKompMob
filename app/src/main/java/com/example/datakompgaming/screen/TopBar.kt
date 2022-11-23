@@ -17,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.datakompgaming.handlekurv.HandlekurvObject.BruktHandleliste
 import com.example.datakompgaming.handlekurv.HandlekurvObject.handlekurvListe
 import com.example.datakompgaming.mainActivity
 import com.example.datakompgaming.ui.theme.DataKompGamingTheme
@@ -26,6 +27,8 @@ import com.example.datakompgaming.ui.theme.DataKompGamingTheme
 fun printTopBarIcon(navController: NavController){
     var expanded by remember { mutableStateOf(false) }
     var showMenu = false
+
+    var totalBasketCount = (handlekurvListe.size + BruktHandleliste.size).toString()
     DataKompGamingTheme {
         Surface(
             modifier = Modifier.fillMaxWidth(),
@@ -51,7 +54,7 @@ fun printTopBarIcon(navController: NavController){
                             tint = MaterialTheme.colorScheme.secondary,
                             modifier = Modifier.size(35.dp)
                         )
-                        Text( text = handlekurvListe.size.toString(), modifier= Modifier, fontWeight = FontWeight.Bold,
+                        Text( text = totalBasketCount, modifier= Modifier, fontWeight = FontWeight.Bold,
                             fontSize = 25.sp,color = Color(0xFF0888c4) )
                     }
                     DropdownMenu(

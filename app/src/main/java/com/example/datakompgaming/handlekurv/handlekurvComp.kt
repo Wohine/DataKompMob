@@ -120,7 +120,7 @@ fun bruktHandlekurvCard(item: BrukteProdukterFire,navController: NavController) 
         .fillMaxWidth()
     ) {
         AsyncImage(
-            model = item.produktNavn,
+            model = item.bilde,
             contentDescription = "null",
             modifier = Modifier
                 .fillMaxSize(0.5F)
