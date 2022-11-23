@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.ShoppingBasket
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -38,6 +39,14 @@ fun printTopBarIcon(navController: NavController){
                             contentDescription = "Person",
                             tint = MaterialTheme.colorScheme.secondary,
                             modifier = Modifier.size(35.dp)
+                        )
+                    }
+                    IconButton(onClick = { navController.navigate("Handlekurv") }) {
+                        Icon(
+                            Icons.Default.ShoppingBasket,
+                            contentDescription = "basket",
+                            tint = MaterialTheme.colorScheme.secondary,
+                            modifier = Modifier.size(35.dp).absoluteOffset(-300.dp,0.dp)
                         )
                     }
                     DropdownMenu(

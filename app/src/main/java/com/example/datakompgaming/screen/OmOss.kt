@@ -67,13 +67,9 @@ fun InfoCard(title: String, line1: String, line2: String, image: String) {
             Spacer(modifier = Modifier.height(5.dp))
             Text(line2)
             Spacer(modifier = Modifier.height(5.dp))
-            AsyncImage(
-                model = image,
-                contentDescription = "null",
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight(1f),
-                alignment = Alignment.CenterStart
+            Image(painter = painterResource(com.example.datakompgaming.R.drawable.floppa),
+                contentDescription = null,
+                contentScale = ContentScale.Fit
             )
         }
     }
