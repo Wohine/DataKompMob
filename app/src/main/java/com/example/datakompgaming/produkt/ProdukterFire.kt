@@ -8,15 +8,8 @@ data class ProdukterFire(
     val varebeholdning: String,
     val pris: Double?,
     val tittel: String,
+    val typeProdukt: String,
+    val docNavn: String
 ) {
-    @Exclude
-    fun toMap(): Map<String, Any?> {
-        return mapOf(
-            "bilde" to bilde,
-            "varebeholdning" to varebeholdning,
-            "rating" to rating,
-            "pris" to pris,
-            "tittel" to tittel,
-        )
-    }
+
 }

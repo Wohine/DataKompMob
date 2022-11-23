@@ -24,8 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.example.datakompgaming.produkt.HovedKortKort
-import com.example.datakompgaming.produkt.ProduktObject.produktListe
+import com.example.datakompgaming.produkt.ProduktObject
+
 import com.example.datakompgaming.produkt.ProdukterFire
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -139,11 +139,8 @@ fun ProduktSlider(tittel: String, farge: Color, produktListe: MutableList<Produk
         .horizontalScroll(rememberScrollState(), enabled = true),
     ) {
         for (produkt in produktListe){
-            HovedKortKort(
-                produkt.tittel,
-                produkt.pris.toString(),
-                produkt.varebeholdning,
-                produkt.bilde,
+            ProdukterKort(
+                produkt,
                 farge
             )
         }
@@ -216,7 +213,7 @@ fun FeatProd(title: String) {
             color = Color(0xFFbd4fdb),
 
         )
-        ProduktSlider("Hovedkort",Color(0xFF82d0d9), produktListe)
+        ProduktSlider("Hovedkort",Color(0xFF82d0d9), ProduktObject.HovedKortListe)
     }
 }
 

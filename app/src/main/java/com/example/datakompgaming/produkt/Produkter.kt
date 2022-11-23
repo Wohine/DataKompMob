@@ -1,8 +1,9 @@
-package com.example.datakompgaming.produkt
+package com.example.datakompgaming.screen
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.util.Log
+import android.widget.Toast
 import androidx.navigation.NavController
 import com.example.datakompgaming.R
 import androidx.compose.foundation.*
@@ -14,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -22,15 +24,17 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.datakompgaming.screen.printBotBarIcon
-import com.example.datakompgaming.screen.printTopBarIcon
+import com.example.datakompgaming.handlekurv.HandlekurvObject
+import com.example.datakompgaming.produkt.ProduktObject
+import com.example.datakompgaming.produkt.ProdukterFire
 
 
 @ExperimentalMaterial3Api
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 
 @Composable
-fun Produkter(navController: NavController, produktListe: MutableList<ProdukterFire>, SkjermKortListe: MutableList<SkjermKortFire>,ProsessorerListe: MutableList<ProsessorerFire> ) {
+fun Produkter(navController: NavController, hovedListe: MutableList<ProdukterFire>,
+            prosesstListe: MutableList<ProdukterFire>, skjermListe: MutableList<ProdukterFire>) {
 
     Scaffold(
         bottomBar = {
@@ -53,10 +57,11 @@ fun Produkter(navController: NavController, produktListe: MutableList<ProdukterF
                             .verticalScroll(rememberScrollState(),enabled = true),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+                        Spacer(modifier = Modifier.height(100.dp))
                         Title("Produkter")
-                        hovedKortRad("Hovedkort",Color(0xFF82d0d9), produktListe)
-                        skjermKortRad("Skjermkort",Color(0xFF82d0d9), SkjermKortListe)
-                        prosessorerRad("Prosessorer",Color(0xFF82d0d9), ProsessorerListe)
+                        produkterRad("Hovedkort",Color(0xFF82d0d9), hovedListe)
+                        produkterRad("Skjermkort",Color(0xFF82d0d9), prosesstListe)
+                        produkterRad("Prosessorer",Color(0xFF82d0d9), skjermListe)
 
                         Spacer(modifier = Modifier.height(100.dp))
                     }
@@ -87,10 +92,11 @@ fun KortLabel(tittel: String) {
         text = tittel,
         modifier = Modifier
             .absolutePadding(bottom = Dp(5f))
+            .width(200.dp)
             .background(Color.Transparent),
         textAlign = TextAlign.Right,
         fontWeight = FontWeight.Bold,
-        fontSize = 16.sp,
+        fontSize = 17.sp,
         color = Color(0xFFf7f7f7)
     )
 }
@@ -130,31 +136,10 @@ fun Kort(tittel: String,pris: String,igjen: String, imagePainter: Painter) {
     }
 }
 
-@Composable
-fun Rad(tittel: String) {
-    Text(
-        text = tittel,
-        modifier = Modifier
-            .fillMaxSize()
-            .absolutePadding(bottom = Dp(10f)),
-        fontWeight = FontWeight.Bold,
-        fontSize = 25.sp,
-        textAlign = TextAlign.Center
-    )
-    Row(modifier = Modifier
-        .height(150.dp)
-        .horizontalScroll(rememberScrollState(), enabled = true),
-    ) {
-        Kort("Test Vare","500","1", painterResource(id = R.drawable.datakomplogo))
-        Kort("Test Vare 2","250","3", painterResource(id = R.drawable.datakomplogo))
-        Kort("Test Vare 3","750","2", painterResource(id = R.drawable.datakomplogo))
-        Kort("Test Vare 4","1250","1", painterResource(id = R.drawable.datakomplogo))
-        Kort("Test Vare 5","2750","5", painterResource(id = R.drawable.datakomplogo))
-    }
-}
+
 
 @Composable
-fun hovedKortRad(tittel: String, farge: Color, produktListe: MutableList<ProdukterFire>, ) {
+fun produkterRad(tittel: String, farge: Color, produktListe: MutableList<ProdukterFire>, ) {
     Text(
         text = tittel,
         modifier = Modifier
@@ -170,82 +155,37 @@ fun hovedKortRad(tittel: String, farge: Color, produktListe: MutableList<Produkt
     ) {
         for (produkt in produktListe){
             Log.d(ContentValues.TAG, "Produktliste ok!")
-            HovedKortKort(
-                produkt.tittel,
-                produkt.pris.toString(),
-                produkt.varebeholdning,
-                produkt.bilde,
+            ProdukterKort(
+                produkt,
                 farge
             )
         }
     }
 }
 
-@Composable
-fun skjermKortRad(tittel: String, farge: Color, produktListe: MutableList<SkjermKortFire>, ) {
-    Text(
-        text = tittel,
-        modifier = Modifier
-            .fillMaxSize()
-            .absolutePadding(bottom = Dp(10f)),
-        fontWeight = FontWeight.Bold,
-        fontSize = 25.sp,
-        textAlign = TextAlign.Center
-    )
-    Row(modifier = Modifier
-        .height(150.dp)
-        .horizontalScroll(rememberScrollState(), enabled = true),
-    ) {
-        for (produkt in produktListe){
-            Log.d(ContentValues.TAG, "Produktliste ok!")
-            HovedKortKort(
-                produkt.tittel,
-                produkt.pris.toString(),
-                produkt.varebeholdning,
-                produkt.bilde,
-                farge
-            )
-        }
-    }
-}
+
+
+
 
 @Composable
-fun prosessorerRad(tittel: String, farge: Color, produktListe: MutableList<ProsessorerFire>, ) {
-    Text(
-        text = tittel,
-        modifier = Modifier
-            .fillMaxSize()
-            .absolutePadding(bottom = Dp(10f)),
-        fontWeight = FontWeight.Bold,
-        fontSize = 25.sp,
-        textAlign = TextAlign.Center
-    )
-    Row(modifier = Modifier
-        .height(150.dp)
-        .horizontalScroll(rememberScrollState(), enabled = true),
-    ) {
-        for (produkt in produktListe){
-            Log.d(ContentValues.TAG, "Produktliste ok!")
-            HovedKortKort(
-                produkt.tittel,
-                produkt.pris.toString(),
-                produkt.varebeholdning,
-                produkt.bilde,
-                farge
-            )
-        }
-    }
-}
-
-@Composable
-fun HovedKortKort(tittel: String,pris: String,igjen: String, bilde: String, farge: Color) {
-    Log.d(ContentValues.TAG, "hei")
+fun ProdukterKort(produkt: ProdukterFire, farge: Color) {
+    var varebeholdning = produkt.varebeholdning
+    var pris = produkt.pris
+    var cont = LocalContext.current
     Card (
         modifier = Modifier
-            .width(300.dp)
+            .width(400.dp)
             .height(150.dp)
             .absolutePadding(right = Dp(35f))
-            .clickable { println("Clicked") },
+            .clickable {
+                if(produkt.varebeholdning.toInt() < 1)
+                    Toast.makeText(cont, "Utsolgt..", Toast.LENGTH_SHORT).show()
+                else{
+                    Toast.makeText(cont, "lagt i kurv", Toast.LENGTH_SHORT).show()
+                    HandlekurvObject.handlekurvListe.add(produkt)
+                }
+
+            },
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(
             farge
@@ -253,7 +193,7 @@ fun HovedKortKort(tittel: String,pris: String,igjen: String, bilde: String, farg
         ) {
         Row() {
             AsyncImage(
-                model = bilde,
+                model = produkt.bilde,
                 contentDescription = "null",
                 modifier = Modifier
                 .fillMaxSize()
@@ -266,9 +206,9 @@ fun HovedKortKort(tittel: String,pris: String,igjen: String, bilde: String, farg
                 .background(Color.Transparent),
 
                 ) {
-                KortLabel(tittel)
+                KortLabel(produkt.tittel)
                 KortLabel("Pris: $pris"+"kr")
-                KortLabel("Kun $igjen igjen!")
+                KortLabel("Kun $varebeholdning igjen!")
             }
 
         }

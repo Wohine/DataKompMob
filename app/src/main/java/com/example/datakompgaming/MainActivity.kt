@@ -1,5 +1,6 @@
 package com.example.datakompgaming
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -11,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.datakompgaming.handlekurv.produktOppdateringDB
 import com.example.datakompgaming.produkt.*
 import com.example.datakompgaming.screen.ScreenMain
 import com.example.datakompgaming.ui.theme.DataKompGamingTheme
@@ -19,6 +21,7 @@ import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.flow.Flow
 
 var mainActivity: MainActivity? = null
 
@@ -28,12 +31,12 @@ class MainActivity : ComponentActivity() {
     private var user: FirebaseUser? = null
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainActivity = this
         ProdukterUthentingDB()
-        Skjermkort()
-        Prosessorer()
+        BrukteProdukterUthentingDB()
         setContent {
             DataKompGamingTheme{
                 Surface(
@@ -102,7 +105,7 @@ class MainActivity : ComponentActivity() {
                 DefaultPreview()
             }
         } else {
-            Log.e("Produkt.kt", "Error logging in " + response?.error?.errorCode)
+            Log.e("FirebaseAuth", "Error logging in " + response?.error?.errorCode)
         }
     }
 
