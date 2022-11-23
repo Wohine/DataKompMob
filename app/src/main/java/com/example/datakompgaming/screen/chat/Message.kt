@@ -19,8 +19,6 @@ data class Message(
     var sender: String = "",
 //    var recipientID: String,
     var time: Long = 0,
-    @field:JvmField
-    var isOut: Boolean? = null,
 )
 
 class MessageViewModel : ViewModel() {
