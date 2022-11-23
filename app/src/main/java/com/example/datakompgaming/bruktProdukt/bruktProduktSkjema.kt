@@ -38,9 +38,7 @@ import com.example.datakompgaming.R
 import com.example.datakompgaming.screen.printBotBarIcon
 import com.example.datakompgaming.screen.printTopBarIcon
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.output.ByteArrayOutputStream
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
 import java.io.Console
 
 
@@ -100,8 +98,6 @@ fun bruktProduktSkjema(navController: NavController) {
                 var firebaseAuth = FirebaseAuth.getInstance()
 
 
-
-                val storageRef = Firebase.storage.reference;
 
                 var imageUri by remember {
                     mutableStateOf<Uri?>(null)

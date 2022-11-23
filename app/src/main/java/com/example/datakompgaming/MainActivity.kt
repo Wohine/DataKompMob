@@ -36,6 +36,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         mainActivity = this
         ProdukterUthentingDB()
+        BrukteProdukterUthentingDB()
         setContent {
             DataKompGamingTheme{
                 Surface(

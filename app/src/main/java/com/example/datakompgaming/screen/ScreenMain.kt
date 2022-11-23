@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.datakompgaming.Routes
 import com.example.datakompgaming.bestillingfiler.Bestillinger
 import com.example.datakompgaming.bestillingfiler.printOrders
+import com.example.datakompgaming.bruktProdukt.BruktProduktObject
 import com.example.datakompgaming.produkt.ProduktObject
 import com.example.datakompgaming.produkt.*
 
@@ -43,6 +44,10 @@ fun ScreenMain(){
         }
         composable(Routes.Handlekurv.route){
             printHandlekurv(navController)
+        }
+        composable(Routes.BrukteProdukter.route){
+            BruktMarked(navController, BruktProduktObject.BruktHovedKortListe,
+                BruktProduktObject.BruktProsessorerListe, BruktProduktObject.BruktSkjermKortListe)
         }
     }
 }

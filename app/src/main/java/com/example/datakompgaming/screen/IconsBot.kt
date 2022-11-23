@@ -78,7 +78,7 @@ fun printBotBarIcon(navController: NavController, nummer: Int){
                 IconButton(modifier = Modifier.padding(horizontal = 15.dp)
                         then (Modifier.size(45.dp)),
                     onClick = {
-                        navController.navigate("produkter")
+                        navController.navigate("Brukteprodukter")
                     }) {
                     Icon(
                         Icons.Default.Shop,

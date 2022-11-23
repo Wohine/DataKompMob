@@ -134,28 +134,7 @@ fun Kort(tittel: String,pris: String,igjen: String, imagePainter: Painter) {
     }
 }
 
-@Composable
-fun Rad(tittel: String) {
-    Text(
-        text = tittel,
-        modifier = Modifier
-            .fillMaxSize()
-            .absolutePadding(bottom = Dp(10f)),
-        fontWeight = FontWeight.Bold,
-        fontSize = 25.sp,
-        textAlign = TextAlign.Center
-    )
-    Row(modifier = Modifier
-        .height(150.dp)
-        .horizontalScroll(rememberScrollState(), enabled = true),
-    ) {
-        Kort("Test Vare","500","1", painterResource(id = R.drawable.datakomplogo))
-        Kort("Test Vare 2","250","3", painterResource(id = R.drawable.datakomplogo))
-        Kort("Test Vare 3","750","2", painterResource(id = R.drawable.datakomplogo))
-        Kort("Test Vare 4","1250","1", painterResource(id = R.drawable.datakomplogo))
-        Kort("Test Vare 5","2750","5", painterResource(id = R.drawable.datakomplogo))
-    }
-}
+
 
 @Composable
 fun produkterRad(tittel: String, farge: Color, produktListe: MutableList<ProdukterFire>, ) {

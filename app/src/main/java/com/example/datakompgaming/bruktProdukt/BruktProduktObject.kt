@@ -1,4 +1,6 @@
-package com.example.datakompgaming.produkt
+package com.example.datakompgaming.bruktProdukt
+
+import com.example.datakompgaming.bruktProdukt.BrukteProdukterFire
 
 
 object BruktProduktObject {

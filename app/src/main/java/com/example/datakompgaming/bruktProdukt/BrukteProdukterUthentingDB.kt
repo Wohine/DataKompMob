@@ -2,6 +2,8 @@ package com.example.datakompgaming.produkt
 
 import android.content.ContentValues.TAG
 import android.util.Log
+import com.example.datakompgaming.bruktProdukt.BruktProduktObject
+import com.example.datakompgaming.bruktProdukt.BrukteProdukterFire
 import com.google.firebase.firestore.Source
 
 
@@ -23,16 +25,15 @@ fun BrukteProdukterUthentingDB(collectionType: String) { // 1-skjerm, 2-pross, 3
     docRef.get(source).addOnSuccessListener { documents ->
         for (document in documents) {
             Log.d(TAG, "${document.id} => ${document.data}")
-            var p2 = ProdukterFire(
-                tittel = document["tittel"].toString(),
-                pris = document.getDouble("pris"),
-                bilde = document["bilde"].toString(),
-                tilstand = document["tilstand"].toString(),
-                typeProdukt =  collectionType,
-                docNavn = document["docNavn"].toString()
+            var p2 = BrukteProdukterFire(
+                kategori = document["kategori"].toString(),
+                pris = document["pris"].toString().toDouble(),
+                produktNavn = document["produktNavn"].toString(),
+                produsent = document["produsent"].toString(),
+                tilstand = document["tilstand"].toString()
             )
             if(collectionType.equals("Skjermkort"))
-                ProduktObject.SkjermKortListe.add(p2)
+                BruktProduktObject.BruktSkjermKortListe.add(p2)
             else if(collectionType.equals("Prosessorer"))
                 BruktProduktObject.BruktProsessorerListe.add(p2)
             else

@@ -3,6 +3,7 @@ package com.example.datakompgaming.screen
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.util.Log
+import android.widget.Toast
 import androidx.navigation.NavController
 import com.example.datakompgaming.R
 import androidx.compose.foundation.*
@@ -24,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.datakompgaming.handlekurv.HandlekurvObject
-import com.example.datakompgaming.produkt.BrukteProdukterFire
+import com.example.datakompgaming.bruktProdukt.BrukteProdukterFire
 import com.example.datakompgaming.produkt.ProdukterFire
 
 
@@ -33,7 +34,7 @@ import com.example.datakompgaming.produkt.ProdukterFire
 
 @Composable
 fun BruktMarked(navController: NavController, bruktHovedkortListe: MutableList<BrukteProdukterFire>,
-              bruktProsessorListe: MutableList<BrukteProdukterFire>, bruktSkjermkortListe: MutableList<BrukteProdukterFire>) {
+                bruktProsessorListe: MutableList<BrukteProdukterFire>, bruktSkjermkortListe: MutableList<BrukteProdukterFire>) {
 
     Scaffold(
         bottomBar = {
@@ -67,74 +68,8 @@ fun BruktMarked(navController: NavController, bruktHovedkortListe: MutableList<B
         }
     }
 }
-
 @Composable
-fun BruktTitle(name: String) {
-    Text(
-        text = name,
-        fontSize = 35.sp,
-        modifier = Modifier
-            .fillMaxSize()
-            .absolutePadding(bottom = Dp(30f))
-            .background(Color(0xFF82d0d9)),
-        textAlign = TextAlign.Center,
-        fontWeight = FontWeight.Bold,
-        fontFamily = FontFamily.Serif
-
-    )
-}
-
-@Composable
-fun BruktKortLabel(tittel: String) {
-    Text(
-        text = tittel,
-        modifier = Modifier
-            .absolutePadding(bottom = Dp(5f))
-            .background(Color.Transparent),
-        textAlign = TextAlign.Right,
-        fontWeight = FontWeight.Bold,
-        fontSize = 16.sp,
-        color = Color(0xFFf7f7f7)
-    )
-}
-
-@Composable
-fun BruktKort(tittel: String,pris: String,tilstand: String, imagePainter: Painter) {
-    Card (
-        modifier = Modifier
-            .width(300.dp)
-            .height(150.dp)
-            .absolutePadding(right = Dp(35f))
-            .clickable { println("Clicked") },
-        shape = RoundedCornerShape(8.dp),
-
-
-        ) {
-        Row() {
-            Image(painter = imagePainter, contentDescription = "$tittel",
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight(1f),
-                alignment = Alignment.CenterStart
-            )
-            Column(modifier = Modifier
-                .padding(horizontal = 19.dp)
-                .fillMaxHeight()
-                .background(Color.Transparent),
-
-                ) {
-                BruktKortLabel(tittel)
-                BruktKort("Pris: $pris"+"kr")
-                BruktKort("Tilstand $tilstand ")
-            }
-
-        }
-
-    }
-}
-
-@Composable
-fun BruktRad(tittel: String) {
+fun brukteProdukterRad(tittel: String, farge: Color, produktListe: MutableList<BrukteProdukterFire>, ) {
     Text(
         text = tittel,
         modifier = Modifier
@@ -148,56 +83,27 @@ fun BruktRad(tittel: String) {
         .height(150.dp)
         .horizontalScroll(rememberScrollState(), enabled = true),
     ) {
-        BruktKort("Test Vare","500","1", painterResource(id = R.drawable.datakomplogo))
-        BruktKort("Test Vare 2","250","3", painterResource(id = R.drawable.datakomplogo))
-        BruktKort("Test Vare 3","750","2", painterResource(id = R.drawable.datakomplogo))
-        BruktKort("Test Vare 4","1250","1", painterResource(id = R.drawable.datakomplogo))
-        BruktKort("Test Vare 5","2750","5", painterResource(id = R.drawable.datakomplogo))
-    }
-}
-
-@Composable
-fun brukteProdukterRad(tittel: String, farge: Color, bruktProduktListe: MutableList<ProdukterFire>, ) {
-    Text(
-        text = tittel,
-        modifier = Modifier
-            .fillMaxSize()
-            .absolutePadding(bottom = Dp(10f)),
-        fontWeight = FontWeight.Bold,
-        fontSize = 25.sp,
-        textAlign = TextAlign.Center
-    )
-    Row(modifier = Modifier
-        .height(150.dp)
-        .horizontalScroll(rememberScrollState(), enabled = true),
-    ) {
-        for (produkt in bruktProduktListe){
+        for (produkt in produktListe){
             Log.d(ContentValues.TAG, "Produktliste ok!")
             BrukteProdukterKort(
-                bruktProdukt,
+                produkt,
                 farge
             )
         }
     }
 }
 
-
-
-
-
 @Composable
-fun BrukteProdukterKort(bruktProdukt: BrukteProdukterFire, farge: Color) {
-    var tilstand = bruktProdukt.tilstand
-    var pris = bruktProdukt.pris
-    var cont = LocalContext.current
+fun BrukteProdukterKort(produkt: BrukteProdukterFire, farge: Color) {
+    var pris = produkt.pris
+    var tilstand = produkt.tilstand
     Card (
         modifier = Modifier
             .width(300.dp)
             .height(150.dp)
             .absolutePadding(right = Dp(35f))
             .clickable {
-                HandlekurvObject.handlekurvListe.add(bruktProdukt)
-
+                HandlekurvObject.BruktHandleliste.add(produkt)
             },
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(
@@ -206,7 +112,7 @@ fun BrukteProdukterKort(bruktProdukt: BrukteProdukterFire, farge: Color) {
     ) {
         Row() {
             AsyncImage(
-                model = bruktProdukt.bilde,
+                model = "dd",
                 contentDescription = "null",
                 modifier = Modifier
                     .fillMaxSize()
@@ -219,9 +125,9 @@ fun BrukteProdukterKort(bruktProdukt: BrukteProdukterFire, farge: Color) {
                 .background(Color.Transparent),
 
                 ) {
-                KortLabel(bruktProdukt.tittel)
+                KortLabel(produkt.produktNavn)
                 KortLabel("Pris: $pris"+"kr")
-                KortLabel("Tilstand: $tilstand")
+                KortLabel("Kun $tilstand brukt!")
             }
 
         }
