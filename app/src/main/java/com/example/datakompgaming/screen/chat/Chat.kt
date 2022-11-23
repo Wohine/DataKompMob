@@ -10,6 +10,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.shape.CircleShape
@@ -44,11 +45,16 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 
 val message = mutableStateOf("")
 private val BotChatBubbleShape = RoundedCornerShape(0.dp,8.dp,8.dp,8.dp)
 private val AuthorChatBubbleShape = RoundedCornerShape(8.dp,0.dp,8.dp,8.dp)
+
+private val database =
+    Firebase.database("https://datakompkotlin-default-rtdb.europe-west1.firebasedatabase.app")
+
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -82,18 +88,28 @@ fun ChatApp(navController: NavController) {
     }
 }
 
+
+
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun MessageScreen(viewModel: MessageViewModel = viewModel()) {
     val SimpleDateFormat = SimpleDateFormat("h:mm a", Locale.ENGLISH)
+    val listState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
+
     LazyColumn(
+        state = listState,
         modifier = Modifier
             .fillMaxHeight(0.83f)
             .padding(16.dp),
-        reverseLayout = true
+        reverseLayout = false
     ) {
         items(viewModel.messages.value) { message ->
             message.isOut?.let { MessageItem(messageText = message.text, time = SimpleDateFormat.format(message.time), isOut = it) }
             Spacer(modifier = Modifier.height(8.dp))
+            coroutineScope.launch {
+                listState.scrollToItem(size.toInt())
+            }
             println(message.isOut)
         }
     }
@@ -212,7 +228,7 @@ fun MessageItem(
 @Composable
 fun MessageSection() {
     val context = LocalContext.current
-    val database = Firebase.database("https://datakompkotlin-default-rtdb.europe-west1.firebasedatabase.app")
+
 
         OutlinedTextField(
             placeholder = {
@@ -245,6 +261,7 @@ fun MessageSection() {
                             messageSender.setValue("test user")
                             messageOut.setValue(true)
                             messageTime.setValue(Calendar.getInstance().timeInMillis)
+
                         }
                 )
             },
@@ -276,8 +293,7 @@ fun defaultPre() {
         MessageSection()
     }
 }
-val database =
-    Firebase.database("https://codesample-76172-default-rtdb.europe-west1.firebasedatabase.app")
+
 
 
 
