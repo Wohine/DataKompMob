@@ -66,11 +66,11 @@ fun printBotBarIcon(navController: NavController, nummer: Int){
                 IconButton(modifier = Modifier.padding(horizontal = 15.dp)
                         then (Modifier.size(45.dp)),
                     onClick = {
-                        navController.navigate("omOss")
+                        navController.navigate("BrukteProdukter")
                     }) {
                     Icon(
-                        Icons.Default.Info,
-                        contentDescription = "om oss ",
+                        Icons.Default.Museum,
+                        contentDescription = "brukte produkter",
                         Modifier.size(35.dp),
                         tint = if (nummer == 3) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.secondary
                     )
@@ -78,7 +78,7 @@ fun printBotBarIcon(navController: NavController, nummer: Int){
                 IconButton(modifier = Modifier.padding(horizontal = 15.dp)
                         then (Modifier.size(45.dp)),
                     onClick = {
-                        navController.navigate("Brukteprodukter")
+                        navController.navigate("Produkter")
                     }) {
                     Icon(
                         Icons.Default.Shop,

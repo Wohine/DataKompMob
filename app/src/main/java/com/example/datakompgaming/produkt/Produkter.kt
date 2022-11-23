@@ -57,6 +57,7 @@ fun Produkter(navController: NavController, hovedListe: MutableList<ProdukterFir
                             .verticalScroll(rememberScrollState(),enabled = true),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+                        Spacer(modifier = Modifier.height(100.dp))
                         Title("Produkter")
                         produkterRad("Hovedkort",Color(0xFF82d0d9), hovedListe)
                         produkterRad("Skjermkort",Color(0xFF82d0d9), prosesstListe)
@@ -91,10 +92,11 @@ fun KortLabel(tittel: String) {
         text = tittel,
         modifier = Modifier
             .absolutePadding(bottom = Dp(5f))
+            .width(200.dp)
             .background(Color.Transparent),
         textAlign = TextAlign.Right,
         fontWeight = FontWeight.Bold,
-        fontSize = 16.sp,
+        fontSize = 17.sp,
         color = Color(0xFFf7f7f7)
     )
 }
@@ -172,7 +174,7 @@ fun ProdukterKort(produkt: ProdukterFire, farge: Color) {
     var cont = LocalContext.current
     Card (
         modifier = Modifier
-            .width(300.dp)
+            .width(400.dp)
             .height(150.dp)
             .absolutePadding(right = Dp(35f))
             .clickable {

@@ -105,7 +105,7 @@ class MainActivity : ComponentActivity() {
                 DefaultPreview()
             }
         } else {
-            Log.e("ProduktDB.kt", "Error logging in " + response?.error?.errorCode)
+            Log.e("FirebaseAuth", "Error logging in " + response?.error?.errorCode)
         }
     }
 

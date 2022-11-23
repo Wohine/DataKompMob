@@ -7,7 +7,8 @@ data class BrukteProdukterFire(
     val pris: Double,
     val produktNavn: String,
     val produsent: String,
-    val tilstand: String
+    val tilstand: String,
+    val bilde: String,
 ) {
 
 }

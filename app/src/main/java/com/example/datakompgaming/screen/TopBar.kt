@@ -55,6 +55,11 @@ fun printTopBarIcon(navController: NavController){
                                 navController.navigate("bestilling")
                             })
                         DropdownMenuItem(
+                            text = { Text("Om Oss") },
+                            onClick = {
+                                navController.navigate("OmOss")
+                            })
+                        DropdownMenuItem(
                             text = { Text("Kundeservice") },
                             onClick = { navController.navigate("kundeservice") })
                         DropdownMenuItem(
