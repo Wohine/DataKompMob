@@ -100,17 +100,20 @@ fun MessageScreen(viewModel: MessageViewModel = viewModel()) {
     LazyColumn(
         state = listState,
         modifier = Modifier
-            .fillMaxHeight(0.83f)
+            .fillMaxHeight(0.845f)
             .padding(16.dp),
         reverseLayout = false
+
+
     ) {
+        val isOut: Boolean = true
         items(viewModel.messages.value) { message ->
-            message.isOut?.let { MessageItem(messageText = message.text, time = SimpleDateFormat.format(message.time), isOut = it) }
+            isOut?.let { MessageItem(messageText = message.text, time = SimpleDateFormat.format(message.time), isOut = it, sender = message.sender) }
             Spacer(modifier = Modifier.height(8.dp))
             coroutineScope.launch {
                 listState.scrollToItem(size.toInt())
             }
-            println(message.isOut)
+            println(isOut)
         }
     }
 }
@@ -187,11 +190,17 @@ fun MessageItem(
     messageText: String?,
     time: String,
     isOut: Boolean,
+    sender: String,
 ) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = if (isOut) Alignment.End else Alignment.Start
     ) {
+        Text(
+            text = ""+sender,
+            fontSize = 12.sp,
+            modifier = Modifier.padding(start = 8.dp)
+        )
         if (messageText != null) {
             if (messageText != "") {
                 Box(
@@ -253,15 +262,12 @@ fun MessageSection() {
 
                             val messageTxt = database.getReference("/messages/${messageId}/text")
                             val messageSender = database.getReference("/messages/${messageId}/sender")
-                            val messageOut = database.getReference("/messages/${messageId}/isOut")
                             val messageTime = database.getReference("/messages/${messageId}/time")
 
 //                            Calendar.getInstance().timeInMillis
                             messageTxt.setValue(message.value)
                             messageSender.setValue("test user")
-                            messageOut.setValue(true)
                             messageTime.setValue(Calendar.getInstance().timeInMillis)
-
                         }
                 )
             },
