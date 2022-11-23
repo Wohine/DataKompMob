@@ -19,7 +19,6 @@ data class Message(
     var sender: String = "",
 //    var recipientID: String,
     var time: Long = Calendar.getInstance().timeInMillis,
-//    var time: Long = 0,
     @field:JvmField
     var isOut: Boolean? = null,
 )
@@ -31,6 +30,7 @@ class MessageViewModel : ViewModel() {
     private var _messages = mutableStateOf<List<Message>>(emptyList())
     val messages: State<List<Message>> = _messages
     var guh = getMessages()
+
     private fun getMessages(): Int {
         database.getReference("messages")
             .addValueEventListener(
