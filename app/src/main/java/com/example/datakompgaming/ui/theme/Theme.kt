@@ -79,8 +79,6 @@ private val LightColorPalette = lightColorScheme(
 
     outline = BlueGreyGrey40
 
-//Du er kommet til 16 min i videoen
-
 )
 
 @Composable

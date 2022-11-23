@@ -59,9 +59,9 @@ fun BruktMarked(navController: NavController, bruktHovedkortListe: MutableList<B
             ) {
                 Spacer(modifier = Modifier.height(100.dp))
                 Title("Markedsplass")
-                brukteProdukterRad("Hovedkort",Color(0xFF82d0d9), bruktHovedkortListe)
-                brukteProdukterRad("Skjermkort",Color(0xFF82d0d9), bruktSkjermkortListe)
-                brukteProdukterRad("Prosessorer",Color(0xFF82d0d9), bruktProsessorListe)
+                brukteProdukterRad("Hovedkort",Color(0xFF0888c4), bruktHovedkortListe)
+                brukteProdukterRad("Skjermkort",Color(0xFF0888c4), bruktSkjermkortListe)
+                brukteProdukterRad("Prosessorer",Color(0xFF0888c4), bruktProsessorListe)
 
                 Spacer(modifier = Modifier.height(100.dp))
             }
@@ -116,7 +116,7 @@ fun BrukteProdukterKort(produkt: BrukteProdukterFire, farge: Color) {
     ) {
         Row() {
             AsyncImage(
-                model = "$bilde",
+                model = bilde,
                 contentDescription = "null",
                 modifier = Modifier
                     .fillMaxSize()
@@ -134,7 +134,7 @@ fun BrukteProdukterKort(produkt: BrukteProdukterFire, farge: Color) {
                 KortLabel("Pris: $pris"+"kr")
                 Spacer(modifier = Modifier.height(10.dp))
                 KortLabel("Beskrivelse:")
-                KortLabel("$tilstand")
+                KortLabel(tilstand)
             }
 
         }

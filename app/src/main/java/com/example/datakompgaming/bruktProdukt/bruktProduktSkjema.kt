@@ -48,9 +48,6 @@ import java.io.Console
 @Composable
 fun bruktProduktSkjema(navController: NavController) {
 
-
-
-
         Scaffold(
             bottomBar = {
                 printBotBarIcon(navController = navController, 2)

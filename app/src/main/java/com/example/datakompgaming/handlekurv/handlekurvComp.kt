@@ -1,6 +1,8 @@
 package com.example.datakompgaming.screen
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -21,16 +23,19 @@ import coil.compose.AsyncImage
 import com.example.datakompgaming.bestillingfiler.BestillingerCard
 import com.example.datakompgaming.bestillingfiler.Order
 import com.example.datakompgaming.bestillingfiler.printProdukt
+import com.example.datakompgaming.bruktProdukt.BrukteProdukterFire
 import com.example.datakompgaming.handlekurv.HandlekurvObject
 import com.example.datakompgaming.handlekurv.produktOppdateringDB
 import com.example.datakompgaming.produkt.ProduktObject
 import com.example.datakompgaming.produkt.ProdukterFire
 
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun printHandlekurv(navController: NavController) {
+    var totalPris = 0.0;
     Scaffold(
         bottomBar = {
             printBotBarIcon(navController = navController, 5)
@@ -49,13 +54,23 @@ fun printHandlekurv(navController: NavController) {
             Spacer(modifier = Modifier.height(50.dp))
             Text(text = "Din handlekurv")
             for(item in HandlekurvObject.handlekurvListe){
+                totalPris += item.pris
                 HandlekurvCard(item, navController)
                 Spacer(modifier = Modifier.height(5.dp))
             }
+            for(bruktitem in HandlekurvObject.BruktHandleliste){
+                totalPris += bruktitem.pris
+                bruktHandlekurvCard(bruktitem, navController)
+            }
+
+            Spacer(modifier = Modifier.height(15.dp))
+            Text(text = "din totalpris: ${totalPris} ")
+
             Button(onClick = {
-                updateVarerPaLager()
-                HandlekurvObject.handlekurvListe.clear()
-                navController.navigate("Handlekurv")
+                // updateVarerPaLager()
+                // HandlekurvObject.handlekurvListe.clear()
+                // HandlekurvObject.BruktHandleliste.clear()
+                navController.navigate("Shipping")
             }) {
                 Text(text = "kjøp varer!")
             }
@@ -66,9 +81,7 @@ fun printHandlekurv(navController: NavController) {
 
 @Composable
 fun HandlekurvCard(item: ProdukterFire,navController: NavController) {
-
     var pris = item.pris.toString()
-
     Row(modifier = Modifier
         .border(3.dp, Color.Black)
         .padding(10.dp)
@@ -87,6 +100,38 @@ fun HandlekurvCard(item: ProdukterFire,navController: NavController) {
             Text(text = pris + "kr")
             Button(onClick = {
                 HandlekurvObject.handlekurvListe.remove(item)
+                navController.navigate("Handlekurv")
+            }) {
+                Text(text = "fjern fra handlekurv",
+                    textAlign = TextAlign.Center)
+            }
+        }
+    }
+}
+
+@Composable
+fun bruktHandlekurvCard(item: BrukteProdukterFire,navController: NavController) {
+
+    var pris = item.pris.toString()
+
+    Row(modifier = Modifier
+        .border(3.dp, Color.Black)
+        .padding(10.dp)
+        .fillMaxWidth()
+    ) {
+        AsyncImage(
+            model = item.bilde,
+            contentDescription = "null",
+            modifier = Modifier
+                .fillMaxSize(0.5F)
+        )
+        Column() {
+            Text(text = item.produktNavn)
+            Text(text = item.tilstand + " stjerners rangering")
+            Text(text = pris + "kr")
+            Button(onClick = {
+
+                HandlekurvObject.BruktHandleliste.remove(item)
                 navController.navigate("Handlekurv")
             }) {
                 Text(text = "fjern fra handlekurv",

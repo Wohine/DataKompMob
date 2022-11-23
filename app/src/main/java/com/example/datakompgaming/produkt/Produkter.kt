@@ -59,9 +59,9 @@ fun Produkter(navController: NavController, hovedListe: MutableList<ProdukterFir
                     ) {
                         Spacer(modifier = Modifier.height(100.dp))
                         Title("Produkter")
-                        produkterRad("Hovedkort",Color(0xFF82d0d9), hovedListe)
-                        produkterRad("Skjermkort",Color(0xFF82d0d9), prosesstListe)
-                        produkterRad("Prosessorer",Color(0xFF82d0d9), skjermListe)
+                        produkterRad("Hovedkort",Color(0xFF0888c4), hovedListe)
+                        produkterRad("Skjermkort",Color(0xFF0888c4), prosesstListe)
+                        produkterRad("Prosessorer",Color(0xFF0888c4), skjermListe)
 
                         Spacer(modifier = Modifier.height(100.dp))
                     }
@@ -114,7 +114,7 @@ fun Kort(tittel: String,pris: String,igjen: String, imagePainter: Painter) {
 
         ) {
         Row() {
-            Image(painter = imagePainter, contentDescription = "$tittel",
+            Image(painter = imagePainter, contentDescription = tittel,
                 modifier = Modifier
                     .fillMaxSize()
                     .weight(1f),
