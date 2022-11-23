@@ -36,6 +36,7 @@ class MessageViewModel : ViewModel() {
             .addValueEventListener(
                 object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
+
                         _messages.value = dataSnapshot.getValue<List<Message>>()!!
                         size = dataSnapshot.childrenCount
                     }
