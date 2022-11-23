@@ -57,10 +57,12 @@ fun Produkter(navController: NavController, hovedListe: MutableList<ProdukterFir
                             .verticalScroll(rememberScrollState(),enabled = true),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Title("Produkter")
-                        produkterRad("Hovedkort",Color(0xFF82d0d9), hovedListe)
-                        produkterRad("Skjermkort",Color(0xFF82d0d9), prosesstListe)
-                        produkterRad("Prosessorer",Color(0xFF82d0d9), skjermListe)
+                        Spacer(modifier = Modifier.height(100.dp))
+                        Text(text = "NYE PRODUKTER", fontSize = 40.sp,color = Color(0xFF0888c4), fontWeight = FontWeight.Bold)
+                        Spacer(modifier = Modifier.height(30.dp))
+                        produkterRad("Hovedkort",Color(0xFF0888c4), hovedListe)
+                        produkterRad("Skjermkort",Color(0xFF0888c4), prosesstListe)
+                        produkterRad("Prosessorer",Color(0xFF0888c4), skjermListe)
 
                         Spacer(modifier = Modifier.height(100.dp))
                     }
@@ -91,10 +93,11 @@ fun KortLabel(tittel: String) {
         text = tittel,
         modifier = Modifier
             .absolutePadding(bottom = Dp(5f))
+            .width(200.dp)
             .background(Color.Transparent),
         textAlign = TextAlign.Right,
         fontWeight = FontWeight.Bold,
-        fontSize = 16.sp,
+        fontSize = 17.sp,
         color = Color(0xFFf7f7f7)
     )
 }
@@ -112,7 +115,7 @@ fun Kort(tittel: String,pris: String,igjen: String, imagePainter: Painter) {
 
         ) {
         Row() {
-            Image(painter = imagePainter, contentDescription = "$tittel",
+            Image(painter = imagePainter, contentDescription = tittel,
                 modifier = Modifier
                     .fillMaxSize()
                     .weight(1f),
@@ -172,14 +175,18 @@ fun ProdukterKort(produkt: ProdukterFire, farge: Color) {
     var cont = LocalContext.current
     Card (
         modifier = Modifier
-            .width(300.dp)
+            .width(400.dp)
             .height(150.dp)
             .absolutePadding(right = Dp(35f))
             .clickable {
-                if(produkt.varebeholdning.toInt() < 1)
-                    Toast.makeText(cont, "Utsolgt..", Toast.LENGTH_SHORT).show()
-                else{
-                    Toast.makeText(cont, "lagt i kurv", Toast.LENGTH_SHORT).show()
+                if (produkt.varebeholdning.toInt() < 1)
+                    Toast
+                        .makeText(cont, "Utsolgt..", Toast.LENGTH_SHORT)
+                        .show()
+                else {
+                    Toast
+                        .makeText(cont, "lagt i kurv", Toast.LENGTH_SHORT)
+                        .show()
                     HandlekurvObject.handlekurvListe.add(produkt)
                 }
 
@@ -194,8 +201,8 @@ fun ProdukterKort(produkt: ProdukterFire, farge: Color) {
                 model = produkt.bilde,
                 contentDescription = "null",
                 modifier = Modifier
-                .fillMaxSize()
-                .weight(1f),
+                    .fillMaxSize()
+                    .weight(1f),
                 alignment = Alignment.CenterStart
             )
             Column(modifier = Modifier

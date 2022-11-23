@@ -39,7 +39,7 @@ fun BruktMarked(navController: NavController, bruktHovedkortListe: MutableList<B
 
     Scaffold(
         bottomBar = {
-            printBotBarIcon(navController = navController, 4)
+            printBotBarIcon(navController = navController, 3)
         },
         topBar = {
             printTopBarIcon(navController = navController)
@@ -58,10 +58,12 @@ fun BruktMarked(navController: NavController, bruktHovedkortListe: MutableList<B
                     .verticalScroll(rememberScrollState(),enabled = true),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Title("Markedsplass")
-                brukteProdukterRad("Hovedkort",Color(0xFF82d0d9), bruktHovedkortListe)
-                brukteProdukterRad("Skjermkort",Color(0xFF82d0d9), bruktSkjermkortListe)
-                brukteProdukterRad("Prosessorer",Color(0xFF82d0d9), bruktProsessorListe)
+                Spacer(modifier = Modifier.height(100.dp))
+                Text(text = "BRUKTMARKED", fontSize = 40.sp,color = Color(0xFF0888c4), fontWeight = FontWeight.Bold)
+                Spacer(modifier = Modifier.height(30.dp))
+                brukteProdukterRad("Hovedkort",Color(0xFF0888c4), bruktHovedkortListe)
+                brukteProdukterRad("Skjermkort",Color(0xFF0888c4), bruktSkjermkortListe)
+                brukteProdukterRad("Prosessorer",Color(0xFF0888c4), bruktProsessorListe)
 
                 Spacer(modifier = Modifier.height(100.dp))
             }
@@ -81,7 +83,7 @@ fun brukteProdukterRad(tittel: String, farge: Color, produktListe: MutableList<B
         textAlign = TextAlign.Center
     )
     Row(modifier = Modifier
-        .height(150.dp)
+        .height(200.dp)
         .horizontalScroll(rememberScrollState(), enabled = true),
     ) {
         for (produkt in produktListe){
@@ -98,13 +100,15 @@ fun brukteProdukterRad(tittel: String, farge: Color, produktListe: MutableList<B
 fun BrukteProdukterKort(produkt: BrukteProdukterFire, farge: Color) {
     var pris = produkt.pris
     var tilstand = produkt.tilstand
+    var cont = LocalContext.current
     Card (
         modifier = Modifier
-            .width(300.dp)
-            .height(150.dp)
+            .width(400.dp)
+            .height(200.dp)
             .absolutePadding(right = Dp(35f))
             .clickable {
                 HandlekurvObject.BruktHandleliste.add(produkt)
+                Toast.makeText(cont, "lagt i kurv", Toast.LENGTH_SHORT).show()
             },
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(
@@ -128,8 +132,12 @@ fun BrukteProdukterKort(produkt: BrukteProdukterFire, farge: Color) {
 
                 ) {
                 KortLabel(produkt.tittel)
+                KortLabel(produkt.tittel)
+                Spacer(modifier = Modifier.height(10.dp))
                 KortLabel("Pris: $pris"+"kr")
-                KortLabel("Kun $tilstand brukt!")
+                Spacer(modifier = Modifier.height(10.dp))
+                KortLabel("Beskrivelse:")
+                KortLabel(tilstand)
             }
 
         }

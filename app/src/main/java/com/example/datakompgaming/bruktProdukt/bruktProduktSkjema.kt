@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.*
@@ -46,9 +47,6 @@ import java.io.Console
 @ExperimentalMaterial3Api
 @Composable
 fun bruktProduktSkjema(navController: NavController) {
-
-
-
 
         Scaffold(
             bottomBar = {
@@ -96,6 +94,8 @@ fun bruktProduktSkjema(navController: NavController) {
                 }
 
                 var firebaseAuth = FirebaseAuth.getInstance()
+
+                var cont = LocalContext.current
 
 
 
@@ -159,9 +159,17 @@ fun bruktProduktSkjema(navController: NavController) {
                 Spacer(modifier = Modifier.height(15.dp))
 
                 TextField(
-                    label = { Text(text = "Produktets tilstand") },
+                    label = { Text(text = "Beskrivelse av produktet") },
                     value = tilstand.value,
                     onValueChange = { tilstand.value = it },
+                )
+
+                Spacer(modifier = Modifier.height(15.dp))
+
+                TextField(
+                    label = { Text(text = "Bildeadresse") },
+                    value = bildeAdresse.value,
+                    onValueChange = { bildeAdresse.value = it },
                 )
 
                 Spacer(modifier = Modifier.height(15.dp))
@@ -174,14 +182,6 @@ fun bruktProduktSkjema(navController: NavController) {
                 ) {
                     Text(text = "Last opp bilde fra galleri")
                 }
-
-                Spacer(modifier = Modifier.height(15.dp))
-
-                TextField(
-                    label = { Text(text = "Bildeadresse") },
-                    value = bildeAdresse.value,
-                    onValueChange = { bildeAdresse.value = it },
-                )
 
                 Spacer(modifier = Modifier.height(15.dp))
 
@@ -218,7 +218,7 @@ fun bruktProduktSkjema(navController: NavController) {
                             val varebeholdningString = "1"
 
                             data class BruktProdukt(
-                                val produktNavn: String? = null,
+                                val tittel: String? = null,
                                 val kategori: String? = null,
                                 val produsent: String? = null,
                                 val pris: String? = null,
@@ -237,13 +237,14 @@ fun bruktProduktSkjema(navController: NavController) {
                                 varebeholdningString
                             )
 
+
                             firebaseAuth.currentUser?.let { it1 ->
                                 firestore.collection("Produkter").document("BrukteProdukter").collection(kategoriString).document(Math.random().toString())
                                     .set(
                                         bruktProdukt
                                     )
-                                    .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!")}
-                                    .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
+                                    .addOnSuccessListener { Toast.makeText(cont, "Produktet ditt er sendt inn!", Toast.LENGTH_LONG).show()}
+                                    .addOnFailureListener { Toast.makeText(cont, "Noe gikk galt ved innsending av produktet", Toast.LENGTH_LONG).show() }
                             }
 
                         },

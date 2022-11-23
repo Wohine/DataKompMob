@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.datakompgaming.handlekurv.produktOppdateringDB
 import com.example.datakompgaming.produkt.*
+import com.example.datakompgaming.screen.LogoBanner
 import com.example.datakompgaming.screen.ScreenMain
 import com.example.datakompgaming.ui.theme.DataKompGamingTheme
 import com.firebase.ui.auth.AuthUI
@@ -57,7 +58,7 @@ class MainActivity : ComponentActivity() {
     ) {
         Column(verticalArrangement = Arrangement.SpaceEvenly, horizontalAlignment = Alignment.CenterHorizontally) {
             Row(modifier = Modifier.padding(all = 2.dp)) {
-                Text(text = "DataKomp")
+                LogoBanner(title = "test")
             }
             Row(modifier = Modifier.padding(all = 2.dp)) {
                 Button(
@@ -106,7 +107,7 @@ class MainActivity : ComponentActivity() {
                 DefaultPreview()
             }
         } else {
-            Log.e("ProduktDB.kt", "Error logging in " + response?.error?.errorCode)
+            Log.e("FirebaseAuth", "Error logging in " + response?.error?.errorCode)
         }
     }
 
@@ -124,8 +125,13 @@ class MainActivity : ComponentActivity() {
 @ExperimentalMaterial3Api
 @Composable
 fun DefaultPreview() {
-    MaterialTheme {
-        ScreenMain()
+    DataKompGamingTheme {
+        Surface(
+            modifier = Modifier.fillMaxWidth(),
+            color = MaterialTheme.colorScheme.onBackground
+        ) {
+            ScreenMain()
+        }
     }
 }
 @ExperimentalMaterial3Api

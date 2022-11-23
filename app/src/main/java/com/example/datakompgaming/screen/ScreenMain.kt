@@ -12,6 +12,7 @@ import com.example.datakompgaming.bruktProdukt.BruktProduktObject
 import com.example.datakompgaming.handlekurv.printShippingSkjema
 import com.example.datakompgaming.produkt.ProduktObject
 import com.example.datakompgaming.produkt.*
+import com.example.datakompgaming.screen.chat.ChatApp
 
 @ExperimentalMaterial3Api
 @Composable
@@ -26,7 +27,7 @@ fun ScreenMain(){
             printOrders(Bestillinger.bestilligListe, navController)
         }
         composable(Routes.Chat.route){
-            PreviewConversation(navController)
+            ChatApp(navController)
         }
         composable(Routes.OmOss.route){
             OmOss(navController)
@@ -40,8 +41,14 @@ fun ScreenMain(){
         composable(Routes.HomePage.route){
             HomePage(navController)
         }
+        composable(Routes.UserPage.route){
+            UserPage(navController)
+        }
         composable(Routes.bruktProduktSkjema.route){
             bruktProduktSkjema(navController)
+        }
+        composable(Routes.UserSettings.route){
+            UserSettings(navController)
         }
         composable(Routes.Handlekurv.route){
             printHandlekurv(navController)
