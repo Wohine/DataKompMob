@@ -1,5 +1,4 @@
 package com.example.datakompgaming.screen.chat
-
 import android.content.ContentValues
 import android.util.Log
 import androidx.compose.runtime.State
@@ -13,12 +12,13 @@ import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import java.util.*
 
+public var size: Long = 0
 
 data class Message(
     var text: String = "",
     var sender: String = "",
 //    var recipientID: String,
-    var time: Long = Calendar.getInstance().timeInMillis,
+    var time: Long = 0,
     @field:JvmField
     var isOut: Boolean? = null,
 )
@@ -37,6 +37,7 @@ class MessageViewModel : ViewModel() {
                 object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         _messages.value = dataSnapshot.getValue<List<Message>>()!!
+                        size = dataSnapshot.childrenCount
                     }
 
                     override fun onCancelled(error: DatabaseError) {

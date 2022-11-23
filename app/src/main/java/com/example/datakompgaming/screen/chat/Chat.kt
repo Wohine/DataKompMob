@@ -2,6 +2,7 @@ package com.example.datakompgaming.screen.chat
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
+import android.service.controls.ControlsProviderService.TAG
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -42,7 +43,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
-import com.example.datakompgaming.screen.chat.Car
 import androidx.lifecycle.viewmodel.compose.viewModel
 import java.text.SimpleDateFormat
 
@@ -212,9 +212,7 @@ fun MessageItem(
 @Composable
 fun MessageSection() {
     val context = LocalContext.current
-
-    val database =
-        Firebase.database("https://datakompkotlin-default-rtdb.europe-west1.firebasedatabase.app")
+    val database = Firebase.database("https://datakompkotlin-default-rtdb.europe-west1.firebasedatabase.app")
 
         OutlinedTextField(
             placeholder = {
@@ -235,15 +233,18 @@ fun MessageSection() {
                         .clickable {
 //                            val messageID = database.getReference("/messages").push().key
 //                            println(messageID)
-                            val messageTxt = database.getReference("/messages/${0}/text")
-                            val messageSender = database.getReference("/messages/${0}/sender")
-                            val messageOut = database.getReference("/messages/${0}/isOut")
+                            val messageId = size
 
+                            val messageTxt = database.getReference("/messages/${messageId}/text")
+                            val messageSender = database.getReference("/messages/${messageId}/sender")
+                            val messageOut = database.getReference("/messages/${messageId}/isOut")
+                            val messageTime = database.getReference("/messages/${messageId}/time")
 
 //                            Calendar.getInstance().timeInMillis
                             messageTxt.setValue(message.value)
                             messageSender.setValue("test user")
                             messageOut.setValue(true)
+                            messageTime.setValue(Calendar.getInstance().timeInMillis)
                         }
                 )
             },
@@ -275,7 +276,8 @@ fun defaultPre() {
         MessageSection()
     }
 }
-
+val database =
+    Firebase.database("https://codesample-76172-default-rtdb.europe-west1.firebasedatabase.app")
 
 
 
