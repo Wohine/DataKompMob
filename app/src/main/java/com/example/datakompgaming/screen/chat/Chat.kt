@@ -30,6 +30,13 @@ import com.example.datakompgaming.screen.printTopBarIcon
 import com.example.datakompgaming.ui.theme.DataKompGamingTheme
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.ViewModel
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import com.example.datakompgaming.screen.chat.Car
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 val message = mutableStateOf("")
 private val BotChatBubbleShape = RoundedCornerShape(0.dp,8.dp,8.dp,8.dp)
@@ -52,18 +59,51 @@ fun ChatApp(navController: NavController) {
                 modifier = Modifier.fillMaxSize(),
 //                verticalArrangement = Arrangement.SpaceBetween
             ) {
-                TopProfile(
-                    username = "Test",
-                    profile = painterResource(id = R.drawable.floppa),
-                    isOnline = true
-                )
-
-                ChatSection(Modifier.weight(1f))
-                MessageSection()
+//                TopProfile(
+//                    username = "Test",
+//                    profile = painterResource(id = R.drawable.floppa),
+//                    isOnline = true
+//                )
+//
+//                ChatSection(Modifier.weight(1f))
+//                MessageSection()
+                MessageScreen()
             }
         }
     }
 }
+
+@Composable
+fun MessageScreen(viewModel: MessageViewModel = viewModel()) {
+    LazyColumn {
+        items(viewModel.messages.value) { message ->
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(text = message.text)
+                Text(text = message.sender)
+            }
+        }
+    }
+}
+
+@Composable
+fun CarsScreen(viewModel: CarsViewModel = viewModel()) {
+    LazyColumn {
+        items(viewModel.cars.value) { car ->
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(text = car.name)
+                Text(text = "$${car.price}")
+            }
+        }
+    }
+}
+
+
 
 @Composable
 fun TopProfile(
@@ -108,27 +148,27 @@ fun TopProfile(
     }
 }
 
-@Composable
-fun ChatSection(
-    modifier: Modifier = Modifier
-) {
-    val SimpleDateFormat = SimpleDateFormat("h:mm a", Locale.ENGLISH)
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxHeight(0.83f)
-            .padding(16.dp),
-        reverseLayout = true
-    ) {
-        items(messageTest) { chat -> 
-            MessageItem(
-                messageText = chat.text,
-                time = SimpleDateFormat.format(chat.time),
-                isOut = chat.isOut
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-        }
-    }
-}
+//@Composable
+//fun ChatSection(
+//    modifier: Modifier = Modifier
+//) {
+//    val SimpleDateFormat = SimpleDateFormat("h:mm a", Locale.ENGLISH)
+//    LazyColumn(
+//        modifier = Modifier
+//            .fillMaxHeight(0.83f)
+//            .padding(16.dp),
+//        reverseLayout = true
+//    ) {
+//        items(messageTest) { chat ->
+//            MessageItem(
+//                messageText = chat.text,
+//                time = SimpleDateFormat.format(chat.time),
+//                isOut = chat.isOut
+//            )
+//            Spacer(modifier = Modifier.height(8.dp))
+//        }
+//    }
+//}
 
 @Composable
 fun MessageItem(
@@ -171,6 +211,7 @@ fun MessageItem(
     }
 }
 
+@SuppressLint("SuspiciousIndentation")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MessageSection() {
@@ -219,7 +260,7 @@ fun defaultPre() {
             isOnline = true
         )
 
-        ChatSection(Modifier.weight(1f))
+//        ChatSection(Modifier.weight(1f))
         MessageSection()
     }
 }
