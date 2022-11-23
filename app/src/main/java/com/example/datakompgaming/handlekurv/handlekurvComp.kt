@@ -67,9 +67,6 @@ fun printHandlekurv(navController: NavController) {
             Text(text = "din totalpris: ${totalPris} ")
 
             Button(onClick = {
-                // updateVarerPaLager()
-                // HandlekurvObject.handlekurvListe.clear()
-                // HandlekurvObject.BruktHandleliste.clear()
                 navController.navigate("Shipping")
             }) {
                 Text(text = "kjøp varer!")
@@ -130,7 +127,6 @@ fun bruktHandlekurvCard(item: BrukteProdukterFire,navController: NavController) 
             Text(text = item.tilstand + " stjerners rangering")
             Text(text = pris + "kr")
             Button(onClick = {
-
                 HandlekurvObject.BruktHandleliste.remove(item)
                 navController.navigate("Handlekurv")
             }) {

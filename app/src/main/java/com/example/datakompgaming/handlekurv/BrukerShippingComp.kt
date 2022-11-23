@@ -3,6 +3,7 @@ package com.example.datakompgaming.handlekurv
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -14,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -36,6 +38,7 @@ fun printShippingSkjema(navController: NavController) {
             printTopBarIcon(navController = navController)
         }
     ) {
+        var cont = LocalContext.current
 
         val fornavn = remember { mutableStateOf(TextFieldValue()) }
         val etternavn = remember { mutableStateOf(TextFieldValue()) }
@@ -98,8 +101,8 @@ fun printShippingSkjema(navController: NavController) {
                     value = postkode.value,
                     onValueChange = { postkode.value = it }
                 )
-
                 Button(onClick = {
+
                     var shipInfo = ShippingFire(
                         uid = uID,
                         fornavn = fornavn.value.text,
@@ -109,6 +112,16 @@ fun printShippingSkjema(navController: NavController) {
                         by = by.value.text,
                         postkode = postkode.value.text
                     )
+                    for(item in HandlekurvObject.handlekurvListe)
+                        shipInfo.basket.add(item.toMap())
+                    for(item in HandlekurvObject.BruktHandleliste)
+                        shipInfo.basket.add(item.toMap())
+                    kjopProdukterDB(shipInfo)
+                    updateVarerPaLager()
+                    HandlekurvObject.handlekurvListe.clear()
+                    HandlekurvObject.BruktHandleliste.clear()
+                    navController.navigate("HomePage")
+                    Toast.makeText(cont, "takk for ditt kjøp", Toast.LENGTH_SHORT).show()
                     Log.d(ContentValues.TAG, shipInfo.fornavn)
                 }) {
                     Text(text = "trykk her")

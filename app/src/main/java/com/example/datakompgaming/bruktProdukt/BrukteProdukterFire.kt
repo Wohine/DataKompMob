@@ -9,5 +9,14 @@ data class BrukteProdukterFire(
     val produsent: String,
     val tilstand: String
 ) {
-
+    @Exclude
+    fun toMap(): Map<String, Any?> {
+        return mapOf(
+            "kategori" to kategori,
+            "pris" to pris,
+            "produktNavn" to produktNavn,
+            "produsent" to produsent,
+            "tilstand" to tilstand,
+        )
+    }
 }
