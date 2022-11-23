@@ -96,7 +96,7 @@ fun ChatApp(navController: NavController) {
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun MessageScreen(viewModel: MessageViewModel = viewModel()) {
-    val SimpleDateFormat = SimpleDateFormat("h:mm a", Locale.ENGLISH)
+    val SimpleDateFormat = SimpleDateFormat("HH:mm,   dd.MM", Locale.ENGLISH)
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
 
@@ -280,6 +280,8 @@ fun MessageSection() {
                                 messageSender.setValue(firebaseAuth.currentUser?.email)
                             }
                             messageTime.setValue(Calendar.getInstance().timeInMillis)
+
+                            message.value = ""
                         }
                 )
             },
