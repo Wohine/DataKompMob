@@ -24,11 +24,12 @@ import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
 
 var mainActivity: MainActivity? = null
+var user: FirebaseUser? = null
 
 @OptIn(ExperimentalMaterial3Api::class)
 class MainActivity : ComponentActivity() {
 
-    private var user: FirebaseUser? = null
+
 
 
 
