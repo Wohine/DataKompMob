@@ -17,7 +17,7 @@ public var size: Long = 0
 data class Message(
     var text: String = "",
     var sender: String = "",
-//    var recipientID: String,
+    var uid: String = "",
     var time: Long = 0,
 )
 

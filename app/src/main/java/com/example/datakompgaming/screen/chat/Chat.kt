@@ -45,12 +45,14 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 
 val message = mutableStateOf("")
 private val BotChatBubbleShape = RoundedCornerShape(0.dp,8.dp,8.dp,8.dp)
 private val AuthorChatBubbleShape = RoundedCornerShape(8.dp,0.dp,8.dp,8.dp)
+var firebaseAuth = FirebaseAuth.getInstance()
 
 private val database =
     Firebase.database("https://datakompkotlin-default-rtdb.europe-west1.firebasedatabase.app")
@@ -108,7 +110,7 @@ fun MessageScreen(viewModel: MessageViewModel = viewModel()) {
     ) {
         val isOut: Boolean = true
         items(viewModel.messages.value) { message ->
-            isOut?.let { MessageItem(messageText = message.text, time = SimpleDateFormat.format(message.time), isOut = it, sender = message.sender) }
+            isOut?.let { MessageItem(messageText = message.text, time = SimpleDateFormat.format(message.time), uid = message.uid, sender = message.sender) }
             Spacer(modifier = Modifier.height(8.dp))
             coroutineScope.launch {
                 listState.scrollToItem(size.toInt())
@@ -189,9 +191,13 @@ fun TopProfile(
 fun MessageItem(
     messageText: String?,
     time: String,
-    isOut: Boolean,
     sender: String,
+    uid: String,
 ) {
+    var isOut = false
+    if (firebaseAuth.currentUser?.uid == uid){
+        isOut = true
+    }
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = if (isOut) Alignment.End else Alignment.Start
@@ -259,15 +265,20 @@ fun MessageSection() {
 //                            val messageID = database.getReference("/messages").push().key
 //                            println(messageID)
                             val messageId = size
-
+                            val messageUid = database.getReference("/messages/${messageId}/uid")
                             val messageTxt = database.getReference("/messages/${messageId}/text")
                             val messageSender = database.getReference("/messages/${messageId}/sender")
                             val messageTime = database.getReference("/messages/${messageId}/time")
 
 //                            Calendar.getInstance().timeInMillis
                             messageTxt.setValue(message.value)
-                            messageSender.setValue("test user")
+                            if (firebaseAuth.currentUser?.email == null){
+                                messageSender.setValue("Guest")
+                            } else {
+                                messageSender.setValue(firebaseAuth.currentUser?.email)
+                            }
                             messageTime.setValue(Calendar.getInstance().timeInMillis)
+                            messageUid.setValue(firebaseAuth.currentUser?.uid)
                         }
                 )
             },
