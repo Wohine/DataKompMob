@@ -46,6 +46,7 @@ fun printOrders(bestillingListe: List<Order>, navController: NavController) {
                 .background(Color.White),
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
+            Spacer(modifier = Modifier.height(100.dp))
             Text(text = "Dine Bestillinger")
             for(bestilling in bestillingListe){
                 BestillingerCard(bestilling)
