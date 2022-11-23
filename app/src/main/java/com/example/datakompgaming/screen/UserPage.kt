@@ -56,14 +56,14 @@ fun UserPage(navController: NavController)
                 ) {
 
 
-                    Spacer(modifier = Modifier.height(40.dp))
+                    Spacer(modifier = Modifier.height(10.dp))
                     Image(
                         painter = painterResource(R.drawable.datakomplogo),
-                        contentDescription = null
+                        contentDescription = null,
+                        Modifier
+                            .size(200.dp)
+                            .offset(x = 0.dp, y = 20.dp)
                     )
-
-
-
 
                     Text(
                         text = "Din bruker: " + firebaseAuth.currentUser?.email,
@@ -71,7 +71,7 @@ fun UserPage(navController: NavController)
                     )
 
 
-
+                    Spacer(modifier = Modifier.height(20.dp))
                     Row(
                         horizontalArrangement = Arrangement.Center,
                         //verticalAlignment = Alignment.CenterVertically
@@ -83,7 +83,7 @@ fun UserPage(navController: NavController)
                         ) {
                             Button(
                                 onClick = {
-                                    navController.navigate("Bestilling")
+                                    navController.navigate("UserSettings")
                                 },
                                 shape = RoundedCornerShape(30.dp),
                                 modifier = Modifier
