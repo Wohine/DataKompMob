@@ -1,6 +1,9 @@
 package com.example.datakompgaming.screen.chat
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
+import android.icu.text.SimpleDateFormat
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -28,15 +31,17 @@ import com.example.datakompgaming.R
 import com.example.datakompgaming.screen.printBotBarIcon
 import com.example.datakompgaming.screen.printTopBarIcon
 import com.example.datakompgaming.ui.theme.DataKompGamingTheme
-import java.text.SimpleDateFormat
 import java.util.*
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import com.example.datakompgaming.screen.chat.Car
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.childEvents
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
+import com.google.firebase.ktx.Firebase
 
 val message = mutableStateOf("")
 private val BotChatBubbleShape = RoundedCornerShape(0.dp,8.dp,8.dp,8.dp)
@@ -66,8 +71,8 @@ fun ChatApp(navController: NavController) {
 //                )
 //
 //                ChatSection(Modifier.weight(1f))
-//                MessageSection()
                 MessageScreen()
+                MessageSection()
             }
         }
     }
@@ -75,30 +80,17 @@ fun ChatApp(navController: NavController) {
 
 @Composable
 fun MessageScreen(viewModel: MessageViewModel = viewModel()) {
-    LazyColumn {
+    val SimpleDateFormat = SimpleDateFormat("h:mm a", Locale.ENGLISH)
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxHeight(0.83f)
+            .padding(16.dp),
+        reverseLayout = true
+    ) {
         items(viewModel.messages.value) { message ->
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(text = message.text)
-                Text(text = message.sender)
-            }
-        }
-    }
-}
-
-@Composable
-fun CarsScreen(viewModel: CarsViewModel = viewModel()) {
-    LazyColumn {
-        items(viewModel.cars.value) { car ->
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(text = car.name)
-                Text(text = "$${car.price}")
-            }
+            message.isOut?.let { MessageItem(messageText = message.text, time = SimpleDateFormat.format(message.time), isOut = it) }
+            Spacer(modifier = Modifier.height(8.dp))
+            println(message.isOut)
         }
     }
 }
@@ -174,7 +166,7 @@ fun TopProfile(
 fun MessageItem(
     messageText: String?,
     time: String,
-    isOut: Boolean
+    isOut: Boolean,
 ) {
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -204,7 +196,7 @@ fun MessageItem(
         }
 
         Text(
-            text = time,
+            text = ""+time,
             fontSize = 12.sp,
             modifier = Modifier.padding(start = 8.dp)
         )
@@ -216,7 +208,9 @@ fun MessageItem(
 @Composable
 fun MessageSection() {
     val context = LocalContext.current
-
+    val database =
+        Firebase.database("https://datakompkotlin-default-rtdb.europe-west1.firebasedatabase.app")
+    val test = database.getReference("/messages/0/text")
         OutlinedTextField(
             placeholder = {
                 Text(text = "Message..")
@@ -225,21 +219,34 @@ fun MessageSection() {
             onValueChange = {
                 message.value = it
             },
-            shape = RoundedCornerShape(25.dp),
+            shape = RoundedCornerShape(15.dp),
             trailingIcon = {
                 Icon(
-                    painter = painterResource(id = R.drawable.floppa),
+                    painter = painterResource(id = R.drawable.send),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
                         .size(32.dp)
-                        .clickable { }
+                        .clickable {
+
+
+                            val messageId = 0
+
+                            val messageTxt = database.getReference("/messages/${messageId}/text")
+                            val messageSender =
+                                database.getReference("/messages/${messageId}/sender")
+                            val messageOut = database.getReference("/messages/${messageId}/isOut")
+
+                            messageTxt.setValue(message.value)
+                            messageSender.setValue("test user")
+                            messageOut.setValue(true)
+                        }
                 )
             },
             modifier = Modifier
                 .padding(0.dp)
                 .fillMaxWidth()
-                .fillMaxHeight(.5f),
+                .height(55.dp),
         )
 
 }
@@ -266,5 +273,20 @@ fun defaultPre() {
 }
 
 
+val database = Firebase.database("https://datakompkotlin-default-rtdb.europe-west1.firebasedatabase.app")
+fun getCount(): Long {
+    var messageId: Long = 0
+    database.getReference("messages")
+        .addValueEventListener(
+            object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    messageId = dataSnapshot.childrenCount
+                }
 
+                override fun onCancelled(error: DatabaseError) {
+                    Log.w(ContentValues.TAG, "Failed to read value.", error.toException())
+                }
+            }
+        )
+    return messageId}
 
