@@ -1,6 +1,7 @@
 package com.example.datakompgaming.screen
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -15,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
@@ -26,6 +28,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.datakompgaming.R
 import com.example.datakompgaming.ui.theme.DataKompGamingTheme
+import com.example.datakompgaming.produkt.firestore
+import com.google.firebase.auth.FirebaseAuth
 
 
 @ExperimentalMaterial3Api
@@ -50,7 +54,7 @@ fun Kundeservice(navController: NavController) {
 
                 Column(
                     modifier = Modifier
-                       // .background(Color.White)
+                        // .background(Color.White)
                         .verticalScroll(rememberScrollState(), enabled = true),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -61,10 +65,15 @@ fun Kundeservice(navController: NavController) {
                     val email = remember { mutableStateOf(TextFieldValue()) }
                     val tema = remember { mutableStateOf(TextFieldValue()) }
                     val hjelptxt = remember { mutableStateOf(TextFieldValue()) }
+                    var firebaseAuth = FirebaseAuth.getInstance()
+                    var cont = LocalContext.current
 
-            Spacer(modifier = Modifier.height(20.dp))
+                    Spacer(modifier = Modifier.height(20.dp))
 
-            Image(painter = painterResource(R.drawable.datakomplogo), contentDescription = null)
+                    Image(
+                        painter = painterResource(R.drawable.datakomplogo),
+                        contentDescription = null
+                    )
 
 
                     Spacer(modifier = Modifier.height(20.dp))
@@ -99,7 +108,51 @@ fun Kundeservice(navController: NavController) {
                     Spacer(modifier = Modifier.height(25.dp))
                     Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
                         Button(
-                            onClick = { },
+                            onClick = {
+                                val navnString = navn.value.text
+                                val emailString = email.value.text
+                                val temaString = tema.value.text
+                                val hjelpString = hjelptxt.value.text
+
+                                data class KundeServiceObjekt(
+                                    val navn: String? = null,
+                                    val email: String? = null,
+                                    val tema: String? = null,
+                                    val beskrivelse: String? = null,
+                                )
+
+                                val kundeService = KundeServiceObjekt(
+                                    navnString,
+                                    emailString,
+                                    temaString,
+                                    hjelpString,
+                                )
+
+
+                                firebaseAuth.currentUser?.let { it1 ->
+                                    firestore.collection("users")
+                                        .document(firebaseAuth.currentUser!!.uid.toString())
+                                        .collection("Kundeservice")
+                                        .document("Saksnummer: " + Math.random().toString())
+                                        .set(
+                                            kundeService
+                                        )
+                                        .addOnSuccessListener {
+                                            Toast.makeText(
+                                                cont,
+                                                "Saken din er sendt inn!",
+                                                Toast.LENGTH_LONG
+                                            ).show()
+                                        }
+                                        .addOnFailureListener {
+                                            Toast.makeText(
+                                                cont,
+                                                "Noe gikk galt ved innsending av skjema",
+                                                Toast.LENGTH_LONG
+                                            ).show()
+                                        }
+                                }
+                            },
                             shape = RoundedCornerShape(50.dp),
                             modifier = Modifier
                                 .fillMaxWidth()

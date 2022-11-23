@@ -79,44 +79,6 @@ fun LogoBanner(title: String) {
     )
 }
 
-@Composable
-fun Kort(tittel: String,pris: String,igjen: String, bilde: String, farge: Color) {
-    Column(modifier = Modifier
-        .padding(horizontal = 10.dp)
-        .fillMaxHeight()
-        .background(Color.Transparent),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(text = tittel,
-            modifier = Modifier
-                .width(150.dp)
-                .absolutePadding(left = 38.dp),
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold,
-        )
-        AsyncImage(model = bilde, contentDescription = "test",
-            modifier = Modifier
-                .height(180.dp),
-            alignment = Alignment.CenterStart
-        )
-        Text(text = igjen,
-        modifier = Modifier
-            .width(150.dp)
-            .absolutePadding(left = 38.dp),
-        fontSize = 16.sp,
-        fontWeight = FontWeight.Bold,
-        )
-        Button(onClick = { /*TODO*/ },
-        modifier = Modifier
-            .width(150.dp),
-        ) {
-            Text(text = "Kjøp")
-        }
-    }
-
-}
-
 //denne brukes bare til development
 @Preview
 @Composable
@@ -148,10 +110,7 @@ fun ProduktSlider(tittel: String, farge: Color, produktListe: MutableList<Produk
     ) {
         for (produkt in produktListe){
             ProdukterKort(
-                produkt.tittel,
-                produkt.pris.toString(),
-                produkt.varebeholdning,
-                produkt.bilde,
+                produkt,
                 farge
             )
         }
@@ -220,11 +179,30 @@ fun FeatProd(title: String) {
                 .background(Color.Transparent),
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
-            fontSize = 16.sp,
-            color = Color(0xFFbd4fdb),
+            fontSize = 25.sp,
+            color = Color(0xFF0888c4),
 
         )
-        ProduktSlider("Hovedkort",Color(0xFF82d0d9), ProduktObject.HovedKortListe)
+        ProduktSlider("Hovedkort",Color(0xFF0888c4), ProduktObject.HovedKortListe)
+    }
+}
+
+@Composable
+fun SkjermProd(title: String) {
+    Column(
+        modifier = Modifier
+    ) {
+        Text(text = title,
+            modifier = Modifier
+                .absolutePadding(bottom = Dp(5f))
+                .background(Color.Transparent),
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Bold,
+            fontSize = 25.sp,
+            color = Color(0xFF0888c4),
+
+            )
+        ProduktSlider("Skjermkort",Color(0xFF0888c4), ProduktObject.SkjermKortListe)
     }
 }
 

@@ -8,8 +8,11 @@ import androidx.navigation.compose.rememberNavController
 import com.example.datakompgaming.Routes
 import com.example.datakompgaming.bestillingfiler.Bestillinger
 import com.example.datakompgaming.bestillingfiler.printOrders
+import com.example.datakompgaming.bruktProdukt.BruktProduktObject
+import com.example.datakompgaming.handlekurv.printShippingSkjema
 import com.example.datakompgaming.produkt.ProduktObject
 import com.example.datakompgaming.produkt.*
+import com.example.datakompgaming.screen.chat.ChatApp
 
 @ExperimentalMaterial3Api
 @Composable
@@ -24,7 +27,7 @@ fun ScreenMain(){
             printOrders(Bestillinger.bestilligListe, navController)
         }
         composable(Routes.Chat.route){
-            PreviewConversation(navController)
+            ChatApp(navController)
         }
         composable(Routes.OmOss.route){
             OmOss(navController)
@@ -46,6 +49,16 @@ fun ScreenMain(){
         }
         composable(Routes.UserSettings.route){
             UserSettings(navController)
+        }
+        composable(Routes.Handlekurv.route){
+            printHandlekurv(navController)
+        }
+        composable(Routes.BrukteProdukter.route){
+            BruktMarked(navController, BruktProduktObject.BruktHovedKortListe,
+                BruktProduktObject.BruktProsessorerListe, BruktProduktObject.BruktSkjermKortListe)
+        }
+        composable(Routes.Shipping.route){
+            printShippingSkjema(navController)
         }
     }
 }

@@ -86,5 +86,13 @@ dependencies {
     implementation "com.google.accompanist:accompanist-flowlayout:0.24.8-beta"
     implementation "com.google.accompanist:accompanist-flowlayout:0.24.8-beta"
     implementation 'com.google.accompanist:accompanist-pager:0.23.1'
+    def lifecycle_version = "2.6.0-alpha01"
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
+
+    implementation platform('com.google.firebase:firebase-bom:30.3.1')
+    implementation 'com.google.firebase:firebase-database-ktx'
     implementation "com.stripe:stripeterminal:2.15.0"
+    implementation 'com.google.firebase:firebase-storage-ktx'
+    implementation "com.google.firebase:firebase-crashlytics-buildtools:2.9.2"
+
 }
