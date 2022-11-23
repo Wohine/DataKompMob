@@ -27,9 +27,14 @@ fun ProdukterUthentingDB(collectionType: String) { // 1-skjerm, 2-pross, 3-hoved
     docRef.get(source).addOnSuccessListener { documents ->
         for (document in documents) {
             Log.d(TAG, "${document.id} => ${document.data}")
+            var pris = 0.0
+
+            if (document.getDouble("pris") != null)
+                pris = document.getDouble("pris")!!
+
             var p1 = ProdukterFire(
                 tittel = document["tittel"].toString(),
-                pris = document.getDouble("pris"),
+                pris = pris,
                 varebeholdning = document["varebeholdning"].toString(),
                 bilde = document["bilde"].toString(),
                 rating = document["rating"].toString(),
