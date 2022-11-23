@@ -88,27 +88,34 @@ fun UserSettings(navController: NavController)
                         TextField(
                             label = { Text(text = "Fornavn") },
                             value = fNavn.value,
-                            onValueChange = { fNavn.value = it })
+                            onValueChange = { fNavn.value = it },
+                            placeholder = { Text(text = "Fornavn2")}
+                        )
 
                     Spacer(modifier = Modifier.height(10.dp))
                         TextField(label = { Text(text = "Etternavn") },
                             value = eNavn.value,
-                            onValueChange = { eNavn.value = it })
+                            onValueChange = { eNavn.value = it },
+
+                        )
 
                     Spacer(modifier = Modifier.height(10.dp))
                     TextField(label = { Text(text = "Email") },
                         value = email.value,
-                        onValueChange = { email.value = it })
+                        onValueChange = { email.value = it },
+                    )
 
                     Spacer(modifier = Modifier.height(10.dp))
                     TextField(label = { Text(text = "Gate adresse") },
                         value = adresse.value,
-                        onValueChange = { adresse.value = it })
+                        onValueChange = { adresse.value = it },
+                    )
 
                     Spacer(modifier = Modifier.height(10.dp))
                     TextField(label = { Text(text = "Postnummer") },
                         value = postNr.value,
-                        onValueChange = { postNr.value = it })
+                        onValueChange = { postNr.value = it },
+                    )
 
 
                     Spacer(modifier = Modifier.height(25.dp))
