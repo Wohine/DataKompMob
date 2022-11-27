@@ -66,7 +66,6 @@ fun Produkter(navController: NavController, hovedListe: MutableList<ProdukterFir
 
                         Spacer(modifier = Modifier.height(100.dp))
                     }
-
                 }
             }
         }
