@@ -1,28 +1,27 @@
 package com.example.datakompgaming.produkt
 
 import android.annotation.SuppressLint
-import android.content.ContentValues.TAG
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -31,16 +30,14 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.net.toFile
 import androidx.navigation.NavController
-import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import com.example.datakompgaming.R
+import com.example.datakompgaming.bruktProdukt.BruktProdukt
+import com.example.datakompgaming.bruktProdukt.SendProduktDB
 import com.example.datakompgaming.screen.printBotBarIcon
 import com.example.datakompgaming.screen.printTopBarIcon
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.ktx.Firebase
-import java.io.Console
+import java.util.regex.Pattern
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "SuspiciousIndentation")
@@ -93,6 +90,8 @@ fun bruktProduktSkjema(navController: NavController) {
                     mutableStateOf(TextFieldValue())
                 }
 
+                var enabled by rememberSaveable{ mutableStateOf(true)}
+                var textKat by remember { mutableStateOf("Kategori") }
                 var firebaseAuth = FirebaseAuth.getInstance()
 
                 var cont = LocalContext.current
@@ -134,11 +133,41 @@ fun bruktProduktSkjema(navController: NavController) {
 
                 Spacer(modifier = Modifier.height(15.dp))
 
-                TextField(
-                    label = { Text(text = "Kategori") },
-                    value = kategori.value,
-                    onValueChange = { kategori.value = it }
-                )
+
+                var expanded by remember { mutableStateOf(false) }
+                val interactionSource = remember { MutableInteractionSource() }
+                val isPressed: Boolean by interactionSource.collectIsPressedAsState()
+
+                if (isPressed) {
+                    expanded = true
+                }
+                Box(){
+                    TextField(
+                        readOnly = true,
+                        label = { Text(text = "Kategori") },
+                        value = textKat,
+                        onValueChange = { textKat = it },
+                        interactionSource = interactionSource
+                    )
+                    DropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false }
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text("Hovedkort") },
+                            onClick = { textKat = "Hovedkort"},
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Prossesorer") },
+                            onClick = { textKat = "Prossesorer" },
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Skjermkort") },
+                            onClick = { textKat = "Skjermkort" },
+                        )
+                    }
+                }
+
 
                 Spacer(modifier = Modifier.height(15.dp))
 
@@ -208,45 +237,21 @@ fun bruktProduktSkjema(navController: NavController) {
                 Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
                     Button(
                         onClick = {
-
-                            val produktNavnString = produktNavn.value.text
-                            val kategoriString = kategori.value.text
-                            val produsentString = produsent.value.text
-                            val prisString = pris.value.text
-                            val tilstandString = tilstand.value.text
-                            val bildeAdresseString = bildeAdresse.value.text
-                            val varebeholdningString = "1"
-
-                            data class BruktProdukt(
-                                val tittel: String? = null,
-                                val kategori: String? = null,
-                                val produsent: String? = null,
-                                val pris: String? = null,
-                                val tilstand: String? = null,
-                                val bildeAdresse: String? = null,
-                                val varebeholdning: String? = null
-                            )
-
-                            val bruktProdukt = BruktProdukt(
-                                produktNavnString,
-                                kategoriString,
-                                produsentString,
-                                prisString,
-                                tilstandString,
-                                bildeAdresseString,
-                                varebeholdningString
-                            )
-
-
-                            firebaseAuth.currentUser?.let { it1 ->
-                                firestore.collection("Produkter").document("BrukteProdukter").collection(kategoriString).document(Math.random().toString())
-                                    .set(
-                                        bruktProdukt
-                                    )
-                                    .addOnSuccessListener { Toast.makeText(cont, "Produktet ditt er sendt inn!", Toast.LENGTH_LONG).show()}
-                                    .addOnFailureListener { Toast.makeText(cont, "Noe gikk galt ved innsending av produktet", Toast.LENGTH_LONG).show() }
+                            if(isNumericToX(pris.value.text)){
+                                val bruktProdukt = BruktProdukt(
+                                    produktNavn.value.text,
+                                    kategori.value.text,
+                                    produsent.value.text,
+                                    pris.value.text,
+                                    tilstand.value.text,
+                                    bildeAdresse.value.text,
+                                    "1"
+                                )
+                                SendProduktDB(bruktProdukt, cont, navController)
                             }
-
+                            else{
+                                Toast.makeText(cont, "ugyldig pris", Toast.LENGTH_LONG).show()
+                            }
                         },
                         shape = RoundedCornerShape(50.dp),
                         modifier = Modifier
@@ -268,4 +273,6 @@ fun bruktProduktSkjema(navController: NavController) {
 
 }
 
-
+fun isNumericToX(toCheck: String): Boolean {
+    return toCheck.toDoubleOrNull() != null
+}

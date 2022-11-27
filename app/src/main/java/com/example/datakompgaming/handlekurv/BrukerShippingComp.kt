@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.datakompgaming.produkt.ProdukterUthentingDB
 import com.example.datakompgaming.screen.*
 import com.example.datakompgaming.user
 import com.google.firebase.auth.FirebaseAuth
@@ -127,6 +128,7 @@ fun printShippingSkjema(navController: NavController) {
 
                     kjopProdukterDB(shipInfo)
                     updateVarerPaLager()
+                    ProdukterUthentingDB()
                     HandlekurvObject.handlekurvListe.clear()
                     HandlekurvObject.BruktHandleliste.clear()
                     navController.navigate("HomePage")
