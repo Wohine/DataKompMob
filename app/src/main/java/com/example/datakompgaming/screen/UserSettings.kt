@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.datakompgaming.R
+import com.example.datakompgaming.brukerSider.BrukerDataFire
 import com.example.datakompgaming.produkt.firestore
 import com.example.datakompgaming.ui.theme.DataKompGamingTheme
 import com.google.firebase.auth.FirebaseAuth
@@ -43,29 +44,7 @@ fun UserSettings(navController: NavController)
 {
     var firebaseAuth = FirebaseAuth.getInstance()
 
-    data class UserDataT(
-        val fornavn: String,
-        val etternavn: String,
-        val email: String,
-        val adresse: String,
-        val postnummer: String,
-    )
 
-
-    var docRef = firestore.collection("users").document(firebaseAuth.currentUser!!.uid.toString())
-        .collection("Brukerdokumenter").document("Brukerdata")
-    var source = Source.DEFAULT
-
-    docRef.get(source).addOnSuccessListener { document ->
-
-            var ud = UserDataT(
-                fornavn = document["fornavn"].toString(),
-                etternavn = document["etternavn"].toString(),
-                email = document["email"].toString(),
-                adresse = document["adresse"].toString(),
-                postnummer = document["postnummer"].toString(),
-            )
-    }
 
     DataKompGamingTheme{
         Surface(
@@ -90,7 +69,7 @@ fun UserSettings(navController: NavController)
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
 
-                    var user = UserDataT()
+                    var bruker = BrukerDataFire()
 
                     val fNavn = remember { mutableStateOf(TextFieldValue()) }
                     val eNavn = remember { mutableStateOf(TextFieldValue()) }
@@ -173,7 +152,6 @@ fun UserSettings(navController: NavController)
                                     emailString,
                                     adresseString,
                                     postNrString,
-
                                 )
 
 
@@ -198,5 +176,26 @@ fun UserSettings(navController: NavController)
                 }
             }
         }
+    }
+}
+
+fun getUserData()
+{
+    var firebaseAuth = FirebaseAuth.getInstance()
+
+
+    var docRef = firestore.collection("users").document(firebaseAuth.currentUser!!.uid.toString())
+        .collection("Brukerdokumenter").document("Brukerdata")
+    var source = Source.DEFAULT
+
+    docRef.get(source).addOnSuccessListener { document ->
+
+        var ud = BrukerDataFire(
+            fornavn = document["fornavn"].toString(),
+            etternavn = document["etternavn"].toString(),
+            email = document["email"].toString(),
+            adresse = document["adresse"].toString(),
+            postnummer = document["postnummer"].toString(),
+        )
     }
 }
