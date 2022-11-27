@@ -89,7 +89,7 @@ fun UserSettings(navController: NavController)
                             label = { Text(text = "Fornavn") },
                             value = fNavn.value,
                             onValueChange = { fNavn.value = it },
-                            placeholder = { Text(text = "Fornavn2")}
+
                         )
 
                     Spacer(modifier = Modifier.height(10.dp))
