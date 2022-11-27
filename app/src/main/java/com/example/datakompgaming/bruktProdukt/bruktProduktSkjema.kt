@@ -38,9 +38,11 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.output.ByteArrayOutputStream
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import java.io.Console
 import java.io.IOException
+import kotlin.random.Random
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "SuspiciousIndentation")
@@ -231,16 +233,15 @@ fun bruktProduktSkjema(navController: NavController) {
                                 }.addOnSuccessListener { taskSnapshot ->
                                     Log.d(ContentValues.TAG, "Suksessfull bildeopplastning!")
                                     val downloadUri = uploadTask.result
-                                    Log.d(ContentValues.TAG, downloadUri.toString())
+                                    Log.d(ContentValues.TAG, "hei" + downloadUri.toString())
                                     // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
                                     // ...
+
+
                                 }
                             }
 
-                            var getDownloadUrl: Task<Uri>? = null
 
-                            if(imageControl > 0)
-                                getDownloadUrl = storageRef.child("images/" + produktNavn.value.text).downloadUrl
 
                             val produktNavnString = produktNavn.value.text
                             val kategoriString = kategori.value.text
@@ -248,7 +249,7 @@ fun bruktProduktSkjema(navController: NavController) {
                             val prisString = pris.value.text
                             val tilstandString = tilstand.value.text
                             val varebeholdningString = "1"
-                            val bildeString = getDownloadUrl.toString()
+                            val bildeString = "https://firebasestorage.googleapis.com/v0/b/datakompkotlin.appspot.com/o/images%2F"+produktNavnString+"?alt=media"
 
 
                             data class BruktProdukt(
@@ -270,7 +271,6 @@ fun bruktProduktSkjema(navController: NavController) {
                                 varebeholdningString,
                                 bildeString,
                             )
-
 
                             firebaseAuth.currentUser?.let { it1 ->
                                 firestore.collection("Produkter").document("BrukteProdukter").collection(kategoriString).document(Math.random().toString())
