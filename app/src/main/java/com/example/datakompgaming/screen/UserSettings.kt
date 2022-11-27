@@ -43,12 +43,28 @@ fun UserSettings(navController: NavController)
 {
     var firebaseAuth = FirebaseAuth.getInstance()
 
+    data class UserDataT(
+        val fornavn: String,
+        val etternavn: String,
+        val email: String,
+        val adresse: String,
+        val postnummer: String,
+    )
+
+
     var docRef = firestore.collection("users").document(firebaseAuth.currentUser!!.uid.toString())
         .collection("Brukerdokumenter").document("Brukerdata")
     var source = Source.DEFAULT
 
     docRef.get(source).addOnSuccessListener { document ->
 
+            var ud = UserDataT(
+                fornavn = document["fornavn"].toString(),
+                etternavn = document["etternavn"].toString(),
+                email = document["email"].toString(),
+                adresse = document["adresse"].toString(),
+                postnummer = document["postnummer"].toString(),
+            )
     }
 
     DataKompGamingTheme{
@@ -74,13 +90,14 @@ fun UserSettings(navController: NavController)
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
 
-                    var fNavn = remember { mutableStateOf(TextFieldValue()) }
+                    var user = UserDataT()
+
+                    val fNavn = remember { mutableStateOf(TextFieldValue()) }
                     val eNavn = remember { mutableStateOf(TextFieldValue()) }
                     val email = remember { mutableStateOf(TextFieldValue()) }
                     val adresse = remember { mutableStateOf(TextFieldValue()) }
                     val postNr = remember { mutableStateOf(TextFieldValue()) }
 
-                    val forNavn = "cwis"
 
                     var cont = LocalContext.current
 
