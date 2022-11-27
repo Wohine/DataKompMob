@@ -1,11 +1,14 @@
 package com.example.datakompgaming.produkt
 
 import android.annotation.SuppressLint
-import android.content.ContentValues.TAG
+import android.content.ContentValues
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
+import android.os.ParcelFileDescriptor
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
@@ -13,16 +16,12 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -31,16 +30,17 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.net.toFile
 import androidx.navigation.NavController
-import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import com.example.datakompgaming.R
 import com.example.datakompgaming.screen.printBotBarIcon
 import com.example.datakompgaming.screen.printTopBarIcon
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.output.ByteArrayOutputStream
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import java.io.Console
+import java.io.IOException
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "SuspiciousIndentation")
@@ -89,29 +89,35 @@ fun bruktProduktSkjema(navController: NavController) {
                     mutableStateOf(TextFieldValue())
                 }
 
-                val bildeAdresse = remember {
-                    mutableStateOf(TextFieldValue())
-                }
+                var imageUri by remember { mutableStateOf<Uri?>(null) }
 
                 var firebaseAuth = FirebaseAuth.getInstance()
 
+                var storage = Firebase.storage
+                val storageRef = storage.reference
+
                 var cont = LocalContext.current
 
+                val imagesRef = storageRef.child("images/" + produktNavn.value.text)
 
+                val imageFolderRef = storageRef.child("images/")
 
-                var imageUri by remember {
-                    mutableStateOf<Uri?>(null)
+                var isImageChosen = false
+
+                val launcher = rememberLauncherForActivityResult(
+                    contract = ActivityResultContracts.GetContent()
+                ) { uri: Uri? ->
+                    run {
+                        if (uri != null) {
+                            imageUri = uri
+                            isImageChosen = true
+                        }
+                    }
                 }
-                val context = LocalContext.current
-                val bitmap =  remember {
-                    mutableStateOf<Bitmap?>(null)
-                }
 
-                val launcher = rememberLauncherForActivityResult(contract =
-                ActivityResultContracts.GetContent()) { uri: Uri? ->
-                    imageUri = uri
-                }
+                var urlResult = ""
 
+                var imageControl = 0
 
                 Spacer(modifier = Modifier.height(20.dp))
 
@@ -166,16 +172,20 @@ fun bruktProduktSkjema(navController: NavController) {
 
                 Spacer(modifier = Modifier.height(15.dp))
 
-                TextField(
-                    label = { Text(text = "Bildeadresse") },
-                    value = bildeAdresse.value,
-                    onValueChange = { bildeAdresse.value = it },
-                )
-
-                Spacer(modifier = Modifier.height(15.dp))
-
                 Button(
-                    onClick = { launcher.launch("image/*") },
+                    onClick = {
+                        if(Build.VERSION.SDK_INT >= 29) {
+                            try {
+                                launcher.launch("image/*")
+                            }
+
+                            catch (ex: IOException) {
+                                Log.i("Catch", ex.toString())
+                            }
+
+                        }
+                        imageControl = 1
+                    },
                     modifier = Modifier
                         .wrapContentSize()
                         .padding(10.dp)
@@ -185,23 +195,7 @@ fun bruktProduktSkjema(navController: NavController) {
 
                 Spacer(modifier = Modifier.height(15.dp))
 
-                imageUri?.let {
-                    if (Build.VERSION.SDK_INT < 28) {
-                        bitmap.value = MediaStore.Images
-                            .Media.getBitmap(context.contentResolver,it)
 
-                    } else {
-                        val source = ImageDecoder
-                            .createSource(context.contentResolver,it)
-                        bitmap.value = ImageDecoder.decodeBitmap(source)
-                    }
-
-                    bitmap.value?.let {  btm ->
-                        Image(bitmap = btm.asImageBitmap(),
-                            contentDescription = null,
-                            modifier = Modifier.size(400.dp))
-                    }
-                }
 
                 Spacer(modifier = Modifier.height(15.dp))
 
@@ -209,13 +203,53 @@ fun bruktProduktSkjema(navController: NavController) {
                     Button(
                         onClick = {
 
+                            val imagePFD: ParcelFileDescriptor? =
+                                imageUri?.let { it1 ->
+                                    cont.contentResolver.openFileDescriptor(
+                                        it1, "r"
+                                    )
+                                }
+
+                            if (imagePFD != null) {
+                                val bitmap =
+                                    BitmapFactory.decodeFileDescriptor(imagePFD.fileDescriptor)
+
+                                val byteArrayOutputStream = ByteArrayOutputStream()
+
+                                bitmap.compress(
+                                    Bitmap.CompressFormat.JPEG,
+                                    100,
+                                    byteArrayOutputStream
+                                )
+
+                                val data = byteArrayOutputStream.toByteArray()
+
+                                var uploadTask = imagesRef.putBytes(data)
+
+                                uploadTask.addOnFailureListener {
+                                    Log.d(ContentValues.TAG, "Feilet bildeopplastning!")
+                                }.addOnSuccessListener { taskSnapshot ->
+                                    Log.d(ContentValues.TAG, "Suksessfull bildeopplastning!")
+                                    val downloadUri = uploadTask.result
+                                    Log.d(ContentValues.TAG, downloadUri.toString())
+                                    // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+                                    // ...
+                                }
+                            }
+
+                            var getDownloadUrl: Task<Uri>? = null
+
+                            if(imageControl > 0)
+                                getDownloadUrl = storageRef.child("images/" + produktNavn.value.text).downloadUrl
+
                             val produktNavnString = produktNavn.value.text
                             val kategoriString = kategori.value.text
                             val produsentString = produsent.value.text
                             val prisString = pris.value.text
                             val tilstandString = tilstand.value.text
-                            val bildeAdresseString = bildeAdresse.value.text
                             val varebeholdningString = "1"
+                            val bildeString = getDownloadUrl.toString()
+
 
                             data class BruktProdukt(
                                 val tittel: String? = null,
@@ -223,8 +257,8 @@ fun bruktProduktSkjema(navController: NavController) {
                                 val produsent: String? = null,
                                 val pris: String? = null,
                                 val tilstand: String? = null,
-                                val bildeAdresse: String? = null,
-                                val varebeholdning: String? = null
+                                val varebeholdning: String? = null,
+                                val bildeAdresse: String? = null
                             )
 
                             val bruktProdukt = BruktProdukt(
@@ -233,8 +267,8 @@ fun bruktProduktSkjema(navController: NavController) {
                                 produsentString,
                                 prisString,
                                 tilstandString,
-                                bildeAdresseString,
-                                varebeholdningString
+                                varebeholdningString,
+                                bildeString,
                             )
 
 
@@ -257,7 +291,7 @@ fun bruktProduktSkjema(navController: NavController) {
                     }
                 }
                 Spacer(modifier = Modifier.height(50.dp))
-                
+
                 Text(text = "Du er ikke forpliktet til å sende inn produktet ved å sende inn dette skjemaet.", textAlign = TextAlign.Center)
 
                 Spacer(modifier = Modifier.height(100.dp))
@@ -265,6 +299,7 @@ fun bruktProduktSkjema(navController: NavController) {
 
         }
     }
+
 
 }
 
