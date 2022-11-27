@@ -10,6 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -31,6 +32,8 @@ import com.example.datakompgaming.produkt.firestore
 import com.example.datakompgaming.ui.theme.DataKompGamingTheme
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.*
 
 @ExperimentalMaterial3Api
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -39,6 +42,14 @@ import com.google.firebase.auth.FirebaseUser
 fun UserSettings(navController: NavController)
 {
     var firebaseAuth = FirebaseAuth.getInstance()
+
+    var docRef = firestore.collection("users").document(firebaseAuth.currentUser!!.uid.toString())
+        .collection("Brukerdokumenter").document("Brukerdata")
+    var source = Source.DEFAULT
+
+    docRef.get(source).addOnSuccessListener { document ->
+
+    }
 
     DataKompGamingTheme{
         Surface(
@@ -63,14 +74,15 @@ fun UserSettings(navController: NavController)
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
 
-                    val fNavn = remember { mutableStateOf(TextFieldValue()) }
+                    var fNavn = remember { mutableStateOf(TextFieldValue()) }
                     val eNavn = remember { mutableStateOf(TextFieldValue()) }
                     val email = remember { mutableStateOf(TextFieldValue()) }
                     val adresse = remember { mutableStateOf(TextFieldValue()) }
                     val postNr = remember { mutableStateOf(TextFieldValue()) }
 
-                    var cont = LocalContext.current
+                    val forNavn = "cwis"
 
+                    var cont = LocalContext.current
 
                     Spacer(modifier = Modifier.height(40.dp))
                     Image(
@@ -85,38 +97,39 @@ fun UserSettings(navController: NavController)
 
 
                     Spacer(modifier = Modifier.height(15.dp))
-                        TextField(
-                            label = { Text(text = "Fornavn") },
-                            value = fNavn.value,
-                            onValueChange = { fNavn.value = it },
-
-                        )
-
-                    Spacer(modifier = Modifier.height(10.dp))
-                        TextField(label = { Text(text = "Etternavn") },
-                            value = eNavn.value,
-                            onValueChange = { eNavn.value = it },
-
-                        )
+                    TextField(
+                        label = { Text(text = "Fornavn") },
+                        value = fNavn.value,
+                        onValueChange = { fNavn.value = it },
+                    )
 
                     Spacer(modifier = Modifier.height(10.dp))
-                    TextField(label = { Text(text = "Email") },
+                    TextField(
+                        label = { Text(text = "Etternavn") },
+                        value = eNavn.value,
+                        onValueChange = { eNavn.value = it },
+                    )
+
+                    Spacer(modifier = Modifier.height(10.dp))
+                    TextField(
+                        label = { Text(text = "Email") },
                         value = email.value,
                         onValueChange = { email.value = it },
                     )
 
                     Spacer(modifier = Modifier.height(10.dp))
-                    TextField(label = { Text(text = "Gate adresse") },
+                    TextField(
+                        label = { Text(text = "Gate adresse") },
                         value = adresse.value,
                         onValueChange = { adresse.value = it },
                     )
 
                     Spacer(modifier = Modifier.height(10.dp))
-                    TextField(label = { Text(text = "Postnummer") },
+                    TextField(
+                        label = { Text(text = "Postnummer") },
                         value = postNr.value,
                         onValueChange = { postNr.value = it },
                     )
-
 
                     Spacer(modifier = Modifier.height(25.dp))
                     Box(modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 0.dp)) {
