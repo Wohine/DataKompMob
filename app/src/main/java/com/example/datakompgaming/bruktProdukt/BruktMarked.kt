@@ -132,7 +132,6 @@ fun BrukteProdukterKort(produkt: BrukteProdukterFire, farge: Color) {
 
                 ) {
                 KortLabel(produkt.tittel)
-                KortLabel(produkt.tittel)
                 Spacer(modifier = Modifier.height(10.dp))
                 KortLabel("Pris: $pris"+"kr")
                 Spacer(modifier = Modifier.height(10.dp))
