@@ -27,12 +27,16 @@ import coil.compose.AsyncImage
 import com.example.datakompgaming.screen.printBotBarIcon
 import com.example.datakompgaming.screen.printTopBarIcon
 
-
+/**
+ * funksjon som printer ut bestillingene til brukeren
+ * @param bestillingListe
+ * @param navController
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun printOrders(bestillingListe: List<Order>, navController: NavController) {
-    if (bestillingListe.isEmpty())
+    if (bestillingListe.isEmpty()) // henter bestillinger om det ikke har blitt gjort
         bestillingHent()
 
     Scaffold(
@@ -52,7 +56,7 @@ fun printOrders(bestillingListe: List<Order>, navController: NavController) {
         ) {
             Spacer(modifier = Modifier.height(100.dp))
             Text(text = "Dine Bestillinger")
-            for(bestilling in bestillingListe){
+            for(bestilling in bestillingListe){ // printer hver bestilling
                 BestillingerCard(bestilling)
                 Spacer(modifier = Modifier.height(5.dp))
             }
@@ -60,6 +64,11 @@ fun printOrders(bestillingListe: List<Order>, navController: NavController) {
         }
     }
 }
+
+/**
+ * funksjon som lager et card av hver bestilling
+ * @param bestilling
+ */
 @Composable
 fun BestillingerCard(bestilling: Order) {
     Row(modifier = Modifier
@@ -70,7 +79,7 @@ fun BestillingerCard(bestilling: Order) {
             Text(text = "Bestilling")
             Text(text = bestilling.dato)
             Text(text = bestilling.key)
-            for (item in bestilling.liste){
+            for (item in bestilling.liste){ // løkke av hver produkt i en bestilling
                 printProdukt(item)
             }
             Text(text = bestilling.totalPris)
@@ -79,7 +88,10 @@ fun BestillingerCard(bestilling: Order) {
 }
 
 
-
+/**
+ * funksjon som skriver ut hvert produkt i en bestilling
+ * @param produkt
+ */
 @Composable
 fun printProdukt(produkt: Produkt){
     Row(modifier = Modifier.border(1.dp, Color.Black)) {
@@ -91,7 +103,10 @@ fun printProdukt(produkt: Produkt){
     }
 }
 
-
+/**
+ * funksjon som printer et bilde til hvert produkt
+ * @param produkt
+ */
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 private fun itemBilde(produkt: Produkt) {

@@ -27,6 +27,10 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
+/**
+ * viser skjema for å skrive inn shipping adressen sin
+ * @param navController
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable

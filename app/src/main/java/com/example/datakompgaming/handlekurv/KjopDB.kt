@@ -7,6 +7,10 @@ import com.example.datakompgaming.produkt.ProdukterUthentingDB
 import com.example.datakompgaming.produkt.firestore
 import kotlin.random.Random
 
+/**
+ * funksjon som kjøper produkter og legger inn bestillingen i databasen
+ * @param shippingFire
+ */
 fun kjopProdukterDB(shippingFire: ShippingFire) {
     var kjopID = Random.nextInt(0, 100000)
     var dbProdukt = shippingFire.toMap()

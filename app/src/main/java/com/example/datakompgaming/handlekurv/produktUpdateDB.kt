@@ -11,8 +11,11 @@ import com.google.firebase.firestore.Source
 import android.content.ContentValues.TAG
 import com.example.datakompgaming.produkt.ProdukterUthentingDB
 
-
-fun produktOppdateringDB(produkterFire: ProdukterFire) { // 1-skjerm, 2-pross, 3-hoved
+/**
+ * funksjon som oppdaterer varebeholdning til produkter man kjøper
+ * @param produkterFire
+ */
+fun produktOppdateringDB(produkterFire: ProdukterFire) {
     var nyVareBeholdning = produkterFire.varebeholdning.toInt()
 
     var docRef = firestore.collection("Produkter").document("NyeProdukter").

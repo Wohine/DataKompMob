@@ -4,7 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.text.input.TextFieldValue
 import com.google.firebase.firestore.Exclude
-
+// dataklasse av bestillingen
 data class ShippingFire(
     val uid: String,
     val fornavn: String,
@@ -17,6 +17,7 @@ data class ShippingFire(
     var totalPris: String,
     val basket: MutableList<Map<String, Any?>> = arrayListOf()
 ) {
+    // mapper bestillingen for kunne legge inn i databasen
     @Exclude
     fun toMap(): Map<String, Any?> {
         return mapOf(

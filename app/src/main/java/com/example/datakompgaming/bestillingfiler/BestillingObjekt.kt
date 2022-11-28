@@ -1,5 +1,6 @@
 package com.example.datakompgaming.bestillingfiler
 
+// dataklasse av hver ordre
 data class Order(
     val id: String,
     val dato: String,

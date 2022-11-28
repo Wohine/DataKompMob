@@ -31,6 +31,10 @@ import com.example.datakompgaming.produkt.ProdukterFire
 
 var pris = 0.0
 
+/**
+ * viser handlekurven på skjer
+ * @param navController
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -77,6 +81,11 @@ fun printHandlekurv(navController: NavController) {
     }
 }
 
+/**
+ * lager et card for hvert nye produkt i handlekurven
+ * @param item
+ * @param navController
+ */
 @Composable
 fun HandlekurvCard(item: ProdukterFire,navController: NavController) {
     var pris = item.pris.toString()
@@ -107,6 +116,11 @@ fun HandlekurvCard(item: ProdukterFire,navController: NavController) {
     }
 }
 
+/**
+ * lager et card for hvert brukte produkt i handlekurven
+ * @param item
+ * @param navController
+ */
 @Composable
 fun bruktHandlekurvCard(item: BrukteProdukterFire,navController: NavController) {
 
@@ -138,6 +152,9 @@ fun bruktHandlekurvCard(item: BrukteProdukterFire,navController: NavController) 
     }
 }
 
+/**
+ * funksjon som kaller på en databaseoppdatering
+ */
 fun updateVarerPaLager(){
     for (item in HandlekurvObject.handlekurvListe)
         produktOppdateringDB(item)

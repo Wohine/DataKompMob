@@ -1,6 +1,7 @@
 package com.example.datakompgaming.bestillingfiler
 
-import com.example.datakompgaming.R
+
+// liste av bestillinger
 object Bestillinger {
     var bestilligListe = mutableListOf<Order>()
 }

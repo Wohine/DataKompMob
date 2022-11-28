@@ -9,6 +9,11 @@ import com.example.datakompgaming.produkt.firestore
 import com.example.datakompgaming.user
 import com.google.firebase.firestore.Source
 
+/**
+ * funksjon som henter hver bestilling fra databasen
+ * legger hver bestilling i liste
+ * legger hver produkt inn i liste i bestillingobjekt
+ */
 fun bestillingHent() {
 
     var source = Source.DEFAULT
