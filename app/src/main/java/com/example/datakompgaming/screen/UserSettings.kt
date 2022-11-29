@@ -73,7 +73,7 @@ fun UserSettings(navController: NavController)
 
                     val fNavn = remember { mutableStateOf(TextFieldValue()) }
                     val eNavn = remember { mutableStateOf(TextFieldValue()) }
-                    val email = remember { mutableStateOf(TextFieldValue()) }
+                    val email = remember { mutableStateOf(TextFieldValue()) }      //fjern mail felt
                     val adresse = remember { mutableStateOf(TextFieldValue()) }
                     val postNr = remember { mutableStateOf(TextFieldValue()) }
 
