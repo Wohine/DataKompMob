@@ -207,10 +207,3 @@ fun SkjermProd(title: String) {
 }
 
 
-
-
-
-
-// TODO: sliding cards
-// TODO: clickable images
-// TODO: drepe chris (done)
