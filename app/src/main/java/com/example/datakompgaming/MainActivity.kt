@@ -3,6 +3,7 @@ package com.example.datakompgaming
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -11,6 +12,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.datakompgaming.handlekurv.produktOppdateringDB
 import com.example.datakompgaming.produkt.*
@@ -48,6 +50,9 @@ class MainActivity : ComponentActivity() {
 
     }
 
+    /**
+     * Lager login komponenten som sender deg til metoden for AuthUI brukeroppretting og innlogging.
+     */
     @ExperimentalMaterial3Api
     @Composable
     fun login(
@@ -72,6 +77,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+
     @ExperimentalMaterial3Api
     private val signInLauncher = registerForActivityResult(
         FirebaseAuthUIActivityResultContract()
@@ -79,6 +85,9 @@ class MainActivity : ComponentActivity() {
         this.signInResult(res)
     }
 
+    /**
+     * Presenterer de ulike innloggingsmulighetene definert i Auth konsollen i Firebase.
+     */
     @OptIn(ExperimentalMaterial3Api::class)
     private fun signIn() {
         val providers = arrayListOf(
@@ -94,9 +103,13 @@ class MainActivity : ComponentActivity() {
     }
 
 
-
+    /**
+     * Returnerer hovedsiden ved en suksessfull innlogging.
+     * Ved en feilet innlogging returnerer brukeren til login siden.
+     */
     private fun signInResult(result: FirebaseAuthUIAuthenticationResult) {
         val response = result.idpResponse
+
         if (result.resultCode == RESULT_OK) {
             user = FirebaseAuth.getInstance().currentUser
             setContent {
@@ -104,14 +117,23 @@ class MainActivity : ComponentActivity() {
             }
         } else {
             Log.e("FirebaseAuth", "Error logging in " + response?.error?.errorCode)
+            setContent {
+                login()
+            }
         }
     }
 
+    /**
+     * Logger brukeren ut, gir brukeren en melding om at de er logget ut og sender dem til login siden.
+     */
+    @Composable
     fun logOut(){
+        var cont = LocalContext.current
         FirebaseAuth.getInstance().signOut();
         setContent {
             login()
         }
+        Toast.makeText(cont, "Du er logget ut", Toast.LENGTH_LONG).show()
     }
 
 }

@@ -59,7 +59,6 @@ fun bruktProduktSkjema(navController: NavController) {
             }
         ) {
 
-            // A surface container using the 'background' color from the theme
             Surface(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -71,6 +70,11 @@ fun bruktProduktSkjema(navController: NavController) {
                     .verticalScroll(rememberScrollState(),enabled = true),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+
+                /**
+                 * Definisjon av variabler
+                 */
+
                 val produktNavn = remember {
                     mutableStateOf(TextFieldValue())
                 }
@@ -102,10 +106,12 @@ fun bruktProduktSkjema(navController: NavController) {
 
                 val imagesRef = storageRef.child("images/" + produktNavn.value.text)
 
-                val imageFolderRef = storageRef.child("images/")
-
                 var isImageChosen = false
 
+
+                /**
+                 * Launcher for bildeuthenting. Sjekker om det er returnert en uri.
+                 */
                 val launcher = rememberLauncherForActivityResult(
                     contract = ActivityResultContracts.GetContent()
                 ) { uri: Uri? ->
@@ -127,6 +133,9 @@ fun bruktProduktSkjema(navController: NavController) {
 
                 Spacer(modifier = Modifier.height(15.dp))
 
+                /**
+                 * Inntastingsfelt for brukte produkter.
+                 */
                 Text(
                     text = "Send inn ditt brukte produkt!",
                     style = TextStyle(fontSize = 40.sp, fontFamily = FontFamily.SansSerif, textAlign = TextAlign.Center)
@@ -174,6 +183,12 @@ fun bruktProduktSkjema(navController: NavController) {
 
                 Spacer(modifier = Modifier.height(15.dp))
 
+                /**
+                 * Knapp for å starte bildeuthentingsprosessen. Benytter seg av launcher definert
+                 * ved variablene. Kjører kun om Android enheten kjører på en android versjon
+                 * som støtter denne uthentingsmetoden.
+                 */
+
                 Button(
                     onClick = {
                         if(Build.VERSION.SDK_INT >= 29) {
@@ -198,9 +213,9 @@ fun bruktProduktSkjema(navController: NavController) {
                 Spacer(modifier = Modifier.height(15.dp))
 
 
-
-                Spacer(modifier = Modifier.height(15.dp))
-
+                /**
+                 * Knapp som starter konvertering av bilde Uri til byteArray.
+                 */
                 Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
                     Button(
                         onClick = {
@@ -212,12 +227,19 @@ fun bruktProduktSkjema(navController: NavController) {
                                     )
                                 }
 
+
+                            /**
+                             * Sjekker om brukeren har lastet opp et bilde. Hvis dette er sant
+                             * lager den et Bitmap objekt.
+                             */
                             if (imagePFD != null) {
                                 val bitmap =
                                     BitmapFactory.decodeFileDescriptor(imagePFD.fileDescriptor)
-
                                 val byteArrayOutputStream = ByteArrayOutputStream()
 
+                                /**
+                                 * Definerer fildatatypen for bildet.
+                                 */
                                 bitmap.compress(
                                     Bitmap.CompressFormat.JPEG,
                                     100,
@@ -226,32 +248,45 @@ fun bruktProduktSkjema(navController: NavController) {
 
                                 val data = byteArrayOutputStream.toByteArray()
 
+                                /**
+                                 * Laster opp resultatet til Firebase Storage. Resultatet
+                                 * av denne tasken returnerer enten en positiv eller negativ konsoll melding.
+                                 */
                                 var uploadTask = imagesRef.putBytes(data)
 
                                 uploadTask.addOnFailureListener {
                                     Log.d(ContentValues.TAG, "Feilet bildeopplastning!")
                                 }.addOnSuccessListener { taskSnapshot ->
                                     Log.d(ContentValues.TAG, "Suksessfull bildeopplastning!")
+
+                                    /**
+                                     * Fikk ikke denne downloadUri uthentingen til å fungere,
+                                     * bygger heller denne manuelt i Firestore opplasningen.
+                                     */
                                     val downloadUri = uploadTask.result
-                                    Log.d(ContentValues.TAG, "hei" + downloadUri.toString())
-                                    // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-                                    // ...
-
-
+                                    Log.d(ContentValues.TAG, downloadUri.toString())
                                 }
                             }
 
 
-
+                            /**
+                             * Konvertering av inndata til tekststrenger.
+                             */
                             val produktNavnString = produktNavn.value.text
                             val kategoriString = kategori.value.text
                             val produsentString = produsent.value.text
                             val prisString = pris.value.text
                             val tilstandString = tilstand.value.text
                             val varebeholdningString = "1"
+
+                            /**
+                             * Bygger downloadUri manuelt grunnet at vi ikke fikk Firebase sin metode til å returnere riktig verdi.
+                             */
                             val bildeString = "https://firebasestorage.googleapis.com/v0/b/datakompkotlin.appspot.com/o/images%2F"+produktNavnString+"?alt=media"
 
-
+                            /**
+                             * Definisjon for objektet vi sender inn i Firestore dokumentet.
+                             */
                             data class BruktProdukt(
                                 val tittel: String? = null,
                                 val kategori: String? = null,
@@ -262,6 +297,9 @@ fun bruktProduktSkjema(navController: NavController) {
                                 val bildeAdresse: String? = null
                             )
 
+                            /**
+                             * Binder inndata til objektvariabler.
+                             */
                             val bruktProdukt = BruktProdukt(
                                 produktNavnString,
                                 kategoriString,
@@ -272,11 +310,19 @@ fun bruktProduktSkjema(navController: NavController) {
                                 bildeString,
                             )
 
+
+                            /**
+                             * Sjekker om brukeren er logget inn. Om dette er sant,
+                             * lagrer den et dokument med en unik ID i BruktProdukt collectionen.
+                             */
                             firebaseAuth.currentUser?.let { it1 ->
                                 firestore.collection("Produkter").document("BrukteProdukter").collection(kategoriString).document(Math.random().toString())
                                     .set(
                                         bruktProdukt
                                     )
+                                    /**
+                                     * Informerer bruker om opplasningen av produktet gikk som det skulle eller ikke.
+                                     */
                                     .addOnSuccessListener { Toast.makeText(cont, "Produktet ditt er sendt inn!", Toast.LENGTH_LONG).show()}
                                     .addOnFailureListener { Toast.makeText(cont, "Noe gikk galt ved innsending av produktet", Toast.LENGTH_LONG).show() }
                             }
@@ -296,11 +342,8 @@ fun bruktProduktSkjema(navController: NavController) {
 
                 Spacer(modifier = Modifier.height(100.dp))
             }
-
         }
     }
-
-
 }
 
 

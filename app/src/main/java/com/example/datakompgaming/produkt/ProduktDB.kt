@@ -20,10 +20,16 @@ fun ProdukterUthentingDB(collectionType: String) { // 1-skjerm, 2-pross, 3-hoved
     ProduktObject.ProsessorerListe.clear()
     ProduktObject.HovedKortListe.clear()
 
+    /**
+     * Referanse for lokasjonen til produktene vi ønsker å hente.
+     */
     var docRef = firestore.collection("Produkter").document("NyeProdukter")
                                             .collection(collectionType)
     var source = Source.DEFAULT
 
+    /**
+     * Henter ut alle dokumenter som møter referansen definert i docRef.
+     */
     docRef.get(source).addOnSuccessListener { documents ->
         for (document in documents) {
             Log.d(TAG, "${document.id} => ${document.data}")
@@ -32,6 +38,9 @@ fun ProdukterUthentingDB(collectionType: String) { // 1-skjerm, 2-pross, 3-hoved
             if (document.getDouble("pris") != null)
                 pris = document.getDouble("pris")!!
 
+            /**
+             * Binder de uthentede verdiene til et objekt.
+             */
             var p1 = ProdukterFire(
                 tittel = document["tittel"].toString(),
                 pris = pris,
@@ -41,6 +50,11 @@ fun ProdukterUthentingDB(collectionType: String) { // 1-skjerm, 2-pross, 3-hoved
                 typeProdukt =  collectionType,
                 docNavn = document["docNavn"].toString()
             )
+
+            /**
+             * Sjekker hvilken collection produktene er hentet fra, og legger
+             * dem til en liste henholdsvis til resultatet.
+             */
             if(collectionType.equals("Skjermkort"))
                 ProduktObject.SkjermKortListe.add(p1)
             else if(collectionType.equals("Prosessorer"))
