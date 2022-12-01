@@ -335,10 +335,6 @@ fun bruktProduktSkjema(navController: NavController) {
                                 "https://firebasestorage.googleapis.com/v0/b/datakompkotlin.appspot.com/o/images%2F" + produktNavnString + "?alt=media"
 
 
-                            /**
-                             * Binder inndata til objektvariabler.
-                             */
-
                             if(isNumericToX(prisString)) {
                                 val bruktProdukt = BruktProdukt(
                                     produktNavnString,
@@ -349,6 +345,9 @@ fun bruktProduktSkjema(navController: NavController) {
                                     varebeholdningString,
                                     bildeString,
                                 )
+                                /**
+                                 * Kaller på send skjema metoden
+                                 */
                                 sendSkjemaDB(bruktProdukt, cont)
                             }
                             else{

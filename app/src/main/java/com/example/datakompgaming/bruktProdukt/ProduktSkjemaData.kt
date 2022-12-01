@@ -1,5 +1,10 @@
 package com.example.datakompgaming.bruktProdukt
-//data til brukt produkt
+
+
+/**
+ * Definerer data klasse for produktet som skal lastes opp til databasen
+ * fra bruktProduktSkjema
+ */
 data class BruktProdukt(
     val tittel: String,
     val kategori: String,
