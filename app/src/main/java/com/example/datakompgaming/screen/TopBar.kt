@@ -28,6 +28,9 @@ fun printTopBarIcon(navController: NavController){
     var expanded by remember { mutableStateOf(false) }
     var showMenu = false
 
+    /**
+     * viser hvor mange ting som ligger i handlekurven
+     */
     var totalBasketCount = (handlekurvListe.size + BruktHandleliste.size).toString()
     DataKompGamingTheme {
         Surface(
@@ -39,6 +42,9 @@ fun printTopBarIcon(navController: NavController){
                     .fillMaxWidth()
             ) {
                 Box {
+                    /**
+                     * logikk for å bli trykket på
+                     */
                     IconButton(onClick = { expanded = true }) {
                         Icon(
                             Icons.Default.Person,
@@ -47,6 +53,9 @@ fun printTopBarIcon(navController: NavController){
                             modifier = Modifier.size(35.dp)
                         )
                     }
+                    /**
+                     * logikk for å bli trykket på
+                     */
                     IconButton(modifier = Modifier.absoluteOffset(-360.dp,0.dp), onClick = { navController.navigate("Handlekurv") }) {
                         Icon(
                             Icons.Default.ShoppingBasket,
@@ -57,6 +66,9 @@ fun printTopBarIcon(navController: NavController){
                         Text( text = totalBasketCount, modifier= Modifier, fontWeight = FontWeight.Bold,
                             fontSize = 25.sp,color = Color(0xFF0888c4) )
                     }
+                    /**
+                     * dropdown meny elementer
+                     */
                     DropdownMenu(
                         expanded = expanded,
                         onDismissRequest = { expanded = false }
