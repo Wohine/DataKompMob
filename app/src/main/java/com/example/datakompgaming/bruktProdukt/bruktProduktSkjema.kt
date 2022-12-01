@@ -81,7 +81,7 @@ fun bruktProduktSkjema(navController: NavController) {
             ) {
 
                 /**
-                 * Definisjon av variabler
+                 * Instansiering av variabler
                  */
 
                 val produktNavn = remember {
@@ -115,13 +115,6 @@ fun bruktProduktSkjema(navController: NavController) {
 
                 val imagesRef = storageRef.child("images/" + produktNavn.value.text)
 
-                var isImageChosen = false
-
-                val checkedState = remember { mutableStateOf(true) }
-
-                val listItems = arrayOf("Favorites", "Options", "Settings", "Share")
-                val disabledItem = 1
-                val contextForToast = LocalContext.current.applicationContext
                 var expanded by remember {
                     mutableStateOf(false)
                 }
@@ -136,14 +129,9 @@ fun bruktProduktSkjema(navController: NavController) {
                     run {
                         if (uri != null) {
                             imageUri = uri
-                            isImageChosen = true
                         }
                     }
                 }
-
-                var urlResult = ""
-
-                var imageControl = 0
 
 
 
@@ -205,7 +193,7 @@ fun bruktProduktSkjema(navController: NavController) {
                             onClick = {
                                 kategori.value = "Hovedkort"
                                 expanded = false
-                                Toast.makeText(cont, "Kategori: $kategori", Toast.LENGTH_LONG).show()
+                                Toast.makeText(cont, kategori.value, Toast.LENGTH_LONG).show()
                                 Log.d(ContentValues.TAG, kategori.value)
                             })
                         DropdownMenuItem(
@@ -261,7 +249,6 @@ fun bruktProduktSkjema(navController: NavController) {
                             }
 
                         }
-                        imageControl = 1
                     },
                     modifier = Modifier
                         .wrapContentSize()
@@ -338,12 +325,13 @@ fun bruktProduktSkjema(navController: NavController) {
                             val prisString = pris.value.text
                             val tilstandString = tilstand.value.text
                             val varebeholdningString = "1"
-
                             /**
-                             * Bygger downloadUri manuelt grunnet at vi ikke fikk Firebase sin metode til å returnere riktig verdi.
+                             * Bygger downloadUrl manuelt grunnet at vi ikke fikk Firebase sin metode til å returnere riktig verdi.
                              */
                             val bildeString =
                                 "https://firebasestorage.googleapis.com/v0/b/datakompkotlin.appspot.com/o/images%2F" + produktNavnString + "?alt=media"
+
+
 
                             /**
                              * Definisjon for objektet vi sender inn i Firestore dokumentet.
