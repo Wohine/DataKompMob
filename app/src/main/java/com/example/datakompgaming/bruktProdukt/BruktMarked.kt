@@ -1,12 +1,10 @@
 package com.example.datakompgaming.screen
 
 import android.annotation.SuppressLint
-import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.util.Log
 import android.widget.Toast
 import androidx.navigation.NavController
-import com.example.datakompgaming.R
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,10 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
@@ -28,8 +23,6 @@ import coil.compose.AsyncImage
 import com.example.datakompgaming.bruktProdukt.BruktProduktObject
 import com.example.datakompgaming.handlekurv.HandlekurvObject
 import com.example.datakompgaming.bruktProdukt.BrukteProdukterFire
-import com.example.datakompgaming.produkt.BrukteProdukterUthentingDB
-import com.example.datakompgaming.produkt.ProdukterFire
 
 /**
  * viser det brukte produktmarkedet med compose
@@ -38,7 +31,12 @@ import com.example.datakompgaming.produkt.ProdukterFire
 @ExperimentalMaterial3Api
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun BruktMarked(navController: NavController) {
+fun BruktMarked(
+    navController: NavController,
+    bruktHovedKortListe: MutableList<BrukteProdukterFire>,
+    bruktProsessorerListe: MutableList<BrukteProdukterFire>,
+    bruktSkjermKortListe: MutableList<BrukteProdukterFire>
+) {
     Scaffold(
         bottomBar = {
             printBotBarIcon(navController = navController, 3)
@@ -64,9 +62,9 @@ fun BruktMarked(navController: NavController) {
                 Spacer(modifier = Modifier.height(30.dp))
 
                 // printer hvert produkt av de ulike typene produkter
-                brukteProdukterRad("Hovedkort",Color(0xFF0888c4), BruktProduktObject.BruktHovedKortListe)
-                brukteProdukterRad("Skjermkort",Color(0xFF0888c4), BruktProduktObject.BruktSkjermKortListe)
-                brukteProdukterRad("Prosessorer",Color(0xFF0888c4), BruktProduktObject.BruktProsessorerListe)
+                brukteProdukterRad("Hovedkort",Color(0xFF0888c4), bruktHovedKortListe)
+                brukteProdukterRad("Skjermkort",Color(0xFF0888c4), bruktSkjermKortListe)
+                brukteProdukterRad("Prosessorer",Color(0xFF0888c4), bruktProsessorerListe)
                 Spacer(modifier = Modifier.height(100.dp))
             }
 

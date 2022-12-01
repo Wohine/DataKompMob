@@ -11,14 +11,15 @@ import com.google.firebase.firestore.Source
 
 var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 fun ProdukterUthentingDB(){
+    ProduktObject.SkjermKortListe.clear()
     ProdukterUthentingDB("Skjermkort")
+    ProduktObject.ProsessorerListe.clear()
     ProdukterUthentingDB("Prosessorer")
+    ProduktObject.HovedKortListe.clear()
     ProdukterUthentingDB("Hovedkort")
 }
-fun ProdukterUthentingDB(collectionType: String) { // 1-skjerm, 2-pross, 3-hoved
-    ProduktObject.SkjermKortListe.clear()
-    ProduktObject.ProsessorerListe.clear()
-    ProduktObject.HovedKortListe.clear()
+fun ProdukterUthentingDB(collectionType: String) {
+
 
     var docRef = firestore.collection("Produkter").document("NyeProdukter")
                                             .collection(collectionType)

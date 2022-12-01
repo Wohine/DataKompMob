@@ -27,6 +27,7 @@ import coil.compose.AsyncImage
 import com.example.datakompgaming.handlekurv.HandlekurvObject
 import com.example.datakompgaming.produkt.ProduktObject
 import com.example.datakompgaming.produkt.ProdukterFire
+import com.example.datakompgaming.produkt.ProdukterUthentingDB
 
 
 @ExperimentalMaterial3Api
@@ -69,6 +70,7 @@ fun Produkter(navController: NavController, hovedListe: MutableList<ProdukterFir
 
                 }
             }
+        Log.d(ContentValues.TAG, ""+ ProduktObject.HovedKortListe.size)
         }
 
 @Composable

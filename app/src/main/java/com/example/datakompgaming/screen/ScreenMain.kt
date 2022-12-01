@@ -36,6 +36,8 @@ fun ScreenMain(){
             Kundeservice(navController)
         }
         composable(Routes.Produkter.route){
+           ProdukterUthentingDB()
+           Thread.sleep(500)
            Produkter(navController, ProduktObject.HovedKortListe, ProduktObject.ProsessorerListe, ProduktObject.SkjermKortListe)
         }
         composable(Routes.HomePage.route){
@@ -54,7 +56,9 @@ fun ScreenMain(){
             printHandlekurv(navController)
         }
         composable(Routes.BrukteProdukter.route){
-            BruktMarked(navController)
+            BrukteProdukterUthentingDB()
+            Thread.sleep(500)
+            BruktMarked(navController, BruktProduktObject.BruktHovedKortListe, BruktProduktObject.BruktProsessorerListe, BruktProduktObject.BruktSkjermKortListe)
         }
         composable(Routes.Shipping.route){
             printShippingSkjema(navController)
