@@ -29,10 +29,15 @@ import com.example.datakompgaming.handlekurv.HandlekurvObject
 import com.example.datakompgaming.bruktProdukt.BrukteProdukterFire
 import com.example.datakompgaming.produkt.ProdukterFire
 
-
+/**
+ * viser det brukte produktmarkedet med compose
+ * @param navController
+ * @param bruktHovedkortListe
+ * @param bruktProsessorListe
+ * @param bruktSkjermkortListe
+ */
 @ExperimentalMaterial3Api
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-
 @Composable
 fun BruktMarked(navController: NavController, bruktHovedkortListe: MutableList<BrukteProdukterFire>,
                 bruktProsessorListe: MutableList<BrukteProdukterFire>, bruktSkjermkortListe: MutableList<BrukteProdukterFire>) {
@@ -46,7 +51,6 @@ fun BruktMarked(navController: NavController, bruktHovedkortListe: MutableList<B
         }
     ) {
 
-        // A surface container using the 'background' color from the theme
         Surface(
             modifier = Modifier
                 .fillMaxSize(),
@@ -61,16 +65,24 @@ fun BruktMarked(navController: NavController, bruktHovedkortListe: MutableList<B
                 Spacer(modifier = Modifier.height(100.dp))
                 Text(text = "BRUKTMARKED", fontSize = 40.sp,color = Color(0xFF0888c4), fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(30.dp))
+
+                // printer hvert produkt av de ulike typene produkter
                 brukteProdukterRad("Hovedkort",Color(0xFF0888c4), bruktHovedkortListe)
                 brukteProdukterRad("Skjermkort",Color(0xFF0888c4), bruktSkjermkortListe)
                 brukteProdukterRad("Prosessorer",Color(0xFF0888c4), bruktProsessorListe)
-
                 Spacer(modifier = Modifier.height(100.dp))
             }
 
         }
     }
 }
+
+/**
+ * lager en rad med produkter av en type produkt
+ * @param tittel overskrift av type produkt
+ * @param farge farge på rad
+ * @param produktListe liste med produktene til raden
+ */
 @Composable
 fun brukteProdukterRad(tittel: String, farge: Color, produktListe: MutableList<BrukteProdukterFire>, ) {
     Text(
@@ -86,8 +98,8 @@ fun brukteProdukterRad(tittel: String, farge: Color, produktListe: MutableList<B
         .height(200.dp)
         .horizontalScroll(rememberScrollState(), enabled = true),
     ) {
+        // for hvert produkt lag et kort i raden
         for (produkt in produktListe){
-            Log.d(ContentValues.TAG, "Produktliste ok!")
             BrukteProdukterKort(
                 produkt,
                 farge
@@ -96,6 +108,11 @@ fun brukteProdukterRad(tittel: String, farge: Color, produktListe: MutableList<B
     }
 }
 
+/**
+ * printer et kort av et produkt
+ * @param produkt produktet som skal lages til kort
+ * @param farge fargen på kortet
+ */
 @Composable
 fun BrukteProdukterKort(produkt: BrukteProdukterFire, farge: Color) {
     var pris = produkt.pris
@@ -107,6 +124,7 @@ fun BrukteProdukterKort(produkt: BrukteProdukterFire, farge: Color) {
             .height(200.dp)
             .absolutePadding(right = Dp(35f))
             .clickable {
+                // klikkes produktet på så legges det til i handklekurv
                 HandlekurvObject.BruktHandleliste.add(produkt)
                 Toast.makeText(cont, "lagt i kurv", Toast.LENGTH_SHORT).show()
             },
