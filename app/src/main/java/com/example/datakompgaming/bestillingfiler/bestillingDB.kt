@@ -1,7 +1,6 @@
 package com.example.datakompgaming.bestillingfiler
 
 
-import com.example.datakompgaming.produkt.firestore
 import com.example.datakompgaming.user
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Source
