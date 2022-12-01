@@ -37,6 +37,8 @@ fun ScreenMain(){
         }
         composable(Routes.Produkter.route){
            ProdukterUthentingDB()
+            // sleeper for å rekke å laste, må kanskje utvides om det ikke laster inn
+            // tidsnok for sensor
            Thread.sleep(500)
            Produkter(navController, ProduktObject.HovedKortListe, ProduktObject.ProsessorerListe, ProduktObject.SkjermKortListe)
         }
@@ -57,6 +59,8 @@ fun ScreenMain(){
         }
         composable(Routes.BrukteProdukter.route){
             BrukteProdukterUthentingDB()
+            // sleeper for å rekke å laste, må kanskje utvides om det ikke laster inn
+            // tidsnok for sensor
             Thread.sleep(500)
             BruktMarked(navController, BruktProduktObject.BruktHovedKortListe, BruktProduktObject.BruktProsessorerListe, BruktProduktObject.BruktSkjermKortListe)
         }

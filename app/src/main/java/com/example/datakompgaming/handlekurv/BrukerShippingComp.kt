@@ -131,8 +131,6 @@ fun printShippingSkjema(navController: NavController) {
                     for(item in HandlekurvObject.BruktHandleliste)
                         shipInfo.basket.add(item.toMap())
 
-
-
                     kjopProdukterDB(shipInfo)
                     updateVarerPaLager()
                     HandlekurvObject.handlekurvListe.clear()
