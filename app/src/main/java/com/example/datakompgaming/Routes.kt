@@ -14,4 +14,5 @@ sealed class Routes(val route: String) {
     object BrukteProdukter : Routes("Brukteprodukter")
     object Shipping : Routes("Shipping")
     object UserSettings : Routes("UserSettings")
+    object BrukerPassord : Routes("BrukerPassord")
 }

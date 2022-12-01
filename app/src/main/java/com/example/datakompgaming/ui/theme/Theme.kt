@@ -98,7 +98,6 @@ fun DataKompGamingTheme(
         else -> LightColorPalette
     }
 
-
     MaterialTheme(
         colorScheme = colors,
         typography = Typography,

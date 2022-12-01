@@ -120,31 +120,19 @@ fun UserPage(navController: NavController)
                         ) {
                             Button(
                                 onClick = {
-                                    navController.navigate("Bestilling")
+                                    navController.navigate("BrukerPassord")
                                 },
                                 shape = RoundedCornerShape(30.dp),
                                 modifier = Modifier
                                     .width(120.dp)
                                     .height(60.dp)
                             ) {
-                                Text(text = "B3",
+                                Text(text = "Endre passord",
                                     textAlign = TextAlign.Center)
                             }
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(25.dp))
-                    Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
-                        Button(
-                            onClick = { },
-                            shape = RoundedCornerShape(50.dp),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(50.dp)
-                        ) {
-                            Text(text = "Send inn")
-                        }
-                    }
                 }
             }
         }

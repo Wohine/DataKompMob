@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.datakompgaming.Routes
 import com.example.datakompgaming.bestillingfiler.Bestillinger
 import com.example.datakompgaming.bestillingfiler.printOrders
+import com.example.datakompgaming.brukerSider.BrukerPassord
 import com.example.datakompgaming.bruktProdukt.BruktProduktObject
 import com.example.datakompgaming.handlekurv.printShippingSkjema
 import com.example.datakompgaming.produkt.ProduktObject
@@ -59,6 +60,9 @@ fun ScreenMain(){
         }
         composable(Routes.Shipping.route){
             printShippingSkjema(navController)
+        }
+        composable(Routes.BrukerPassord.route){
+            BrukerPassord(navController)
         }
     }
 }

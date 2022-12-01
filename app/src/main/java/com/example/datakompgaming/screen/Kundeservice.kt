@@ -52,22 +52,31 @@ fun Kundeservice(navController: NavController) {
                 }
             ) {
 
+            /**
+             * Oppretter column og legger til scrollability
+             * Sentrerer elementer i kolonnen
+                 */
                 Column(
                     modifier = Modifier
-                        // .background(Color.White)
                         .verticalScroll(rememberScrollState(), enabled = true),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 )
                 {
 
+                /**
+                 * Oppretter values for å holde på textfield verdiene
+                     */
                     val navn = remember { mutableStateOf(TextFieldValue()) }
-                    val email = remember { mutableStateOf(TextFieldValue()) }
+                    val email = remember { mutableStateOf(TextFieldValue()) }       //fjern email
                     val tema = remember { mutableStateOf(TextFieldValue()) }
                     val hjelptxt = remember { mutableStateOf(TextFieldValue()) }
                     var firebaseAuth = FirebaseAuth.getInstance()
                     var cont = LocalContext.current
 
+                    /**
+                     * Spacer for å unngå at top baren overlapper elementer på siden
+                     */
                     Spacer(modifier = Modifier.height(20.dp))
 
                     Image(
@@ -85,6 +94,9 @@ fun Kundeservice(navController: NavController) {
                     Spacer(modifier = Modifier.height(5.dp))
                     Text(text = "Hva lurer du på?", style = TextStyle(fontSize = 10.sp))
 
+                    /**
+                     * Oppretter textfelt angående kundeservice skjema
+                     */
                     Spacer(modifier = Modifier.height(20.dp))
                     TextField(label = { Text(text = "Ditt navn") },
                         value = navn.value,
@@ -106,6 +118,13 @@ fun Kundeservice(navController: NavController) {
                         onValueChange = { hjelptxt.value = it })
 
                     Spacer(modifier = Modifier.height(25.dp))
+
+                    /**
+                     * En "send inn" knapp hvor ved klikk sender input verdien til texfletene over
+                     * inn i en lokal data klasse. Det kobles så over til nåværende bruker og lages
+                     * ett nytt dokument med tilfeldig saksnummer, inni dokumentet lagres saks
+                     * informasjonen fra textfeltene i guien
+                     */
                     Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
                         Button(
                             onClick = {
