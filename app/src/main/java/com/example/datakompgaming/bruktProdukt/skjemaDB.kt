@@ -2,8 +2,8 @@ package com.example.datakompgaming.bruktProdukt
 
 import android.content.Context
 import android.widget.Toast
-import com.example.datakompgaming.produkt.firestore
 import com.example.datakompgaming.screen.chat.firebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 /**
  * Laster opp data fra bruktProduktSkjema som er bundet til data klassen opprettet i ProduktSkjemaData.kt.
@@ -13,6 +13,9 @@ import com.example.datakompgaming.screen.chat.firebaseAuth
  * @param cont
  */
 fun sendSkjemaDB(bruktProdukt: BruktProdukt, cont: Context ){
+
+    var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+
     firebaseAuth.currentUser?.let { it1 ->
         firestore.collection("Produkter").document("BrukteProdukter").collection(bruktProdukt.kategori).document(Math.random().toString())
             .set(

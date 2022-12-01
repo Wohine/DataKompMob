@@ -1,8 +1,6 @@
 package com.example.datakompgaming.screen
 
 import android.annotation.SuppressLint
-import android.content.ContentValues
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -13,20 +11,15 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.example.datakompgaming.bestillingfiler.BestillingerCard
-import com.example.datakompgaming.bestillingfiler.Order
-import com.example.datakompgaming.bestillingfiler.printProdukt
 import com.example.datakompgaming.bruktProdukt.BrukteProdukterFire
 import com.example.datakompgaming.handlekurv.HandlekurvObject
 import com.example.datakompgaming.handlekurv.produktOppdateringDB
-import com.example.datakompgaming.produkt.ProduktObject
 import com.example.datakompgaming.produkt.ProdukterFire
 
 var pris = 0.0

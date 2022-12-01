@@ -1,7 +1,6 @@
 package com.example.datakompgaming.screen
 
 import android.annotation.SuppressLint
-import android.view.View
 import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -12,25 +11,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.datakompgaming.R
-import com.example.datakompgaming.produkt.firestore
 import com.example.datakompgaming.ui.theme.DataKompGamingTheme
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 
 @ExperimentalMaterial3Api
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -39,6 +31,7 @@ import com.google.firebase.auth.FirebaseUser
 fun UserSettings(navController: NavController)
 {
     var firebaseAuth = FirebaseAuth.getInstance()
+    var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     DataKompGamingTheme{
         Surface(

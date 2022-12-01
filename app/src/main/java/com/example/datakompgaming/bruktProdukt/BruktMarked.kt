@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.util.Log
 import android.widget.Toast
-import androidx.navigation.NavController
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,10 +18,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.example.datakompgaming.bruktProdukt.BruktProduktObject
-import com.example.datakompgaming.handlekurv.HandlekurvObject
 import com.example.datakompgaming.bruktProdukt.BrukteProdukterFire
+import com.example.datakompgaming.handlekurv.HandlekurvObject
 
 /**
  * viser det brukte produktmarkedet med compose

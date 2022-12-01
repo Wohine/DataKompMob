@@ -1,12 +1,7 @@
 package com.example.datakompgaming.bestillingfiler
 
-import android.content.ContentValues
-import android.content.ContentValues.TAG
-import android.util.Log
-import com.example.datakompgaming.bruktProdukt.BruktProduktObject
-import com.example.datakompgaming.bruktProdukt.BrukteProdukterFire
-import com.example.datakompgaming.produkt.firestore
 import com.example.datakompgaming.user
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Source
 
 /**
@@ -15,6 +10,8 @@ import com.google.firebase.firestore.Source
  * legger hver produkt inn i liste i bestillingobjekt
  */
 fun bestillingHent() {
+
+    var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     var source = Source.DEFAULT
 
