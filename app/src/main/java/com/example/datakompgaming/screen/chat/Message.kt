@@ -37,7 +37,7 @@ class MessageViewModel : ViewModel() {
      * getMessages må kjøres for å starte uthenting fra databasen og realtime opdateringer til datamodellen.
      * måtte instansiere en tom variabel med retur verdi eller så funket ikke koden
      */
-    var guh = getMessages()
+    var returVariabel = getMessages()
 
     private fun getMessages(): Int {
         /**
