@@ -126,14 +126,14 @@ class MainActivity : ComponentActivity() {
     /**
      * Logger brukeren ut, gir brukeren en melding om at de er logget ut og sender dem til login siden.
      */
-    @Composable
     fun logOut(){
-        var cont = LocalContext.current
         FirebaseAuth.getInstance().signOut();
         setContent {
             login()
         }
-        Toast.makeText(cont, "Du er logget ut", Toast.LENGTH_LONG).show()
+        // gir feil pga vanlig funksjonkall i compose\|/\|/\|/\|/
+        // var cont = LocalContext.current
+        // Toast.makeText(cont, "Du er logget ut", Toast.LENGTH_LONG).show()
     }
 
 }
