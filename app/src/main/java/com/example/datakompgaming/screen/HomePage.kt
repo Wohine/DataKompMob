@@ -35,16 +35,22 @@ import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch as launch
 
-
+/**
+ *Homepage henter inn navcontroller slik at man kan skifte pages.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomePage(navController: NavController) {
+    //våres egen theme som definerer styling
     DataKompGamingTheme {
         Surface(
             modifier = Modifier.fillMaxWidth(),
             color = MaterialTheme.colorScheme.onBackground
         ) {
+            /**
+             * scaffold for å ha en permanent topbar og botbar
+             */
             Scaffold(
                 bottomBar = {
                     printBotBarIcon(navController = navController, 0)
@@ -58,6 +64,9 @@ fun HomePage(navController: NavController) {
                         .verticalScroll(rememberScrollState(), enabled = true),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    /**
+                     * plasserer de ulike Composable elementene i Homepage
+                     */
                     LogoBanner(title = "test")
                     WelcomeSlider()
                     FeatProd("Gode Tilbud")
@@ -79,7 +88,9 @@ fun LogoBanner(title: String) {
     )
 }
 
-//denne brukes bare til development
+/**
+ * denne ble bare brukt under utviklingen og er en preview av hjemmesiden uten inputparametere.
+ */
 @Preview
 @Composable
 fun PreHomePage() {
@@ -102,6 +113,9 @@ fun PreHomePage() {
     }
 }
 
+/**
+ * henter ut produkter og plaserer dem i en produkt slider
+ */
 @Composable
 fun ProduktSlider(tittel: String, farge: Color, produktListe: MutableList<ProdukterFire>,) {
     Row(modifier = Modifier
@@ -117,6 +131,9 @@ fun ProduktSlider(tittel: String, farge: Color, produktListe: MutableList<Produk
     }
 }
 
+/**
+ * En pager som viser våres tilbud eller logo
+ */
 @OptIn(ExperimentalPagerApi::class)
 @Preview
 @Composable
@@ -141,7 +158,9 @@ fun WelcomeSlider() {
             }
         }
     }
-
+    /**
+     * pager fra accompanist
+     */
     HorizontalPager(
         count = items.size,
         state = pagerState,
@@ -161,13 +180,18 @@ data class test123(
     val img: String
     )
 
+/**
+ * liste med bilde adresser som blir referert fra firebase databasem
+ */
 fun createItems() = listOf(
-    test123("https://cdn.discordapp.com/attachments/970741785406111754/1037376850890063872/unknown.png"),
-    test123("https://cdn.discordapp.com/attachments/970741785406111754/1037380583682220162/cover2.png"),
-    test123("https://cdn.discordapp.com/attachments/970741785406111754/1037385940047499365/unknown.png")
+    test123("https://firebasestorage.googleapis.com/v0/b/datakompkotlin.appspot.com/o/images%2Fkomp1.png?alt=media&token=49a528f0-b8c0-4e1a-bd86-ccc40b3573ca"),
+    test123("https://firebasestorage.googleapis.com/v0/b/datakompkotlin.appspot.com/o/images%2Fkomp2.png?alt=media&token=0cf64192-e9a5-484d-bbb0-d8f74240ff01"),
+    test123("https://firebasestorage.googleapis.com/v0/b/datakompkotlin.appspot.com/o/images%2Fkomp3.png?alt=media&token=ffcc8d7a-c119-4260-957d-96de9b42443f")
     )
 
-//@Preview
+/**
+ * selve Composable elementet som viser produktene
+ */
 @Composable
 fun FeatProd(title: String) {
     Column(
@@ -183,27 +207,13 @@ fun FeatProd(title: String) {
             color = Color(0xFF0888c4),
 
         )
+        /**
+         * produkt slider med inputparametere
+         */
         ProduktSlider("Hovedkort",Color(0xFF0888c4), ProduktObject.HovedKortListe)
     }
 }
 
-@Composable
-fun SkjermProd(title: String) {
-    Column(
-        modifier = Modifier
-    ) {
-        Text(text = title,
-            modifier = Modifier
-                .absolutePadding(bottom = Dp(5f))
-                .background(Color.Transparent),
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Bold,
-            fontSize = 25.sp,
-            color = Color(0xFF0888c4),
 
-            )
-        ProduktSlider("Skjermkort",Color(0xFF0888c4), ProduktObject.SkjermKortListe)
-    }
-}
 
 
