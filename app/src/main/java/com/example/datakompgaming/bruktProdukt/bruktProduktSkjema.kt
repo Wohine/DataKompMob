@@ -12,10 +12,13 @@ import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.*
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -136,11 +139,45 @@ fun bruktProduktSkjema(navController: NavController) {
 
                 Spacer(modifier = Modifier.height(15.dp))
 
-                TextField(
-                    label = { Text(text = "Kategori") },
-                    value = kategori.value,
-                    onValueChange = { kategori.value = it }
-                )
+
+                var expanded by remember { mutableStateOf(false) }
+                val interactionSource = remember { MutableInteractionSource() }
+                val isPressed: Boolean by interactionSource.collectIsPressedAsState()
+
+                var enabled by rememberSaveable{ mutableStateOf(true)}
+                var textKat by remember { mutableStateOf("Kategori") }
+
+
+                if (isPressed) {
+                    expanded = true
+                }
+                Box(){
+                    TextField(
+                        readOnly = true,
+                        label = { Text(text = "Kategori") },
+                        value = textKat,
+                        onValueChange = { textKat = it },
+                        interactionSource = interactionSource
+                    )
+                    DropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false }
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text("Hovedkort") },
+                            onClick = { textKat = "Hovedkort"},
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Prossesorer") },
+                            onClick = { textKat = "Prossesorer" },
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Skjermkort") },
+                            onClick = { textKat = "Skjermkort" },
+                        )
+                    }
+                }
+
 
                 Spacer(modifier = Modifier.height(15.dp))
 
@@ -165,6 +202,11 @@ fun bruktProduktSkjema(navController: NavController) {
                     value = tilstand.value,
                     onValueChange = { tilstand.value = it },
                 )
+
+                Spacer(modifier = Modifier.height(15.dp))
+
+
+                Spacer(modifier = Modifier.height(15.dp))
 
                 Spacer(modifier = Modifier.height(15.dp))
 
@@ -234,7 +276,7 @@ fun bruktProduktSkjema(navController: NavController) {
 
                             val bruktProdukt = BruktProdukt(
                                 produktNavn.value.text,
-                                kategori.value.text,
+                                textKat,
                                 produsent.value.text,
                                 pris.value.text,
                                 tilstand.value.text,
