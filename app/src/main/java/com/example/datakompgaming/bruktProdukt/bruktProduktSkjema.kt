@@ -338,18 +338,22 @@ fun bruktProduktSkjema(navController: NavController) {
                             /**
                              * Binder inndata til objektvariabler.
                              */
-                            val bruktProdukt = BruktProdukt(
-                                produktNavnString,
-                                kategoriString,
-                                produsentString,
-                                prisString,
-                                tilstandString,
-                                varebeholdningString,
-                                bildeString,
-                            )
 
-                            sendSkjemaDB(bruktProdukt, cont)
-
+                            if(isNumericToX(prisString)) {
+                                val bruktProdukt = BruktProdukt(
+                                    produktNavnString,
+                                    kategoriString,
+                                    produsentString,
+                                    prisString,
+                                    tilstandString,
+                                    varebeholdningString,
+                                    bildeString,
+                                )
+                                sendSkjemaDB(bruktProdukt, cont)
+                            }
+                            else{
+                                Toast.makeText(cont, "ugyldig pris", Toast.LENGTH_LONG).show()
+                            }
                         },
                         shape = RoundedCornerShape(50.dp),
                         modifier = Modifier
@@ -373,8 +377,9 @@ fun bruktProduktSkjema(navController: NavController) {
 
     }
 }
-
-
+fun isNumericToX(toCheck: String): Boolean {
+    return toCheck.toDoubleOrNull() != null
+}
 
 
 
