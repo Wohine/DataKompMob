@@ -2,6 +2,7 @@ package com.example.datakompgaming.produkt
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
@@ -40,6 +41,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.PopupProperties
 import androidx.navigation.NavController
 import com.example.datakompgaming.R
+import com.example.datakompgaming.bruktProdukt.BruktProdukt
+import com.example.datakompgaming.bruktProdukt.sendSkjemaDB
 import com.example.datakompgaming.mainActivity
 import com.example.datakompgaming.screen.printBotBarIcon
 import com.example.datakompgaming.screen.printTopBarIcon
@@ -332,63 +335,25 @@ fun bruktProduktSkjema(navController: NavController) {
                                 "https://firebasestorage.googleapis.com/v0/b/datakompkotlin.appspot.com/o/images%2F" + produktNavnString + "?alt=media"
 
 
-
-                            /**
-                             * Definisjon for objektet vi sender inn i Firestore dokumentet.
-                             */
-                            data class BruktProdukt(
-                                val tittel: String? = null,
-                                val kategori: String? = null,
-                                val produsent: String? = null,
-                                val pris: String? = null,
-                                val tilstand: String? = null,
-                                val varebeholdning: String? = null,
-                                val bildeAdresse: String? = null
-                            )
-
                             /**
                              * Binder inndata til objektvariabler.
                              */
-                            val bruktProdukt = BruktProdukt(
-                                produktNavnString,
-                                kategoriString,
-                                produsentString,
-                                prisString,
-                                tilstandString,
-                                varebeholdningString,
-                                bildeString,
-                            )
 
-
-                            /**
-                             * Sjekker om brukeren er logget inn. Om dette er sant,
-                             * lagrer den et dokument med en unik ID i BruktProdukt collectionen.
-                             */
-                            firebaseAuth.currentUser?.let { it1 ->
-                                firestore.collection("Produkter").document("BrukteProdukter")
-                                    .collection(kategoriString).document(Math.random().toString())
-                                    .set(
-                                        bruktProdukt
-                                    )
-                                    /**
-                                     * Informerer bruker om opplasningen av produktet gikk som det skulle eller ikke.
-                                     */
-                                    .addOnSuccessListener {
-                                        Toast.makeText(
-                                            cont,
-                                            "Produktet ditt er sendt inn!",
-                                            Toast.LENGTH_LONG
-                                        ).show()
-                                    }
-                                    .addOnFailureListener {
-                                        Toast.makeText(
-                                            cont,
-                                            "Noe gikk galt ved innsending av produktet",
-                                            Toast.LENGTH_LONG
-                                        ).show()
-                                    }
+                            if(isNumericToX(prisString)) {
+                                val bruktProdukt = BruktProdukt(
+                                    produktNavnString,
+                                    kategoriString,
+                                    produsentString,
+                                    prisString,
+                                    tilstandString,
+                                    varebeholdningString,
+                                    bildeString,
+                                )
+                                sendSkjemaDB(bruktProdukt, cont)
                             }
-
+                            else{
+                                Toast.makeText(cont, "ugyldig pris", Toast.LENGTH_LONG).show()
+                            }
                         },
                         shape = RoundedCornerShape(50.dp),
                         modifier = Modifier
@@ -412,8 +377,9 @@ fun bruktProduktSkjema(navController: NavController) {
 
     }
 }
-
-
+fun isNumericToX(toCheck: String): Boolean {
+    return toCheck.toDoubleOrNull() != null
+}
 
 
 
