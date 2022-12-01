@@ -49,7 +49,7 @@ fun printTopBarIcon(navController: NavController){
                     /**
                      * logikk for å bli trykket på
                      */
-                    IconButton(modifier = Modifier.absoluteOffset(-360.dp,0.dp), onClick = { navController.navigate("Handlekurv") }) {
+                    IconButton(modifier = Modifier.absoluteOffset(-300.dp,0.dp), onClick = { navController.navigate("Handlekurv") }) {
                         Icon(
                             Icons.Default.ShoppingBasket,
                             contentDescription = "basket",
