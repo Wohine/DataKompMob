@@ -28,7 +28,7 @@ import com.example.datakompgaming.handlekurv.HandlekurvObject
 import com.example.datakompgaming.produkt.ProduktObject
 import com.example.datakompgaming.produkt.ProdukterFire
 import com.example.datakompgaming.produkt.ProdukterUthentingDB
-import com.example.datakompgaming.ui.theme.DataKompGamingRGB
+import com.example.datakompgaming.ui.theme.DataKompGamingBlue
 
 
 @ExperimentalMaterial3Api
@@ -62,9 +62,9 @@ fun Produkter(navController: NavController, hovedListe: MutableList<ProdukterFir
                         Spacer(modifier = Modifier.height(100.dp))
                         Text(text = "NYE PRODUKTER", fontSize = 40.sp,color = Color(0xFF0888c4), fontWeight = FontWeight.Bold)
                         Spacer(modifier = Modifier.height(30.dp))
-                        produkterRad("Hovedkort",Color(0xFF0888c4), hovedListe)
-                        produkterRad("Skjermkort",Color(0xFF0888c4), prosesstListe)
-                        produkterRad("Prosessorer",Color(0xFF0888c4), skjermListe)
+                        produkterRad("Hovedkort", DataKompGamingBlue, hovedListe)
+                        produkterRad("Skjermkort",DataKompGamingBlue, prosesstListe)
+                        produkterRad("Prosessorer",DataKompGamingBlue, skjermListe)
 
                         Spacer(modifier = Modifier.height(100.dp))
                     }
