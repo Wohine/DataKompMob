@@ -11,6 +11,11 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import java.util.*
+
+/**
+ * Koden er basert på https://medium.com/@daniatitienei/how-to-read-data-from-firebase-realtime-database-and-display-it-using-jetpack-compose-fdc0316009ea#31d2
+ * men kraftig modifisert og endret til passe til våres prosjekt
+ */
 /**
  * variablen holder styr på hvor mange melding elementer som er i databasen
  */
