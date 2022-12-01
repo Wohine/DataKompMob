@@ -2,6 +2,7 @@ package com.example.datakompgaming.bruktProdukt
 
 import com.google.firebase.firestore.Exclude
 
+// klasse for brukte produkter
 data class BrukteProdukterFire(
     val kategori: String,
     val pris: Double,
@@ -10,6 +11,8 @@ data class BrukteProdukterFire(
     val tilstand: String,
     val bilde: String
 ) {
+
+    // mapping til database
     @Exclude
     fun toMap(): Map<String, Any?> {
         return mapOf(

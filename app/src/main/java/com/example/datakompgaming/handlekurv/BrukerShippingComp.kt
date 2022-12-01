@@ -45,6 +45,7 @@ fun printShippingSkjema(navController: NavController) {
     ) {
         var cont = LocalContext.current
 
+        // variabler til verdi fra textfield
         val fornavn = remember { mutableStateOf(TextFieldValue()) }
         val etternavn = remember { mutableStateOf(TextFieldValue()) }
         val mail = remember { mutableStateOf(TextFieldValue()) }
@@ -107,9 +108,11 @@ fun printShippingSkjema(navController: NavController) {
                     onValueChange = { postkode.value = it }
                 )
                 Button(onClick = {
+                    // timestamp for når bestilling blir gjort
                     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm ")
                     val current = LocalDateTime.now().format(formatter)
 
+                    // legger verdier for shipping inn i et objekt
                     var shipInfo = ShippingFire(
                         uid = uID,
                         fornavn = fornavn.value.text,
@@ -122,6 +125,7 @@ fun printShippingSkjema(navController: NavController) {
                         dato = current
                     )
 
+                    // to for løkker for brukt og ny handlekurv
                     for(item in HandlekurvObject.handlekurvListe)
                         shipInfo.basket.add(item.toMap())
                     for(item in HandlekurvObject.BruktHandleliste)

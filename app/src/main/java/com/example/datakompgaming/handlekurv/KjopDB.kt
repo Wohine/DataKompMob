@@ -12,12 +12,18 @@ import kotlin.random.Random
  * @param shippingFire
  */
 fun kjopProdukterDB(shippingFire: ShippingFire) {
+    // gir en tilfeldig id til et kjøp
     var kjopID = Random.nextInt(0, 100000)
+
+    // mapper en bestilling til å passe databasen
     var dbProdukt = shippingFire.toMap()
 
 
+    // path til å legge inn bestilling
     var docRef = firestore.collection("users").document(shippingFire.uid).
     collection("orders").document(kjopID.toString())
+
+
     docRef.set(dbProdukt).addOnSuccessListener {
         Log.d(ContentValues.TAG, "DocumentSnapshot successfully updated!")
     }
