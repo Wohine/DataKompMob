@@ -135,7 +135,7 @@ fun printShippingSkjema(navController: NavController) {
                     Toast.makeText(cont, "takk for ditt kjøp", Toast.LENGTH_SHORT).show()
                     Log.d(ContentValues.TAG, shipInfo.fornavn)
                 }) {
-                    Text(text = "trykk her")
+                    Text(text = "Bestill!")
                 }
             }
         }

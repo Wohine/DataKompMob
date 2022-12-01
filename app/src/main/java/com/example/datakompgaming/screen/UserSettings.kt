@@ -27,7 +27,6 @@ import androidx.navigation.NavController
 import com.example.datakompgaming.R
 import com.example.datakompgaming.brukerSider.BrukerDataFire
 import com.example.datakompgaming.mainActivity
-import com.example.datakompgaming.produkt.firestore
 import com.example.datakompgaming.screen.chat.firebaseAuth
 import com.example.datakompgaming.ui.theme.DataKompGamingTheme
 import com.google.firebase.auth.FirebaseAuth
@@ -66,8 +65,6 @@ fun UserSettings(navController: NavController)
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-
-                    var bruker = getUserData()
 
                     /**
                      * values som holder verdien til hvert text felt
@@ -186,11 +183,13 @@ fun UserSettings(navController: NavController)
 
 /**
  * Uthenting av bruker data, dette skulle brukes til automatisk utfylling av textfeltene
+ * Denne funkskjonen er ikke tatt i bruk siden vi ikke fant en måte som fungerte, om det var
+ * mer tid ville dette blitt implementert
  */
+/*
 fun getUserData()
 {
     var firebaseAuth = FirebaseAuth.getInstance()
-
 
     var docRef = firestore.collection("users").document(firebaseAuth.currentUser!!.uid.toString())
         .collection("Brukerdokumenter").document("Brukerdata")
@@ -207,6 +206,7 @@ fun getUserData()
     }
     //return ud
 }
+ */
 
 
 /**

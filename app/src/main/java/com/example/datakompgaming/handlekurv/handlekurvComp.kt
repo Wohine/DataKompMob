@@ -6,10 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,6 +18,7 @@ import com.example.datakompgaming.bruktProdukt.BrukteProdukterFire
 import com.example.datakompgaming.handlekurv.HandlekurvObject
 import com.example.datakompgaming.handlekurv.produktOppdateringDB
 import com.example.datakompgaming.produkt.ProdukterFire
+import com.example.datakompgaming.ui.theme.DataKompGamingTheme
 
 var pris = 0.0
 
@@ -32,44 +30,50 @@ var pris = 0.0
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun printHandlekurv(navController: NavController) {
-    var totalPris = 0.0;
-    Scaffold(
-        bottomBar = {
-            printBotBarIcon(navController = navController, 5)
-        },
-        topBar = {
-            printTopBarIcon(navController = navController)
-        }
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .verticalScroll(rememberScrollState(), enabled = true)
-                .background(Color.White),
-            verticalArrangement = Arrangement.SpaceEvenly
+    DataKompGamingTheme {
+        Surface(
+            modifier = Modifier.fillMaxWidth(),
+            color = MaterialTheme.colorScheme.onBackground
         ) {
-            Spacer(modifier = Modifier.height(50.dp))
-            Text(text = "Din handlekurv")
-            for(item in HandlekurvObject.handlekurvListe){
-                totalPris += item.pris
-                HandlekurvCard(item, navController)
-                Spacer(modifier = Modifier.height(5.dp))
-            }
-            for(bruktitem in HandlekurvObject.BruktHandleliste){
-                totalPris += bruktitem.pris
-                bruktHandlekurvCard(bruktitem, navController)
-            }
+            var totalPris = 0.0;
+            Scaffold(
+                bottomBar = {
+                    printBotBarIcon(navController = navController, 5)
+                },
+                topBar = {
+                    printTopBarIcon(navController = navController)
+                }
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState(), enabled = true),
+                    verticalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    Spacer(modifier = Modifier.height(50.dp))
+                    Text(text = "Din handlekurv")
+                    for (item in HandlekurvObject.handlekurvListe) {
+                        totalPris += item.pris
+                        HandlekurvCard(item, navController)
+                        Spacer(modifier = Modifier.height(5.dp))
+                    }
+                    for (bruktitem in HandlekurvObject.BruktHandleliste) {
+                        totalPris += bruktitem.pris
+                        bruktHandlekurvCard(bruktitem, navController)
+                    }
 
-            Spacer(modifier = Modifier.height(15.dp))
-            Text(text = "din totalpris: ${totalPris} ")
+                    Spacer(modifier = Modifier.height(15.dp))
+                    Text(text = "din totalpris: ${totalPris} ")
 
-            Button(onClick = {
-                pris = totalPris
-                navController.navigate("Shipping")
-            }) {
-                Text(text = "kjøp varer!")
+                    Button(onClick = {
+                        pris = totalPris
+                        navController.navigate("Shipping")
+                    }) {
+                        Text(text = "kjøp varer!")
+                    }
+                    Spacer(modifier = Modifier.height(65.dp))
+                }
             }
-            Spacer(modifier = Modifier.height(65.dp))
         }
     }
 }
@@ -79,36 +83,57 @@ fun printHandlekurv(navController: NavController) {
  * @param item
  * @param navController
  */
+/**
+ * lager et card for hvert nye produkt i handlekurven
+ * @param item
+ * @param navController
+ */
 @Composable
 fun HandlekurvCard(item: ProdukterFire,navController: NavController) {
-    var pris = item.pris.toString()
-    Row(modifier = Modifier
-        .border(3.dp, Color.Black)
-        .padding(10.dp)
-        .fillMaxWidth()
-    ) {
-        AsyncImage(
-        model = item.bilde,
-        contentDescription = "null",
-        modifier = Modifier
-            .fillMaxSize(0.5F)
-        )
-        Column() {
-            Text(text = item.tittel)
-            Text(text = item.rating + " stjerners rangering")
-            Text(text = item.varebeholdning+ " på lager")
-            Text(text = pris + "kr")
-            Button(onClick = {
-                HandlekurvObject.handlekurvListe.remove(item)
-                navController.navigate("Handlekurv")
-            }) {
-                Text(text = "fjern fra handlekurv",
-                    textAlign = TextAlign.Center)
+    DataKompGamingTheme {
+        Surface(
+            modifier = Modifier.fillMaxWidth(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            var pris = item.pris.toString()
+            Row(
+                modifier = Modifier
+                    .border(3.dp, Color.Black)
+                    .padding(10.dp)
+                    .fillMaxWidth()
+            ) {
+                AsyncImage(
+                    model = item.bilde,
+                    contentDescription = "null",
+                    modifier = Modifier
+                        .fillMaxSize(0.5F)
+                )
+                Column() {
+                    Text(text = item.tittel)
+                    Text(text = item.rating + " stjerners rangering")
+                    Text(text = item.varebeholdning + " på lager")
+                    Text(text = pris + "kr")
+                    Button(onClick = {
+                        HandlekurvObject.handlekurvListe.remove(item)
+                        navController.navigate("Handlekurv")
+                    }) {
+                        Text(
+                            text = "fjern fra handlekurv",
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                }
             }
         }
     }
 }
 
+
+/**
+ * lager et card for hvert brukte produkt i handlekurven
+ * @param item
+ * @param navController
+ */
 /**
  * lager et card for hvert brukte produkt i handlekurven
  * @param item
@@ -116,35 +141,48 @@ fun HandlekurvCard(item: ProdukterFire,navController: NavController) {
  */
 @Composable
 fun bruktHandlekurvCard(item: BrukteProdukterFire,navController: NavController) {
+    DataKompGamingTheme {
+        Surface(
+            modifier = Modifier.fillMaxWidth(),
+            color = MaterialTheme.colorScheme.background
+        ) {
 
-    var pris = item.pris.toString()
+            var pris = item.pris.toString()
 
-    Row(modifier = Modifier
-        .border(3.dp, Color.Black)
-        .padding(10.dp)
-        .fillMaxWidth()
-    ) {
-        AsyncImage(
-            model = item.tittel,
-            contentDescription = "null",
-            modifier = Modifier
-                .fillMaxSize(0.5F)
-        )
-        Column() {
-            Text(text = item.tittel)
-            Text(text = item.tilstand + " stjerners rangering")
-            Text(text = pris + "kr")
-            Button(onClick = {
-                HandlekurvObject.BruktHandleliste.remove(item)
-                navController.navigate("Handlekurv")
-            }) {
-                Text(text = "fjern fra handlekurv",
-                    textAlign = TextAlign.Center)
+            Row(
+                modifier = Modifier
+                    .border(3.dp, Color.Black)
+                    .padding(10.dp)
+                    .fillMaxWidth()
+            ) {
+                AsyncImage(
+                    model = item.bilde,
+                    contentDescription = "null",
+                    modifier = Modifier
+                        .fillMaxSize(0.5F)
+                )
+                Column() {
+                    Text(text = item.tittel)
+                    Text(text = item.tilstand + " stjerners rangering")
+                    Text(text = pris + "kr")
+                    Button(onClick = {
+                        HandlekurvObject.BruktHandleliste.remove(item)
+                        navController.navigate("Handlekurv")
+                    }) {
+                        Text(
+                            text = "fjern fra handlekurv",
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                }
             }
         }
     }
 }
 
+/**
+ * funksjon som kaller på en databaseoppdatering
+ */
 /**
  * funksjon som kaller på en databaseoppdatering
  */
