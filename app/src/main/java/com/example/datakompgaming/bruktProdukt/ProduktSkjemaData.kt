@@ -1,5 +1,5 @@
 package com.example.datakompgaming.bruktProdukt
-
+//data til brukt produkt
 data class BruktProdukt(
     val tittel: String,
     val kategori: String,

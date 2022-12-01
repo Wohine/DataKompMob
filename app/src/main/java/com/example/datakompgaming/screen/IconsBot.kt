@@ -14,7 +14,9 @@ import androidx.navigation.NavController
 import com.example.datakompgaming.bestillingfiler.bestillingHent
 import com.example.datakompgaming.ui.theme.DataKompGamingTheme
 
-
+/**
+ * lager selve botbar
+ */
 @Composable
 fun printBotBarIcon(navController: NavController, nummer: Int){
     // 0 = hjem, 1 = chat, 2 = brukt produkt skjema, 3 = om oss, 4 = produkter

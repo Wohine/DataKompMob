@@ -176,7 +176,7 @@ fun WelcomeSlider() {
 
 
 //data for welcome banner
-data class test123(
+data class imgString(
     val img: String
     )
 
@@ -184,9 +184,9 @@ data class test123(
  * liste med bilde adresser som blir referert fra firebase databasem
  */
 fun createItems() = listOf(
-    test123("https://firebasestorage.googleapis.com/v0/b/datakompkotlin.appspot.com/o/images%2Fkomp1.png?alt=media&token=49a528f0-b8c0-4e1a-bd86-ccc40b3573ca"),
-    test123("https://firebasestorage.googleapis.com/v0/b/datakompkotlin.appspot.com/o/images%2Fkomp2.png?alt=media&token=0cf64192-e9a5-484d-bbb0-d8f74240ff01"),
-    test123("https://firebasestorage.googleapis.com/v0/b/datakompkotlin.appspot.com/o/images%2Fkomp3.png?alt=media&token=ffcc8d7a-c119-4260-957d-96de9b42443f")
+    imgString("https://firebasestorage.googleapis.com/v0/b/datakompkotlin.appspot.com/o/images%2Fkomp1.png?alt=media&token=49a528f0-b8c0-4e1a-bd86-ccc40b3573ca"),
+    imgString("https://firebasestorage.googleapis.com/v0/b/datakompkotlin.appspot.com/o/images%2Fkomp2.png?alt=media&token=0cf64192-e9a5-484d-bbb0-d8f74240ff01"),
+    imgString("https://firebasestorage.googleapis.com/v0/b/datakompkotlin.appspot.com/o/images%2Fkomp3.png?alt=media&token=ffcc8d7a-c119-4260-957d-96de9b42443f")
     )
 
 /**

@@ -5,6 +5,9 @@ import android.widget.Toast
 import com.example.datakompgaming.produkt.firestore
 import com.example.datakompgaming.screen.chat.firebaseAuth
 
+/**
+ * sender brukt produkt skjema til databasen
+ */
 fun sendSkjemaDB(bruktProdukt: BruktProdukt, cont: Context ){
     firebaseAuth.currentUser?.let { it1 ->
         firestore.collection("Produkter").document("BrukteProdukter").collection(bruktProdukt.kategori).document(Math.random().toString())

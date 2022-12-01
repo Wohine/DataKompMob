@@ -8,7 +8,9 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Source
 
-
+/**
+ * henter ut produkter fra database
+ */
 var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 fun ProdukterUthentingDB(){
     ProduktObject.SkjermKortListe.clear()
