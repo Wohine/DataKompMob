@@ -104,43 +104,10 @@ fun KortLabel(tittel: String) {
     )
 }
 
-@Composable
-fun Kort(tittel: String,pris: String,igjen: String, imagePainter: Painter) {
-    Card (
-        modifier = Modifier
-            .width(300.dp)
-            .height(150.dp)
-            .absolutePadding(right = Dp(35f))
-            .clickable { println("Clicked") },
-        shape = RoundedCornerShape(8.dp),
 
-
-        ) {
-        Row() {
-            Image(painter = imagePainter, contentDescription = tittel,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight(1f),
-                alignment = Alignment.CenterStart
-            )
-            Column(modifier = Modifier
-                .padding(horizontal = 19.dp)
-                .fillMaxHeight()
-                .background(Color.Transparent),
-
-                ) {
-                KortLabel(tittel)
-                KortLabel("Pris: $pris"+"kr")
-                KortLabel("Kun $igjen igjen!")
-            }
-
-        }
-
-    }
-}
-
-
-
+/**
+ * Utformer rader for de ulike produktkategoriene.
+ */
 @Composable
 fun produkterRad(tittel: String, farge: Color, produktListe: MutableList<ProdukterFire>, ) {
     Text(
@@ -166,10 +133,9 @@ fun produkterRad(tittel: String, farge: Color, produktListe: MutableList<Produkt
     }
 }
 
-
-
-
-
+/**
+ * Utforming av produktkortet for de uthentede produktene fra Firestore
+ */
 @Composable
 fun ProdukterKort(produkt: ProdukterFire, farge: Color) {
     var varebeholdning = produkt.varebeholdning
