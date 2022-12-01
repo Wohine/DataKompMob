@@ -17,12 +17,15 @@ import com.google.firebase.firestore.Source
 fun bestillingHent() {
 
     var source = Source.DEFAULT
+
+    // pathen i firestore til bestillinger
     var docRef = firestore.collection("users").document(user?.uid.toString()).
     collection("orders")
 
     var i = 1
 
     docRef.get(source).addOnSuccessListener { documents ->
+        // for løkke gjennom antall bestillinger som ble funnet i db
         for (document in documents) {
             var liste = document["basket"] as? MutableList<Map<String, Any>>
 
@@ -35,6 +38,7 @@ fun bestillingHent() {
 
             var objekt = Order(id, dato, key, listeProdukter, totalPris)
 
+            // for løkke av antall produkter i hver bestilling
             if (liste != null) {
                 for (item in liste){
                     var pris =  (item.get("pris") as Double).toString() + "kr"
