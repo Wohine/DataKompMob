@@ -27,6 +27,7 @@ import coil.compose.AsyncImage
 import com.example.datakompgaming.handlekurv.HandlekurvObject
 import com.example.datakompgaming.produkt.ProduktObject
 import com.example.datakompgaming.produkt.ProdukterFire
+import com.example.datakompgaming.produkt.ProdukterUthentingDB
 import com.example.datakompgaming.ui.theme.DataKompGamingRGB
 
 
@@ -59,15 +60,18 @@ fun Produkter(navController: NavController, hovedListe: MutableList<ProdukterFir
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Spacer(modifier = Modifier.height(100.dp))
-                        Title("Produkter")
-                        produkterRad("Hovedkort",DataKompGamingRGB, hovedListe)
-                        produkterRad("Skjermkort",DataKompGamingRGB, prosesstListe)
-                        produkterRad("Prosessorer",DataKompGamingRGB, skjermListe)
+                        Text(text = "NYE PRODUKTER", fontSize = 40.sp,color = Color(0xFF0888c4), fontWeight = FontWeight.Bold)
+                        Spacer(modifier = Modifier.height(30.dp))
+                        produkterRad("Hovedkort",Color(0xFF0888c4), hovedListe)
+                        produkterRad("Skjermkort",Color(0xFF0888c4), prosesstListe)
+                        produkterRad("Prosessorer",Color(0xFF0888c4), skjermListe)
 
                         Spacer(modifier = Modifier.height(100.dp))
                     }
+
                 }
             }
+        Log.d(ContentValues.TAG, ""+ ProduktObject.HovedKortListe.size)
         }
 
 @Composable
@@ -101,43 +105,10 @@ fun KortLabel(tittel: String) {
     )
 }
 
-@Composable
-fun Kort(tittel: String,pris: String,igjen: String, imagePainter: Painter) {
-    Card (
-        modifier = Modifier
-            .width(300.dp)
-            .height(150.dp)
-            .absolutePadding(right = Dp(35f))
-            .clickable { println("Clicked") },
-        shape = RoundedCornerShape(8.dp),
 
-
-        ) {
-        Row() {
-            Image(painter = imagePainter, contentDescription = tittel,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight(1f),
-                alignment = Alignment.CenterStart
-            )
-            Column(modifier = Modifier
-                .padding(horizontal = 19.dp)
-                .fillMaxHeight()
-                .background(Color.Transparent),
-
-                ) {
-                KortLabel(tittel)
-                KortLabel("Pris: $pris"+"kr")
-                KortLabel("Kun $igjen igjen!")
-            }
-
-        }
-
-    }
-}
-
-
-
+/**
+ * Utformer rader for de ulike produktkategoriene.
+ */
 @Composable
 fun produkterRad(tittel: String, farge: Color, produktListe: MutableList<ProdukterFire>, ) {
     Text(
@@ -163,10 +134,9 @@ fun produkterRad(tittel: String, farge: Color, produktListe: MutableList<Produkt
     }
 }
 
-
-
-
-
+/**
+ * Utforming av produktkortet for de uthentede produktene fra Firestore
+ */
 @Composable
 fun ProdukterKort(produkt: ProdukterFire, farge: Color) {
     var varebeholdning = produkt.varebeholdning
@@ -178,10 +148,14 @@ fun ProdukterKort(produkt: ProdukterFire, farge: Color) {
             .height(150.dp)
             .absolutePadding(right = Dp(35f))
             .clickable {
-                if(produkt.varebeholdning.toInt() < 1)
-                    Toast.makeText(cont, "Utsolgt..", Toast.LENGTH_SHORT).show()
-                else{
-                    Toast.makeText(cont, "lagt i kurv", Toast.LENGTH_SHORT).show()
+                if (produkt.varebeholdning.toInt() < 1)
+                    Toast
+                        .makeText(cont, "Utsolgt..", Toast.LENGTH_SHORT)
+                        .show()
+                else {
+                    Toast
+                        .makeText(cont, "lagt i kurv", Toast.LENGTH_SHORT)
+                        .show()
                     HandlekurvObject.handlekurvListe.add(produkt)
                 }
 
@@ -196,8 +170,8 @@ fun ProdukterKort(produkt: ProdukterFire, farge: Color) {
                 model = produkt.bilde,
                 contentDescription = "null",
                 modifier = Modifier
-                .fillMaxSize()
-                .weight(1f),
+                    .fillMaxSize()
+                    .weight(1f),
                 alignment = Alignment.CenterStart
             )
             Column(modifier = Modifier

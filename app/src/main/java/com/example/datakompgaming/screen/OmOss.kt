@@ -18,7 +18,9 @@ import coil.compose.AsyncImage
 import com.example.datakompgaming.R
 import com.example.datakompgaming.ui.theme.DataKompGamingTheme
 
-
+/**
+ * omOss siden som forklarer litt om hvem vi i Datakomp er og våres visjon
+ */
 @ExperimentalMaterial3Api
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -49,6 +51,9 @@ fun OmOss(navController: NavController) {
                 ) {
                     Spacer(modifier = Modifier.height(100.dp))
                     Title("Om Oss")
+                    /**
+                     * tar in tekst og bilde og viser det på siden
+                     */
                     InfoCard(
                         "Hvem er vi?",
                         "Vi er fem studenter som studerer IT og informasjonssytemer på USN Campus Bø.",
@@ -75,6 +80,9 @@ fun OmOss(navController: NavController) {
 
 }
 
+/**
+ * infokort som tar in omOss informasjon og viser det i omOss elementet
+ */
 @Composable
 fun InfoCard(title: String, line1: String, line2: String, image: String) {
     Row(modifier = Modifier
@@ -88,7 +96,7 @@ fun InfoCard(title: String, line1: String, line2: String, image: String) {
             Spacer(modifier = Modifier.height(5.dp))
             Text(line2)
             Spacer(modifier = Modifier.height(5.dp))
-            Image(painter = painterResource(com.example.datakompgaming.R.drawable.floppa),
+            AsyncImage(model = image,
                 contentDescription = null,
                 contentScale = ContentScale.Fit
             )

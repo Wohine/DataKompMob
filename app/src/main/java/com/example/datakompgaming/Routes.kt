@@ -1,5 +1,8 @@
 package com.example.datakompgaming
 
+/**
+ * instansierer routes slik at brukeren kan navigere siden
+ */
 sealed class Routes(val route: String) {
     object test : Routes("test")
     object BestillingComp : Routes("Bestilling")

@@ -1,9 +1,10 @@
 package com.example.datakompgaming.bestillingfiler
 
+// dataklasse av hver ordre
 data class Order(
-    val id: Int,
+    val id: String,
     val dato: String,
     val key: String,
-    val liste: List<Produkt>,
+    val liste: MutableList<Produkt>,
     val totalPris: String
 )
