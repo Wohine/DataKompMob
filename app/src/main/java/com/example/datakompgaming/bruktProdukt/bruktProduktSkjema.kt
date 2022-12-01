@@ -17,21 +17,30 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.ShoppingBasket
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.PopupProperties
 import androidx.navigation.NavController
 import com.example.datakompgaming.R
+import com.example.datakompgaming.mainActivity
 import com.example.datakompgaming.screen.printBotBarIcon
 import com.example.datakompgaming.screen.printTopBarIcon
 import com.google.android.gms.tasks.Task
@@ -50,24 +59,24 @@ import kotlin.random.Random
 @Composable
 fun bruktProduktSkjema(navController: NavController) {
 
-        Scaffold(
-            bottomBar = {
-                printBotBarIcon(navController = navController, 2)
-            },
-            topBar = {
-                printTopBarIcon(navController = navController)
-            }
-        ) {
+    Scaffold(
+        bottomBar = {
+            printBotBarIcon(navController = navController, 2)
+        },
+        topBar = {
+            printTopBarIcon(navController = navController)
+        }
+    ) {
 
-            Surface(
-                modifier = Modifier
-                    .fillMaxSize(),
-                color = MaterialTheme.colorScheme.background
+        Surface(
+            modifier = Modifier
+                .fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
 
         ) {
             Column(
                 modifier = Modifier
-                    .verticalScroll(rememberScrollState(),enabled = true),
+                    .verticalScroll(rememberScrollState(), enabled = true),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
@@ -79,8 +88,8 @@ fun bruktProduktSkjema(navController: NavController) {
                     mutableStateOf(TextFieldValue())
                 }
 
-                val kategori = remember {
-                    mutableStateOf(TextFieldValue())
+                var kategori = remember {
+                    mutableStateOf(String())
                 }
 
                 val produsent = remember {
@@ -108,6 +117,15 @@ fun bruktProduktSkjema(navController: NavController) {
 
                 var isImageChosen = false
 
+                val checkedState = remember { mutableStateOf(true) }
+
+                val listItems = arrayOf("Favorites", "Options", "Settings", "Share")
+                val disabledItem = 1
+                val contextForToast = LocalContext.current.applicationContext
+                var expanded by remember {
+                    mutableStateOf(false)
+                }
+
 
                 /**
                  * Launcher for bildeuthenting. Sjekker om det er returnert en uri.
@@ -127,6 +145,8 @@ fun bruktProduktSkjema(navController: NavController) {
 
                 var imageControl = 0
 
+
+
                 Spacer(modifier = Modifier.height(20.dp))
 
                 Image(painter = painterResource(R.drawable.datakomplogo), contentDescription = null)
@@ -138,7 +158,11 @@ fun bruktProduktSkjema(navController: NavController) {
                  */
                 Text(
                     text = "Send inn ditt brukte produkt!",
-                    style = TextStyle(fontSize = 40.sp, fontFamily = FontFamily.SansSerif, textAlign = TextAlign.Center)
+                    style = TextStyle(
+                        fontSize = 40.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        textAlign = TextAlign.Center
+                    )
                 )
 
                 Spacer(modifier = Modifier.height(15.dp))
@@ -152,18 +176,56 @@ fun bruktProduktSkjema(navController: NavController) {
                 Spacer(modifier = Modifier.height(15.dp))
 
                 TextField(
-                    label = { Text(text = "Kategori") },
-                    value = kategori.value,
-                    onValueChange = { kategori.value = it }
-                )
-
-                Spacer(modifier = Modifier.height(15.dp))
-
-                TextField(
                     label = { Text(text = "Produsent") },
                     value = produsent.value,
                     onValueChange = { produsent.value = it },
                 )
+
+                Spacer(modifier = Modifier.height(15.dp))
+
+                Text(text = "Hva slags produkt ønsker du å selge?")
+                Spacer(modifier = Modifier.height(15.dp))
+
+
+                /**
+                 * Drop down meny for å velge hvilken produkt kategori produktet tilhører.
+                 */
+                Box {
+
+                Button(onClick = { expanded = true }) {
+                        Text(text = kategori.value)
+                    }
+
+                    DropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false }
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text("Hovedkort") },
+                            onClick = {
+                                kategori.value = "Hovedkort"
+                                expanded = false
+                                Toast.makeText(cont, "Kategori: $kategori", Toast.LENGTH_LONG).show()
+                                Log.d(ContentValues.TAG, kategori.value)
+                            })
+                        DropdownMenuItem(
+                            text = { Text("Skjermkort") },
+                            onClick = {
+                                kategori.value = "Skjermkort"
+                                expanded = false
+                                Toast.makeText(cont, kategori.value, Toast.LENGTH_LONG).show()
+                                Log.d(ContentValues.TAG, kategori.value)
+                            })
+                        DropdownMenuItem(
+                            text = { Text("Prosessorer") },
+                            onClick = {
+                                kategori.value = "Prosessorer"
+                                expanded = false
+                                Toast.makeText(cont, kategori.value, Toast.LENGTH_LONG).show()
+                                Log.d(ContentValues.TAG, kategori.value)
+                            })
+                    }
+                }
 
                 Spacer(modifier = Modifier.height(15.dp))
 
@@ -191,12 +253,10 @@ fun bruktProduktSkjema(navController: NavController) {
 
                 Button(
                     onClick = {
-                        if(Build.VERSION.SDK_INT >= 29) {
+                        if (Build.VERSION.SDK_INT >= 29) {
                             try {
                                 launcher.launch("image/*")
-                            }
-
-                            catch (ex: IOException) {
+                            } catch (ex: IOException) {
                                 Log.i("Catch", ex.toString())
                             }
 
@@ -273,7 +333,7 @@ fun bruktProduktSkjema(navController: NavController) {
                              * Konvertering av inndata til tekststrenger.
                              */
                             val produktNavnString = produktNavn.value.text
-                            val kategoriString = kategori.value.text
+                            val kategoriString = kategori.value
                             val produsentString = produsent.value.text
                             val prisString = pris.value.text
                             val tilstandString = tilstand.value.text
@@ -282,7 +342,8 @@ fun bruktProduktSkjema(navController: NavController) {
                             /**
                              * Bygger downloadUri manuelt grunnet at vi ikke fikk Firebase sin metode til å returnere riktig verdi.
                              */
-                            val bildeString = "https://firebasestorage.googleapis.com/v0/b/datakompkotlin.appspot.com/o/images%2F"+produktNavnString+"?alt=media"
+                            val bildeString =
+                                "https://firebasestorage.googleapis.com/v0/b/datakompkotlin.appspot.com/o/images%2F" + produktNavnString + "?alt=media"
 
                             /**
                              * Definisjon for objektet vi sender inn i Firestore dokumentet.
@@ -316,15 +377,28 @@ fun bruktProduktSkjema(navController: NavController) {
                              * lagrer den et dokument med en unik ID i BruktProdukt collectionen.
                              */
                             firebaseAuth.currentUser?.let { it1 ->
-                                firestore.collection("Produkter").document("BrukteProdukter").collection(kategoriString).document(Math.random().toString())
+                                firestore.collection("Produkter").document("BrukteProdukter")
+                                    .collection(kategoriString).document(Math.random().toString())
                                     .set(
                                         bruktProdukt
                                     )
                                     /**
                                      * Informerer bruker om opplasningen av produktet gikk som det skulle eller ikke.
                                      */
-                                    .addOnSuccessListener { Toast.makeText(cont, "Produktet ditt er sendt inn!", Toast.LENGTH_LONG).show()}
-                                    .addOnFailureListener { Toast.makeText(cont, "Noe gikk galt ved innsending av produktet", Toast.LENGTH_LONG).show() }
+                                    .addOnSuccessListener {
+                                        Toast.makeText(
+                                            cont,
+                                            "Produktet ditt er sendt inn!",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
+                                    .addOnFailureListener {
+                                        Toast.makeText(
+                                            cont,
+                                            "Noe gikk galt ved innsending av produktet",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
                             }
 
                         },
@@ -338,12 +412,20 @@ fun bruktProduktSkjema(navController: NavController) {
                 }
                 Spacer(modifier = Modifier.height(50.dp))
 
-                Text(text = "Du er ikke forpliktet til å sende inn produktet ved å sende inn dette skjemaet.", textAlign = TextAlign.Center)
+                Text(
+                    text = "Du er ikke forpliktet til å sende inn produktet ved å sende inn dette skjemaet.",
+                    textAlign = TextAlign.Center
+                )
 
                 Spacer(modifier = Modifier.height(100.dp))
             }
+
         }
+
     }
 }
+
+
+
 
 
