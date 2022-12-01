@@ -18,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -58,6 +59,9 @@ fun BrukerPassord(navController: NavController) {
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
 
+                    /**
+                     * Oppretter values som holder på verdiene til hvert sitt tekstfelt
+                     */
                     val passord = remember { mutableStateOf(TextFieldValue()) }
                     val passordCheck = remember { mutableStateOf(TextFieldValue()) }
 
@@ -78,9 +82,13 @@ fun BrukerPassord(navController: NavController) {
                     Spacer(modifier = Modifier.height(15.dp))
                     Text(
                         text = "Endring av passord er ikke nødvendig med google konto eller som gjest",
+                        textAlign = TextAlign.Center,
                         style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Bold)
                     )
 
+                    /**
+                     * Tekstfelt for inntasting av nytt passord
+                     */
                     Spacer(modifier = Modifier.height(10.dp))
                         TextField(
                             label = { Text(text = "Nytt passord") },
@@ -96,12 +104,18 @@ fun BrukerPassord(navController: NavController) {
                     )
 
                     Spacer(modifier = Modifier.height(15.dp))
+                    /**
+                     * Knapp som ved klikk sjekker om begge tekstfeltene har samme input, i det
+                     * tilfelle endrer passordet til brukeren og gir beskjed om dette.
+                     * Om passordet ikke er skrevet riktig i begge felt får brukeren en beskjed
+                     * om dette.
+                     */
                     Box(modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 0.dp)) {
                         Button(
                             onClick = {
                                       if (passord.value == passordCheck.value){
                                           firebaseAuth.currentUser?.updatePassword(passord.value.text)
-                                              ?.addOnSuccessListener { Toast.makeText(cont, "Passord er endret til: " + passord.value.text, Toast.LENGTH_LONG).show() }
+                                              ?.addOnSuccessListener { Toast.makeText(cont, "Passord er endret", Toast.LENGTH_LONG).show() }
                                               ?.addOnFailureListener { Toast.makeText(cont, "Error, passordet er uendret", Toast.LENGTH_LONG).show() }
                                       }
 
@@ -121,6 +135,9 @@ fun BrukerPassord(navController: NavController) {
                     }
 
                     Spacer(modifier = Modifier.height(20.dp))
+                    /**
+                     * Knapp som sender brukeren ett nytt passord via mail og gir beskjed om dette
+                     */
                     Box(modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 0.dp)) {
                         Button(
                             onClick = {

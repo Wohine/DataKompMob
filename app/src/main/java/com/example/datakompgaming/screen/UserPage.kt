@@ -12,7 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -21,7 +20,6 @@ import androidx.navigation.NavController
 import com.example.datakompgaming.R
 import com.example.datakompgaming.ui.theme.DataKompGamingTheme
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 
 @ExperimentalMaterial3Api
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -36,7 +34,6 @@ fun UserPage(navController: NavController)
         Surface(
             modifier = Modifier.fillMaxWidth(),
             color = MaterialTheme.colorScheme.onBackground
-
         ) {
             Scaffold(
                 topBar = {
@@ -44,17 +41,14 @@ fun UserPage(navController: NavController)
                 },
                 bottomBar = {
                     printBotBarIcon(navController = navController, 2)
-
                 }
             ) {
                 Column(
                     modifier = Modifier
-                        // .background(Color.White)
                         .verticalScroll(rememberScrollState(), enabled = true),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-
 
                     Spacer(modifier = Modifier.height(10.dp))
                     Image(
@@ -65,18 +59,22 @@ fun UserPage(navController: NavController)
                             .offset(x = 0.dp, y = 20.dp)
                     )
 
+                    /**
+                     * Tekst som viser nåværende innlogget bruker sin mail
+                     */
                     Text(
                         text = "Din bruker: " + firebaseAuth.currentUser?.email,
                         style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Bold)
                     )
 
-
                     Spacer(modifier = Modifier.height(20.dp))
                     Row(
                         horizontalArrangement = Arrangement.Center,
-                        //verticalAlignment = Alignment.CenterVertically
                     ) {
 
+                        /**
+                         * Knapp som sender brukeren til bruker instillinger
+                         */
                         Box(modifier = Modifier
                             .padding(10.dp, 10.dp, 10.dp, 10.dp),
                             contentAlignment = Alignment.Center
@@ -95,7 +93,9 @@ fun UserPage(navController: NavController)
                             }
                         }
 
-
+                        /**
+                         * Knapp som sender brukeren til sin ordre historikk
+                         */
                         Box(modifier = Modifier
                             .padding(10.dp, 10.dp, 10.dp, 10.dp),
                         contentAlignment = Alignment.Center
@@ -114,6 +114,9 @@ fun UserPage(navController: NavController)
                             }
                         }
 
+                        /**
+                         * Knapp som sender brukeren til side for å endre passord
+                         */
                         Box(modifier = Modifier
                             .padding(10.dp, 10.dp, 10.dp, 10.dp),
                             contentAlignment = Alignment.CenterEnd
@@ -132,7 +135,6 @@ fun UserPage(navController: NavController)
                             }
                         }
                     }
-
                 }
             }
         }

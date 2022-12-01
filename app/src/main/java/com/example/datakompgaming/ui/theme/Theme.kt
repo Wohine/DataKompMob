@@ -1,6 +1,5 @@
 package com.example.datakompgaming.ui.theme
 
-import android.bluetooth.BluetoothA2dp
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.*
@@ -8,6 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
+
+/**
+ * Oppretter eget sett med fargetema til darkmode
+ */
 private val DarkColorPalette = darkColorScheme(
     primary = BlueGreyMain80,
     onPrimary = BlueGreyMain20,
@@ -44,6 +47,9 @@ private val DarkColorPalette = darkColorScheme(
     outline = BlueGreyGrey80
 )
 
+/**
+ * Oppretter eget sett med fargetema til lightmode
+ */
 private val LightColorPalette = lightColorScheme(
     primary = BlueGreyMain40,
     onPrimary = Color.White,
@@ -78,11 +84,14 @@ private val LightColorPalette = lightColorScheme(
     onSurfaceVariant = BlueGreyGrey30,
 
     outline = BlueGreyGrey40
-
-
-
 )
 
+/**
+ * Fargetema funksjon for appen
+ * Tar i bruk dynamic colors om telefonens OS versjon tillater dette
+ * Om OS versjonen ikke tillater dynamic colors vil den sjekke etter om darkmode eller lightmode
+ * er i bruk og ta i bruk riktig fargetema
+ */
 @Composable
 fun DataKompGamingTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),

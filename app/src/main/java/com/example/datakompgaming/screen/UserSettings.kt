@@ -1,7 +1,6 @@
 package com.example.datakompgaming.screen
 
 import android.annotation.SuppressLint
-import android.view.View
 import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -25,28 +24,23 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import androidx.navigation.NavController
-import com.example.datakompgaming.LogoutPreview
 import com.example.datakompgaming.R
 import com.example.datakompgaming.brukerSider.BrukerDataFire
 import com.example.datakompgaming.mainActivity
 import com.example.datakompgaming.produkt.firestore
 import com.example.datakompgaming.screen.chat.firebaseAuth
 import com.example.datakompgaming.ui.theme.DataKompGamingTheme
-import com.example.datakompgaming.ui.theme.Red30
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.Source
 
 @ExperimentalMaterial3Api
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 
-
-
 @Composable
 fun UserSettings(navController: NavController)
 {
     var firebaseAuth = FirebaseAuth.getInstance()
     var cont = LocalContext.current
-
 
     DataKompGamingTheme{
         Surface(
@@ -73,6 +67,9 @@ fun UserSettings(navController: NavController)
 
                     var bruker = getUserData()
 
+                    /**
+                     * values som holder verdien til hvert text felt
+                     */
                     val fNavn = remember { mutableStateOf(TextFieldValue()) }
                     val eNavn = remember { mutableStateOf(TextFieldValue()) }
                     val adresse = remember { mutableStateOf(TextFieldValue()) }
@@ -84,12 +81,17 @@ fun UserSettings(navController: NavController)
                         contentDescription = null
                     )
 
+                    /**
+                     * Viser nåværende bruker sin mail
+                     */
                     Text(
                         text = "Din bruker: " + firebaseAuth.currentUser?.email,
                         style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Bold)
                     )
 
-
+                    /**
+                     * Textfelt til inntasting av bruker info
+                     */
                     Spacer(modifier = Modifier.height(15.dp))
                     TextField(
                         label = { Text(text = "Fornavn") },
@@ -119,6 +121,12 @@ fun UserSettings(navController: NavController)
                     )
 
                     Spacer(modifier = Modifier.height(25.dp))
+
+                    /**
+                     * En "send inn" knapp hvor ved klikk sender input verdien til texfletene over
+                     * inn i en lokal data klasse. Det kobles så over til nåværende bruker og lagrer
+                     * bruker dataen på brukeren i firestore
+                     */
                     Box(modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 0.dp)) {
                         Button(
                             onClick = {
@@ -142,7 +150,6 @@ fun UserSettings(navController: NavController)
                                     postNrString,
                                 )
 
-
                                 firebaseAuth.currentUser?.let { it1 ->
                                     firestore.collection("users").document(firebaseAuth.currentUser!!.uid.toString()).collection("Brukerdokumenter").document("Brukerdata")
                                         .set(
@@ -151,7 +158,6 @@ fun UserSettings(navController: NavController)
                                         .addOnSuccessListener { Toast.makeText(cont, "Brukerdata oppdatert", Toast.LENGTH_LONG).show() }
                                         .addOnFailureListener { Toast.makeText(cont, "Error, brukerdata ikke oppdatert", Toast.LENGTH_LONG).show() }
                                 }
-
                             },
                             shape = RoundedCornerShape(50.dp),
                             modifier = Modifier
@@ -163,16 +169,22 @@ fun UserSettings(navController: NavController)
                     }
 
                     Spacer(modifier = Modifier.height(25.dp))
+                    /**
+                     * Slett bruker knapp med pop up vindu for å unngå uintensjonell sletting
+                     * av bruker med enkelt trykk
+                     */
                     DeleteUserWindow()
 
                     Spacer(modifier = Modifier.height(40.dp))
-
                 }
             }
         }
     }
 }
 
+/**
+ * Uthenting av bruker data, dette skulle brukes til automatisk utfylling av textfeltene
+ */
 fun getUserData()
 {
     var firebaseAuth = FirebaseAuth.getInstance()
@@ -195,8 +207,9 @@ fun getUserData()
 }
 
 
-
-
+/**
+ * Funksjon for button som aktiverer popup vindu med text og knapp
+ */
 @Composable
 fun DeleteUserWindow(){
 
@@ -213,17 +226,18 @@ fun DeleteUserWindow(){
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+        /**
+         * Knapp som åpner og lukker popup vindu
+         */
         Button(
-
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp),
-
             onClick = {
                 openDialog.value = !openDialog.value
 
-                if (!openDialog.value) {
-
+                if (!openDialog.value)
+                {
                     buttonTitle.value = "Slett bruker"
                 }
             }
@@ -232,12 +246,16 @@ fun DeleteUserWindow(){
         }
 
         Box {
-            val popupWidth = 300.dp
-            val popupHeight = 150.dp
-
-            if (openDialog.value) {
+            if (openDialog.value)
+            {
+                /**
+                 * Setter teksten til første knapp til "Ikke slett bruker!"
+                 */
                 buttonTitle.value = "Ikke slett bruker!"
 
+                /**
+                 * Oppretter en popup
+                 */
                 Popup(
                     alignment = Alignment.TopCenter,
                     offset = IntOffset(0, -600),
@@ -246,7 +264,7 @@ fun DeleteUserWindow(){
 
                     Box(
                         Modifier
-                            .size(popupWidth, popupHeight)
+                            .size(300.dp, 150.dp)
                             .padding(top = 5.dp)
                             .background(
                                 color = MaterialTheme.colorScheme.error,
@@ -267,18 +285,19 @@ fun DeleteUserWindow(){
                                 textAlign = TextAlign.Center)
 
                             Spacer(modifier = Modifier.height(5.dp))
-                            
+
+                            /**
+                             * Knapp som sletter nåværende innlogget bruker, gir beskjed gjennom
+                             * toast så sender brukeren til innloggings siden
+                             */
                             Box(modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 0.dp)) {
                                 Button(
                                     onClick = {
-
                                         firebaseAuth.currentUser?.delete()
                                             ?.addOnSuccessListener { Toast.makeText(cont, "Bruker er slettet", Toast.LENGTH_LONG).show() }
                                             ?.addOnFailureListener { Toast.makeText(cont, "Error, brukeren er ikke slettet", Toast.LENGTH_LONG).show() }
                                         
                                         mainActivity?.logOut()
-
-
                                     },
                                     shape = RoundedCornerShape(50.dp),
                                     modifier = Modifier

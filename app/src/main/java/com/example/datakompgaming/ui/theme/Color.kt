@@ -2,6 +2,11 @@ package com.example.datakompgaming.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+
+/**
+ * Opprettet eget sett med farger til bruk i appen og appens fargetema
+ */
+
 val DataKompGamingRGB = Color(0xFF0888c4)
 
 val Purple200 = Color(0xFFBB86FC)

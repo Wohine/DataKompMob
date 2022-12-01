@@ -3,7 +3,6 @@ package com.example.datakompgaming.screen
 import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,14 +14,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -35,9 +31,12 @@ import com.google.firebase.auth.FirebaseAuth
 @ExperimentalMaterial3Api
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 
-
 @Composable
 fun Kundeservice(navController: NavController) {
+
+    var firebaseAuth = FirebaseAuth.getInstance()
+    var cont = LocalContext.current
+
     DataKompGamingTheme {
         Surface(
             modifier = Modifier.fillMaxWidth(),
@@ -71,8 +70,6 @@ fun Kundeservice(navController: NavController) {
                     val email = remember { mutableStateOf(TextFieldValue()) }       //fjern email
                     val tema = remember { mutableStateOf(TextFieldValue()) }
                     val hjelptxt = remember { mutableStateOf(TextFieldValue()) }
-                    var firebaseAuth = FirebaseAuth.getInstance()
-                    var cont = LocalContext.current
 
                     /**
                      * Spacer for å unngå at top baren overlapper elementer på siden
@@ -83,7 +80,6 @@ fun Kundeservice(navController: NavController) {
                         painter = painterResource(R.drawable.datakomplogo),
                         contentDescription = null
                     )
-
 
                     Spacer(modifier = Modifier.height(20.dp))
                     Text(
@@ -146,7 +142,6 @@ fun Kundeservice(navController: NavController) {
                                     temaString,
                                     hjelpString,
                                 )
-
 
                                 firebaseAuth.currentUser?.let { it1 ->
                                     firestore.collection("users")
