@@ -2,16 +2,13 @@ package com.example.datakompgaming.produkt
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.ImageDecoder
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.ParcelFileDescriptor
-import android.provider.MediaStore
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.*
@@ -21,7 +18,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -32,17 +28,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.datakompgaming.R
+import com.example.datakompgaming.bruktProdukt.BruktProdukt
+import com.example.datakompgaming.bruktProdukt.sendSkjemaDB
 import com.example.datakompgaming.screen.printBotBarIcon
 import com.example.datakompgaming.screen.printTopBarIcon
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.output.ByteArrayOutputStream
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
-import java.io.Console
 import java.io.IOException
-import kotlin.random.Random
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "SuspiciousIndentation")
@@ -234,53 +228,22 @@ fun bruktProduktSkjema(navController: NavController) {
                                     Log.d(ContentValues.TAG, "Suksessfull bildeopplastning!")
                                     val downloadUri = uploadTask.result
                                     Log.d(ContentValues.TAG, "hei" + downloadUri.toString())
-                                    // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-                                    // ...
-
 
                                 }
                             }
 
-
-
-                            val produktNavnString = produktNavn.value.text
-                            val kategoriString = kategori.value.text
-                            val produsentString = produsent.value.text
-                            val prisString = pris.value.text
-                            val tilstandString = tilstand.value.text
-                            val varebeholdningString = "1"
-                            val bildeString = "https://firebasestorage.googleapis.com/v0/b/datakompkotlin.appspot.com/o/images%2F"+produktNavnString+"?alt=media"
-
-
-                            data class BruktProdukt(
-                                val tittel: String? = null,
-                                val kategori: String? = null,
-                                val produsent: String? = null,
-                                val pris: String? = null,
-                                val tilstand: String? = null,
-                                val varebeholdning: String? = null,
-                                val bildeAdresse: String? = null
-                            )
-
                             val bruktProdukt = BruktProdukt(
-                                produktNavnString,
-                                kategoriString,
-                                produsentString,
-                                prisString,
-                                tilstandString,
-                                varebeholdningString,
-                                bildeString,
+                                produktNavn.value.text,
+                                kategori.value.text,
+                                produsent.value.text,
+                                pris.value.text,
+                                tilstand.value.text,
+                                "1",
+                                "https://firebasestorage.googleapis.com/v0/b/datakompkotlin.appspot.com/o/images%2F"+produktNavn.value.text+"?alt=media",
                             )
 
-                            firebaseAuth.currentUser?.let { it1 ->
-                                firestore.collection("Produkter").document("BrukteProdukter").collection(kategoriString).document(Math.random().toString())
-                                    .set(
-                                        bruktProdukt
-                                    )
-                                    .addOnSuccessListener { Toast.makeText(cont, "Produktet ditt er sendt inn!", Toast.LENGTH_LONG).show()}
-                                    .addOnFailureListener { Toast.makeText(cont, "Noe gikk galt ved innsending av produktet", Toast.LENGTH_LONG).show() }
-                            }
-
+                            sendSkjemaDB(bruktProdukt, cont)
+                            BrukteProdukterUthentingDB()
                         },
                         shape = RoundedCornerShape(50.dp),
                         modifier = Modifier

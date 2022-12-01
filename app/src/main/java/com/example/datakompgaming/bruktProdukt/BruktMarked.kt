@@ -25,23 +25,20 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.datakompgaming.bruktProdukt.BruktProduktObject
 import com.example.datakompgaming.handlekurv.HandlekurvObject
 import com.example.datakompgaming.bruktProdukt.BrukteProdukterFire
+import com.example.datakompgaming.produkt.BrukteProdukterUthentingDB
 import com.example.datakompgaming.produkt.ProdukterFire
 
 /**
  * viser det brukte produktmarkedet med compose
  * @param navController
- * @param bruktHovedkortListe
- * @param bruktProsessorListe
- * @param bruktSkjermkortListe
  */
 @ExperimentalMaterial3Api
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun BruktMarked(navController: NavController, bruktHovedkortListe: MutableList<BrukteProdukterFire>,
-                bruktProsessorListe: MutableList<BrukteProdukterFire>, bruktSkjermkortListe: MutableList<BrukteProdukterFire>) {
-
+fun BruktMarked(navController: NavController) {
     Scaffold(
         bottomBar = {
             printBotBarIcon(navController = navController, 3)
@@ -67,9 +64,9 @@ fun BruktMarked(navController: NavController, bruktHovedkortListe: MutableList<B
                 Spacer(modifier = Modifier.height(30.dp))
 
                 // printer hvert produkt av de ulike typene produkter
-                brukteProdukterRad("Hovedkort",Color(0xFF0888c4), bruktHovedkortListe)
-                brukteProdukterRad("Skjermkort",Color(0xFF0888c4), bruktSkjermkortListe)
-                brukteProdukterRad("Prosessorer",Color(0xFF0888c4), bruktProsessorListe)
+                brukteProdukterRad("Hovedkort",Color(0xFF0888c4), BruktProduktObject.BruktHovedKortListe)
+                brukteProdukterRad("Skjermkort",Color(0xFF0888c4), BruktProduktObject.BruktSkjermKortListe)
+                brukteProdukterRad("Prosessorer",Color(0xFF0888c4), BruktProduktObject.BruktProsessorerListe)
                 Spacer(modifier = Modifier.height(100.dp))
             }
 

@@ -54,8 +54,7 @@ fun ScreenMain(){
             printHandlekurv(navController)
         }
         composable(Routes.BrukteProdukter.route){
-            BruktMarked(navController, BruktProduktObject.BruktHovedKortListe,
-                BruktProduktObject.BruktProsessorerListe, BruktProduktObject.BruktSkjermKortListe)
+            BruktMarked(navController)
         }
         composable(Routes.Shipping.route){
             printShippingSkjema(navController)
