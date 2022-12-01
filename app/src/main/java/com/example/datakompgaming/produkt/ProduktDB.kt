@@ -2,16 +2,13 @@ package com.example.datakompgaming.produkt
 
 import android.content.ContentValues.TAG
 import android.util.Log
-import com.example.datakompgaming.produkt.ProduktObject
-
-import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Source
 
 /**
  * henter ut produkter fra database
  */
-var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+
 fun ProdukterUthentingDB(){
     ProduktObject.SkjermKortListe.clear()
     ProdukterUthentingDB("Skjermkort")
@@ -21,7 +18,7 @@ fun ProdukterUthentingDB(){
     ProdukterUthentingDB("Hovedkort")
 }
 fun ProdukterUthentingDB(collectionType: String) {
-
+    var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     /**
      * Referanse for lokasjonen til produktene vi ønsker å hente.

@@ -2,7 +2,7 @@ package com.example.datakompgaming.handlekurv
 
 import android.content.ContentValues
 import android.util.Log
-import com.example.datakompgaming.produkt.firestore
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlin.random.Random
 
 /**
@@ -10,6 +10,8 @@ import kotlin.random.Random
  * @param shippingFire
  */
 fun kjopProdukterDB(shippingFire: ShippingFire) {
+
+    var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
     // gir en tilfeldig id til et kjøp
     var kjopID = Random.nextInt(0, 100000)
 

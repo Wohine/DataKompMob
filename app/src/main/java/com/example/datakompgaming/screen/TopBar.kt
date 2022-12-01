@@ -1,22 +1,16 @@
 package com.example.datakompgaming.screen
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingBasket
-import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.datakompgaming.handlekurv.HandlekurvObject.BruktHandleliste
 import com.example.datakompgaming.handlekurv.HandlekurvObject.handlekurvListe
 import com.example.datakompgaming.mainActivity
@@ -26,7 +20,6 @@ import com.example.datakompgaming.ui.theme.DataKompGamingTheme
 @Composable
 fun printTopBarIcon(navController: NavController){
     var expanded by remember { mutableStateOf(false) }
-    var showMenu = false
 
     /**
      * viser hvor mange ting som ligger i handlekurven

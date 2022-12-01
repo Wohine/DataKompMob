@@ -1,9 +1,7 @@
 package com.example.datakompgaming
 
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -12,9 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.example.datakompgaming.handlekurv.produktOppdateringDB
 import com.example.datakompgaming.produkt.*
 import com.example.datakompgaming.screen.LogoBanner
 import com.example.datakompgaming.screen.ScreenMain
@@ -24,7 +20,6 @@ import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import kotlinx.coroutines.flow.Flow
 
 var mainActivity: MainActivity? = null
 var user: FirebaseUser? = null
@@ -87,6 +82,7 @@ class MainActivity : ComponentActivity() {
 
     /**
      * Presenterer de ulike innloggingsmulighetene definert i Auth konsollen i Firebase.
+     * https://firebase.google.com/docs/auth/android/firebaseui
      */
     @OptIn(ExperimentalMaterial3Api::class)
     private fun signIn() {
@@ -106,6 +102,7 @@ class MainActivity : ComponentActivity() {
     /**
      * Returnerer hovedsiden ved en suksessfull innlogging.
      * Ved en feilet innlogging returnerer brukeren til login siden.
+     * https://firebase.google.com/docs/auth/android/firebaseui
      */
     private fun signInResult(result: FirebaseAuthUIAuthenticationResult) {
         val response = result.idpResponse
@@ -150,13 +147,6 @@ fun DefaultPreview() {
         ) {
             ScreenMain()
         }
-    }
-}
-@ExperimentalMaterial3Api
-@Composable
-fun LogoutPreview() {
-    MaterialTheme {
-        mainActivity?.login()
     }
 }
 

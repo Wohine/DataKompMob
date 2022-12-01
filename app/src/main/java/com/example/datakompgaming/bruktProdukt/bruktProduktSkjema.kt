@@ -2,59 +2,42 @@ package com.example.datakompgaming.produkt
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.ImageDecoder
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.ParcelFileDescriptor
-import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.*
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.ShoppingBasket
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.PopupProperties
 import androidx.navigation.NavController
 import com.example.datakompgaming.R
 import com.example.datakompgaming.bruktProdukt.BruktProdukt
 import com.example.datakompgaming.bruktProdukt.sendSkjemaDB
-import com.example.datakompgaming.mainActivity
 import com.example.datakompgaming.screen.printBotBarIcon
 import com.example.datakompgaming.screen.printTopBarIcon
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.output.ByteArrayOutputStream
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
-import java.io.Console
 import java.io.IOException
-import kotlin.random.Random
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "SuspiciousIndentation")
@@ -109,8 +92,6 @@ fun bruktProduktSkjema(navController: NavController) {
 
                 var imageUri by remember { mutableStateOf<Uri?>(null) }
 
-                var firebaseAuth = FirebaseAuth.getInstance()
-
                 var storage = Firebase.storage
                 val storageRef = storage.reference
 
@@ -135,8 +116,6 @@ fun bruktProduktSkjema(navController: NavController) {
                         }
                     }
                 }
-
-
 
                 Spacer(modifier = Modifier.height(20.dp))
 
@@ -240,6 +219,7 @@ fun bruktProduktSkjema(navController: NavController) {
                  * Knapp for å starte bildeuthentingsprosessen. Benytter seg av launcher definert
                  * ved variablene. Kjører kun om Android enheten kjører på en android versjon
                  * som støtter denne uthentingsmetoden.
+                 * https://ngengesenior.medium.com/pick-image-from-gallery-in-jetpack-compose-5fa0d0a8ddafhttps://ngengesenior.medium.com/pick-image-from-gallery-in-jetpack-compose-5fa0d0a8ddaf
                  */
 
                 Button(

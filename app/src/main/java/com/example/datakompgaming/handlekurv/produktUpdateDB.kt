@@ -3,15 +3,18 @@ package com.example.datakompgaming.handlekurv
 
 import android.util.Log
 import com.example.datakompgaming.produkt.ProdukterFire
-import com.example.datakompgaming.produkt.firestore
+import com.google.firebase.firestore.FirebaseFirestore
 import android.content.ContentValues.TAG
 import com.example.datakompgaming.produkt.ProdukterUthentingDB
+
 
 /**
  * funksjon som oppdaterer varebeholdning til produkter man kjøper
  * @param produkterFire
  */
 fun produktOppdateringDB(produkterFire: ProdukterFire) {
+
+    var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     // gammel beholdning
     var nyVareBeholdning = produkterFire.varebeholdning.toInt()
