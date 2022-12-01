@@ -4,6 +4,7 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import com.example.datakompgaming.bruktProdukt.BruktProduktObject
 import com.example.datakompgaming.bruktProdukt.BrukteProdukterFire
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Source
 
 
@@ -23,6 +24,8 @@ fun BrukteProdukterUthentingDB(){
  * henter ut et type produkt fra databasen
  */
 fun BrukteProdukterUthentingDB(collectionType: String) {
+
+    var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     // path
     var docRef = firestore.collection("Produkter").document("BrukteProdukter")

@@ -24,8 +24,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.datakompgaming.R
 import com.example.datakompgaming.ui.theme.DataKompGamingTheme
-import com.example.datakompgaming.produkt.firestore
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 @ExperimentalMaterial3Api
@@ -70,6 +70,7 @@ fun Kundeservice(navController: NavController) {
                     val email = remember { mutableStateOf(TextFieldValue()) }       //fjern email
                     val tema = remember { mutableStateOf(TextFieldValue()) }
                     val hjelptxt = remember { mutableStateOf(TextFieldValue()) }
+                    var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
                     /**
                      * Spacer for å unngå at top baren overlapper elementer på siden

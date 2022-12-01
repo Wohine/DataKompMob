@@ -31,6 +31,7 @@ import com.example.datakompgaming.produkt.firestore
 import com.example.datakompgaming.screen.chat.firebaseAuth
 import com.example.datakompgaming.ui.theme.DataKompGamingTheme
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Source
 
 @ExperimentalMaterial3Api
@@ -40,6 +41,7 @@ import com.google.firebase.firestore.Source
 fun UserSettings(navController: NavController)
 {
     var firebaseAuth = FirebaseAuth.getInstance()
+    var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
     var cont = LocalContext.current
 
     DataKompGamingTheme{
@@ -280,7 +282,7 @@ fun DeleteUserWindow(){
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center
                         ) {
-                            
+
                             Text(text = "Er du helt sikker på at du vil slette dennebrukeren?",
                                 textAlign = TextAlign.Center)
 
@@ -296,7 +298,7 @@ fun DeleteUserWindow(){
                                         firebaseAuth.currentUser?.delete()
                                             ?.addOnSuccessListener { Toast.makeText(cont, "Bruker er slettet", Toast.LENGTH_LONG).show() }
                                             ?.addOnFailureListener { Toast.makeText(cont, "Error, brukeren er ikke slettet", Toast.LENGTH_LONG).show() }
-                                        
+
                                         mainActivity?.logOut()
                                     },
                                     shape = RoundedCornerShape(50.dp),

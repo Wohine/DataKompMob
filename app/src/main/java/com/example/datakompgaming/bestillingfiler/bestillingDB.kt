@@ -1,8 +1,8 @@
 package com.example.datakompgaming.bestillingfiler
 
 
-import com.example.datakompgaming.produkt.firestore
 import com.example.datakompgaming.user
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Source
 
 /**
@@ -11,6 +11,8 @@ import com.google.firebase.firestore.Source
  * legger hver produkt inn i liste i bestillingobjekt
  */
 fun bestillingHent() {
+
+    var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     var source = Source.DEFAULT
 
