@@ -2,8 +2,6 @@ package com.example.datakompgaming.handlekurv
 
 import android.content.ContentValues
 import android.util.Log
-import com.example.datakompgaming.produkt.ProdukterFire
-import com.example.datakompgaming.produkt.ProdukterUthentingDB
 import com.example.datakompgaming.produkt.firestore
 import kotlin.random.Random
 
