@@ -8,12 +8,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,29 +35,35 @@ import com.example.datakompgaming.screen.printTopBarIcon
 fun printOrders(bestillingListe: List<Order>, navController: NavController) {
     if (bestillingListe.isEmpty()) // henter bestillinger om det ikke har blitt gjort
         bestillingHent()
+    // A surface container using the 'background' color from the theme
+    Surface(
+        modifier = Modifier
+            .fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
 
-    Scaffold(
-        bottomBar = {
-            printBotBarIcon(navController = navController, 5)
-        },
-        topBar = {
-            printTopBarIcon(navController = navController)
-        }
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState(), enabled = true)
-                .background(Color.White),
-            verticalArrangement = Arrangement.SpaceEvenly
-        ) {
-            Spacer(modifier = Modifier.height(100.dp))
-            Text(text = "Dine Bestillinger")
-            for(bestilling in bestillingListe){ // printer hver bestilling
-                BestillingerCard(bestilling)
-                Spacer(modifier = Modifier.height(5.dp))
+        Scaffold(
+            bottomBar = {
+                printBotBarIcon(navController = navController, 5)
+            },
+            topBar = {
+                printTopBarIcon(navController = navController)
             }
-            Spacer(modifier = Modifier.height(45.dp))
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState(), enabled = true),
+                verticalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Spacer(modifier = Modifier.height(100.dp))
+                Text(text = "Dine Bestillinger")
+                for (bestilling in bestillingListe) { // printer hver bestilling
+                    BestillingerCard(bestilling)
+                    Spacer(modifier = Modifier.height(5.dp))
+                }
+                Spacer(modifier = Modifier.height(45.dp))
+            }
         }
     }
 }
