@@ -30,7 +30,7 @@ fun printBotBarIcon(navController: NavController, nummer: Int){
                     .fillMaxWidth().padding(horizontal = 17.dp)
             ) {
 
-                IconButton(modifier = Modifier.padding(horizontal = 15.dp)
+                IconButton(modifier = Modifier.padding(horizontal = 10.dp)
                         then (Modifier.size(45.dp)),
                     onClick = {
                         navController.navigate("HomePage")
@@ -42,7 +42,7 @@ fun printBotBarIcon(navController: NavController, nummer: Int){
                         tint = if (nummer == 0) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.secondary
                     )
                 }
-                IconButton(modifier = Modifier.padding(horizontal = 15.dp)
+                IconButton(modifier = Modifier.padding(horizontal = 10.dp)
                         then (Modifier.size(45.dp)),
                     onClick = {
                         navController.navigate("chat")
@@ -54,7 +54,7 @@ fun printBotBarIcon(navController: NavController, nummer: Int){
                         tint = if (nummer == 1) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.secondary
                     )
                 }
-                IconButton(modifier = Modifier.padding(horizontal = 15.dp)
+                IconButton(modifier = Modifier.padding(horizontal = 10.dp)
                         then (Modifier.size(45.dp)),
                     onClick = {
                         navController.navigate("bruktProduktSkjema")
@@ -66,7 +66,7 @@ fun printBotBarIcon(navController: NavController, nummer: Int){
                         tint = if (nummer == 2) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.secondary
                     )
                 }
-                IconButton(modifier = Modifier.padding(horizontal = 15.dp)
+                IconButton(modifier = Modifier.padding(horizontal = 10.dp)
                         then (Modifier.size(45.dp)),
                     onClick = {
                         navController.navigate("BrukteProdukter")
@@ -78,7 +78,7 @@ fun printBotBarIcon(navController: NavController, nummer: Int){
                         tint = if (nummer == 3) MaterialTheme.colorScheme.onSecondary else MaterialTheme.colorScheme.secondary
                     )
                 }
-                IconButton(modifier = Modifier.padding(horizontal = 15.dp)
+                IconButton(modifier = Modifier.padding(horizontal = 10.dp)
                         then (Modifier.size(45.dp)),
                     onClick = {
                         navController.navigate("Produkter")
