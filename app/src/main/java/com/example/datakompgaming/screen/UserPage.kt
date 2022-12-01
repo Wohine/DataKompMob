@@ -45,7 +45,8 @@ fun UserPage(navController: NavController)
             ) {
                 Column(
                     modifier = Modifier
-                        .verticalScroll(rememberScrollState(), enabled = true),
+                        .verticalScroll(rememberScrollState(), enabled = true)
+                        .fillMaxWidth(),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
@@ -68,7 +69,8 @@ fun UserPage(navController: NavController)
                     )
 
                     Spacer(modifier = Modifier.height(20.dp))
-                    Row(
+                    Row(modifier = Modifier
+                        .fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center,
                     ) {
 
@@ -92,28 +94,7 @@ fun UserPage(navController: NavController)
                                     textAlign = TextAlign.Center)
                             }
                         }
-
-                        /**
-                         * Knapp som sender brukeren til sin ordre historikk
-                         */
-                        Box(modifier = Modifier
-                            .padding(10.dp, 10.dp, 10.dp, 10.dp),
-                        contentAlignment = Alignment.Center
-                        ) {
-                            Button(
-                                onClick = {
-                                    navController.navigate("Bestilling")
-                                },
-                                shape = RoundedCornerShape(30.dp),
-                                modifier = Modifier
-                                    .width(120.dp)
-                                    .height(60.dp)
-                            ) {
-                                Text(text = "Bestilling historikk",
-                                    textAlign = TextAlign.Center)
-                            }
-                        }
-
+                        
                         /**
                          * Knapp som sender brukeren til side for å endre passord
                          */
@@ -133,6 +114,28 @@ fun UserPage(navController: NavController)
                                 Text(text = "Endre passord",
                                     textAlign = TextAlign.Center)
                             }
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(10.dp))
+                    /**
+                     * Knapp som sender brukeren til sin ordre historikk
+                     */
+                    Box(modifier = Modifier
+                        .padding(10.dp, 10.dp, 10.dp, 10.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Button(
+                            onClick = {
+                                navController.navigate("Bestilling")
+                            },
+                            shape = RoundedCornerShape(30.dp),
+                            modifier = Modifier
+                                .width(120.dp)
+                                .height(60.dp)
+                        ) {
+                            Text(text = "Bestilling historikk",
+                                textAlign = TextAlign.Center)
                         }
                     }
                 }
